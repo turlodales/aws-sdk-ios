@@ -1,37 +1,24 @@
-# AWS SDK for iOS
+# ⚠️ The AWS SDK for iOS is Deprecated.
+
+We recommend that you start using [AWS Amplify for Swift](https://github.com/aws-amplify/amplify-swift), our modern feature-rich library designed specifically for building cloud-connected apps powered by AWS. You can refer to the [AWS SDK for iOS migration guide](https://github.com/aws-amplify/amplify-swift/blob/main/MobileSDK_To_AmplifySwift_Guidance.md) to help you transition to AWS Amplify for Swift.
+This version is scheduled to reach End of Support on **August 1, 2026**. After this date, no further updates of any kind will be provided. See [maintenance policy](https://docs.amplify.aws/reference/maintenance-policy) for more information about the Amplify Client Library lifecycle.
+
+To use the AWS SDK for iOS directly you can refer to [the AWS SDK Documentation here](https://docs.amplify.aws/sdk/q/platform/ios/) and follow the setup instructions below. You can also look at sample apps in [the AWS SDK for iOS Samples repo](https://github.com/awslabs/aws-sdk-ios-samples).
 
 [![Release](https://img.shields.io/github/release/aws/aws-sdk-ios.svg)](../../releases)
+[![Code Coverage](https://codecov.io/gh/aws-amplify/aws-sdk-ios/branch/main/graph/badge.svg)](https://codecov.io/gh/aws-amplify/aws-sdk-ios)
 [![CocoaPods](https://img.shields.io/cocoapods/v/AWSCore.svg)](https://cocoapods.org/pods/AWSCore)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![CircleCI](https://circleci.com/gh/aws-amplify/aws-sdk-ios.svg?style=svg)](https://circleci.com/gh/aws-amplify/aws-sdk-ios)
+[![Integration Test](https://github.com/aws-amplify/aws-sdk-ios/actions/workflows/integ-test.yml/badge.svg)](https://github.com/aws-amplify/aws-sdk-ios)
+[![Unit Test](https://github.com/aws-amplify/aws-sdk-ios/actions/workflows/unit-test.yml/badge.svg)](https://github.com/aws-amplify/aws-sdk-ios)
 [![Discord](https://img.shields.io/discord/308323056592486420?logo=discord)](https://discord.gg/jWVbPfC) 
 
-The AWS SDK for iOS provides a library and documentation for developers to build connected mobile applications using AWS.
-
-### Features / APIs
-
-- [__Authentication__](https://aws-amplify.github.io/docs/ios/authentication): APIs and building blocks for developers who want to create user authentication experiences.  
-- [__Analytics__](https://aws-amplify.github.io/docs/ios/analytics): Easily collect analytics data for your app. Analytics data includes user sessions and other custom events that you want to track in your app.  
-- [__API__](https://aws-amplify.github.io/docs/ios/api): Provides a simple solution when making HTTP requests. It provides an automatic, lightweight signing process which complies with AWS Signature Version 4.
-- [__Storage__](https://aws-amplify.github.io/docs/ios/storage): Provides a simple mechanism for managing user content for your app in public, protected or private storage buckets.  
-- [__Push Notifications__](https://aws-amplify.github.io/docs/ios/push-notifications): Allows you to integrate push notifications in your app with Amazon Pinpoint targeting and campaign management support.
-- [__PubSub__](https://aws-amplify.github.io/docs/ios/pubsub): Provides connectivity with cloud-based message-oriented middleware.  
-- [__Generated AWS Service Interfaces__](https://aws-amplify.github.io/docs/ios/manualsetup): Provides direct interaction with any AWS service. 
-
-#### Visit our [Web Site](https://aws-amplify.github.io) to learn more about Amplify Framework.
-
-* [Documentation](https://aws-amplify.github.io/docs)
-* [Setup](#setup)
-* [Examples](https://github.com/awslabs/aws-sdk-ios-samples)
-
 ## Setup
-
-To get started with the AWS SDK for iOS, check out the [Developer Guide for iOS](https://aws-amplify.github.io/docs/ios/start). You can set up the SDK and start building a new project, or you integrate the SDK in an existing project. You can also run the samples to get a sense of how the SDK works.
 
 To use the AWS SDK for iOS, you will need the following installed on your development machine:
 
 * Xcode 11.0 or later
-* iOS 9 or later
+* iOS 12 or later
 
 ## Include the SDK for iOS in an Existing Application
 
@@ -420,13 +407,13 @@ To initialize logging to your Xcode console, use the following code:
 **Swift**
 
 ```swift
-AWSDDLog.add(AWSDDTTYLogger.sharedInstance) // TTY = Xcode console
+AWSDDLog.add(AWSDDOSLogger.sharedInstance) // Apple's unified logging
 ```
 
 **Objective-C**
 
 ```objective-c
-[AWSDDLog addLogger:[AWSDDTTYLogger sharedInstance]]; // TTY = Xcode console
+[AWSDDLog addLogger:[AWSDDOSLogger sharedInstance]]; // Apple's unified logging
 ```
 
 ## Open Source Contributions
@@ -444,3 +431,4 @@ Amazon Web Services
 ## License
 
 See the **LICENSE** file for more info.
+

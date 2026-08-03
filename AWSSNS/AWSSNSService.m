@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@
 #import "AWSSNSResources.h"
 
 static NSString *const AWSInfoSNS = @"SNS";
-NSString *const AWSSNSSDKVersion = @"2.27.14";
+NSString *const AWSSNSSDKVersion = @"2.41.0";
 
 
 @interface AWSSNSResponseSerializer : AWSXMLResponseSerializer
@@ -51,6 +51,7 @@ static NSDictionary *errorCodeDictionary = nil;
                             @"InvalidParameter" : @(AWSSNSErrorInvalidParameter),
                             @"ParameterValueInvalid" : @(AWSSNSErrorInvalidParameterValue),
                             @"InvalidSecurity" : @(AWSSNSErrorInvalidSecurity),
+                            @"InvalidState" : @(AWSSNSErrorInvalidState),
                             @"KMSAccessDenied" : @(AWSSNSErrorKMSAccessDenied),
                             @"KMSDisabled" : @(AWSSNSErrorKMSDisabled),
                             @"KMSInvalidState" : @(AWSSNSErrorKMSInvalidState),
@@ -60,6 +61,7 @@ static NSDictionary *errorCodeDictionary = nil;
                             @"NotFound" : @(AWSSNSErrorNotFound),
                             @"OptedOut" : @(AWSSNSErrorOptedOut),
                             @"PlatformApplicationDisabled" : @(AWSSNSErrorPlatformApplicationDisabled),
+                            @"ReplayLimitExceeded" : @(AWSSNSErrorReplayLimitExceeded),
                             @"ResourceNotFound" : @(AWSSNSErrorResourceNotFound),
                             @"StaleTag" : @(AWSSNSErrorStaleTag),
                             @"SubscriptionLimitExceeded" : @(AWSSNSErrorSubscriptionLimitExceeded),
@@ -552,6 +554,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSSNSGetDataProtectionPolicyResponse *> *)getDataProtectionPolicy:(AWSSNSGetDataProtectionPolicyInput *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@""
+                 operationName:@"GetDataProtectionPolicy"
+                   outputClass:[AWSSNSGetDataProtectionPolicyResponse class]];
+}
+
+- (void)getDataProtectionPolicy:(AWSSNSGetDataProtectionPolicyInput *)request
+     completionHandler:(void (^)(AWSSNSGetDataProtectionPolicyResponse *response, NSError *error))completionHandler {
+    [[self getDataProtectionPolicy:request] continueWithBlock:^id _Nullable(AWSTask<AWSSNSGetDataProtectionPolicyResponse *> * _Nonnull task) {
+        AWSSNSGetDataProtectionPolicyResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSSNSGetEndpointAttributesResponse *> *)getEndpointAttributes:(AWSSNSGetEndpointAttributesInput *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -960,6 +985,28 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
         if (completionHandler) {
             completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask *)putDataProtectionPolicy:(AWSSNSPutDataProtectionPolicyInput *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@""
+                 operationName:@"PutDataProtectionPolicy"
+                   outputClass:nil];
+}
+
+- (void)putDataProtectionPolicy:(AWSSNSPutDataProtectionPolicyInput *)request
+     completionHandler:(void (^)(NSError *error))completionHandler {
+    [[self putDataProtectionPolicy:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(error);
         }
 
         return nil;

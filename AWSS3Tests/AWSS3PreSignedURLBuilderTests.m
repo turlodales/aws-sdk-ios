@@ -604,7 +604,6 @@ static long unsigned testObjectSize = 10000;
             switch (count) {
                 case 0:
                     preSignedURLBuilder = [AWSS3PreSignedURLBuilder defaultS3PreSignedURLBuilder];
-                    [getPreSignedURLRequest setValue:@"" forRequestParameter:AWSS3PresignedURLTorrent];
                     break;
                 case 2:
                     preSignedURLBuilder = [AWSS3PreSignedURLBuilder S3PreSignedURLBuilderForKey:testS3PresignedURLEUCentralKey];
@@ -648,7 +647,7 @@ static long unsigned testObjectSize = 10000;
                                                      if (count == 0) {
                                                          XCTAssertTrue([data length] > 0);
                                                          NSString *responseContentTypeStr = [((NSHTTPURLResponse *)response) allHeaderFields][@"Content-Type"];
-                                                         XCTAssertEqualObjects(@"application/x-bittorrent", responseContentTypeStr);
+                                                         XCTAssertEqualObjects(@"binary/octet-stream", responseContentTypeStr);
                                                      } else {
                                                          XCTAssertEqual(testObjectSize, [data length]);
                                                      }
@@ -1280,7 +1279,7 @@ static long unsigned testObjectSize = 10000;
             XCTAssertTrue([task.result isKindOfClass:[AWSS3PutObjectOutput class]],@"The response object is not a class of [%@], got: %@", NSStringFromClass([AWSS3PutObjectOutput class]),[task.result description]);
             AWSS3PutObjectOutput *putObjectOutput = task.result;
             XCTAssertNotNil(putObjectOutput.ETag);
-            XCTAssertEqual(putObjectOutput.serverSideEncryption, AWSS3ServerSideEncryptionUnknown);
+            XCTAssertEqual(putObjectOutput.serverSideEncryption, AWSS3ServerSideEncryptionAES256);
             return nil;
 
         }] waitUntilFinished];

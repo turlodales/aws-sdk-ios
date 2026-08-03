@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -82,7 +82,8 @@
         {\"shape\":\"BadRequestException\"},\
         {\"shape\":\"LimitExceededException\"},\
         {\"shape\":\"InternalFailureException\"},\
-        {\"shape\":\"ConflictException\"}\
+        {\"shape\":\"ConflictException\"},\
+        {\"shape\":\"ServiceUnavailableException\"}\
       ],\
       \"documentation\":\"<p>Starts a bidirectional HTTP2 stream where audio is streamed to Amazon Transcribe and the transcription results are streamed to your application.</p> <p>The following are encoded as HTTP2 headers:</p> <ul> <li> <p>x-amzn-transcribe-language-code</p> </li> <li> <p>x-amzn-transcribe-media-encoding</p> </li> <li> <p>x-amzn-transcribe-sample-rate</p> </li> <li> <p>x-amzn-transcribe-session-id</p> </li> </ul>\"\
     }\
@@ -200,7 +201,56 @@
         \"en-GB\",\
         \"es-US\",\
         \"fr-CA\",\
-        \"fr-FR\"\
+        \"fr-FR\",\
+        \"en-AU\",\
+        \"it-IT\",\
+        \"de-DE\",\
+        \"pt-BR\",\
+        \"ja-JP\",\
+        \"ko-KR\",\
+        \"zh-CN\",\
+        \"th-TH\",\
+        \"es-ES\",\
+        \"ar-SA\",\
+        \"pt-PT\",\
+        \"ca-ES\",\
+        \"ar-AE\",\
+        \"hi-IN\",\
+        \"zh-HK\",\
+        \"nl-NL\",\
+        \"no-NO\",\
+        \"sv-SE\",\
+        \"pl-PL\",\
+        \"fi-FI\",\
+        \"zh-TW\",\
+        \"en-IN\",\
+        \"en-IE\",\
+        \"en-NZ\",\
+        \"en-AB\",\
+        \"en-ZA\",\
+        \"en-WL\",\
+        \"de-CH\",\
+        \"af-ZA\",\
+        \"eu-ES\",\
+        \"hr-HR\",\
+        \"cs-CZ\",\
+        \"da-DK\",\
+        \"fa-IR\",\
+        \"gl-ES\",\
+        \"el-GR\",\
+        \"he-IL\",\
+        \"id-ID\",\
+        \"lv-LV\",\
+        \"ms-MY\",\
+        \"ro-RO\",\
+        \"ru-RU\",\
+        \"sr-RS\",\
+        \"sk-SK\",\
+        \"so-SO\",\
+        \"tl-PH\",\
+        \"uk-UA\",\
+        \"vi-VN\",\
+        \"zu-ZA\"\
       ]\
     },\
     \"LimitExceededException\":{\
@@ -392,6 +442,10 @@
         \"ConflictException\":{\
           \"shape\":\"ConflictException\",\
           \"documentation\":\"<p>A new stream started with the same session ID. The current stream has been terminated.</p>\"\
+        },\
+        \"ServiceUnavailableException\":{\
+          \"shape\":\"ServiceUnavailableException\",\
+          \"documentation\":\"<p>The service is currently unavailable. Try your request later.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the transcription result stream from Amazon Transcribe to your application.</p>\",\

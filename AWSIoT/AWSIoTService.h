@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -341,7 +341,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (void)attachSecurityProfile:(AWSIoTAttachSecurityProfileRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTAttachSecurityProfileResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Attaches the specified principal to the specified thing. A principal can be X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities or federated identities.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">AttachThingPrincipal</a> action.</p>
+ <p>Attaches the specified principal to the specified thing. A principal can be X.509 certificates, Amazon Cognito identities or federated identities.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">AttachThingPrincipal</a> action.</p>
  
  @param request A container for the necessary parameters to execute the AttachThingPrincipal service method.
 
@@ -353,7 +353,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (AWSTask<AWSIoTAttachThingPrincipalResponse *> *)attachThingPrincipal:(AWSIoTAttachThingPrincipalRequest *)request;
 
 /**
- <p>Attaches the specified principal to the specified thing. A principal can be X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities or federated identities.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">AttachThingPrincipal</a> action.</p>
+ <p>Attaches the specified principal to the specified thing. A principal can be X.509 certificates, Amazon Cognito identities or federated identities.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">AttachThingPrincipal</a> action.</p>
  
  @param request A container for the necessary parameters to execute the AttachThingPrincipal service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -635,7 +635,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (void)createBillingGroup:(AWSIoTCreateBillingGroupRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTCreateBillingGroupResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Creates an X.509 certificate using the specified certificate signing request.</p><p><b>Note:</b> The CSR must include a public key that is either an RSA key with a length of at least 2048 bits or an ECC key from NIST P-256, NIST P-384, or NIST P-512 curves. For supported certificates, consult <a href="https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html#x509-cert-algorithms"> Certificate signing algorithms supported by IoT</a>.</p><p><b>Note:</b> Reusing the same certificate signing request (CSR) results in a distinct certificate.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateCertificateFromCsr</a> action.</p><p>You can create multiple certificates in a batch by creating a directory, copying multiple .csr files into that directory, and then specifying that directory on the command line. The following commands show how to create a batch of certificates given a batch of CSRs.</p><p>Assuming a set of CSRs are located inside of the directory my-csr-directory:</p><p>On Linux and OS X, the command is:</p><p>$ ls my-csr-directory/ | xargs -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</p><p>This command lists all of the CSRs in my-csr-directory and pipes each CSR file name to the aws iot create-certificate-from-csr Amazon Web Services CLI command to create a certificate for the corresponding CSR.</p><p>The aws iot create-certificate-from-csr part of the command can also be run in parallel to speed up the certificate creation process:</p><p>$ ls my-csr-directory/ | xargs -P 10 -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</p><p>On Windows PowerShell, the command to create certificates for all CSRs in my-csr-directory is:</p><p>&gt; ls -Name my-csr-directory | %{aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/$_}</p><p>On a Windows command prompt, the command to create certificates for all CSRs in my-csr-directory is:</p><p>&gt; forfiles /p my-csr-directory /c "cmd /c aws iot create-certificate-from-csr --certificate-signing-request file://@path"</p>
+ <p>Creates an X.509 certificate using the specified certificate signing request. </p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateCertificateFromCsr</a> action. </p><note><p>The CSR must include a public key that is either an RSA key with a length of at least 2048 bits or an ECC key from NIST P-256, NIST P-384, or NIST P-521 curves. For supported certificates, consult <a href="https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html#x509-cert-algorithms"> Certificate signing algorithms supported by IoT</a>. </p></note><note><p>Reusing the same certificate signing request (CSR) results in a distinct certificate.</p></note><p>You can create multiple certificates in a batch by creating a directory, copying multiple <code>.csr</code> files into that directory, and then specifying that directory on the command line. The following commands show how to create a batch of certificates given a batch of CSRs. In the following commands, we assume that a set of CSRs are located inside of the directory my-csr-directory:</p><p>On Linux and OS X, the command is: </p><p><code>$ ls my-csr-directory/ | xargs -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</code></p><p>This command lists all of the CSRs in my-csr-directory and pipes each CSR file name to the <code>aws iot create-certificate-from-csr</code> Amazon Web Services CLI command to create a certificate for the corresponding CSR. </p><p>You can also run the <code>aws iot create-certificate-from-csr</code> part of the command in parallel to speed up the certificate creation process:</p><p><code>$ ls my-csr-directory/ | xargs -P 10 -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{} </code></p><p>On Windows PowerShell, the command to create certificates for all CSRs in my-csr-directory is:</p><p><code>&gt; ls -Name my-csr-directory | %{aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/$_} </code></p><p>On a Windows command prompt, the command to create certificates for all CSRs in my-csr-directory is:</p><p><code>&gt; forfiles /p my-csr-directory /c "cmd /c aws iot create-certificate-from-csr --certificate-signing-request file://@path" </code></p>
  
  @param request A container for the necessary parameters to execute the CreateCertificateFromCsr service method.
 
@@ -647,7 +647,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (AWSTask<AWSIoTCreateCertificateFromCsrResponse *> *)createCertificateFromCsr:(AWSIoTCreateCertificateFromCsrRequest *)request;
 
 /**
- <p>Creates an X.509 certificate using the specified certificate signing request.</p><p><b>Note:</b> The CSR must include a public key that is either an RSA key with a length of at least 2048 bits or an ECC key from NIST P-256, NIST P-384, or NIST P-512 curves. For supported certificates, consult <a href="https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html#x509-cert-algorithms"> Certificate signing algorithms supported by IoT</a>.</p><p><b>Note:</b> Reusing the same certificate signing request (CSR) results in a distinct certificate.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateCertificateFromCsr</a> action.</p><p>You can create multiple certificates in a batch by creating a directory, copying multiple .csr files into that directory, and then specifying that directory on the command line. The following commands show how to create a batch of certificates given a batch of CSRs.</p><p>Assuming a set of CSRs are located inside of the directory my-csr-directory:</p><p>On Linux and OS X, the command is:</p><p>$ ls my-csr-directory/ | xargs -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</p><p>This command lists all of the CSRs in my-csr-directory and pipes each CSR file name to the aws iot create-certificate-from-csr Amazon Web Services CLI command to create a certificate for the corresponding CSR.</p><p>The aws iot create-certificate-from-csr part of the command can also be run in parallel to speed up the certificate creation process:</p><p>$ ls my-csr-directory/ | xargs -P 10 -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</p><p>On Windows PowerShell, the command to create certificates for all CSRs in my-csr-directory is:</p><p>&gt; ls -Name my-csr-directory | %{aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/$_}</p><p>On a Windows command prompt, the command to create certificates for all CSRs in my-csr-directory is:</p><p>&gt; forfiles /p my-csr-directory /c "cmd /c aws iot create-certificate-from-csr --certificate-signing-request file://@path"</p>
+ <p>Creates an X.509 certificate using the specified certificate signing request. </p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateCertificateFromCsr</a> action. </p><note><p>The CSR must include a public key that is either an RSA key with a length of at least 2048 bits or an ECC key from NIST P-256, NIST P-384, or NIST P-521 curves. For supported certificates, consult <a href="https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html#x509-cert-algorithms"> Certificate signing algorithms supported by IoT</a>. </p></note><note><p>Reusing the same certificate signing request (CSR) results in a distinct certificate.</p></note><p>You can create multiple certificates in a batch by creating a directory, copying multiple <code>.csr</code> files into that directory, and then specifying that directory on the command line. The following commands show how to create a batch of certificates given a batch of CSRs. In the following commands, we assume that a set of CSRs are located inside of the directory my-csr-directory:</p><p>On Linux and OS X, the command is: </p><p><code>$ ls my-csr-directory/ | xargs -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</code></p><p>This command lists all of the CSRs in my-csr-directory and pipes each CSR file name to the <code>aws iot create-certificate-from-csr</code> Amazon Web Services CLI command to create a certificate for the corresponding CSR. </p><p>You can also run the <code>aws iot create-certificate-from-csr</code> part of the command in parallel to speed up the certificate creation process:</p><p><code>$ ls my-csr-directory/ | xargs -P 10 -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{} </code></p><p>On Windows PowerShell, the command to create certificates for all CSRs in my-csr-directory is:</p><p><code>&gt; ls -Name my-csr-directory | %{aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/$_} </code></p><p>On a Windows command prompt, the command to create certificates for all CSRs in my-csr-directory is:</p><p><code>&gt; forfiles /p my-csr-directory /c "cmd /c aws iot create-certificate-from-csr --certificate-signing-request file://@path" </code></p>
  
  @param request A container for the necessary parameters to execute the CreateCertificateFromCsr service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -658,6 +658,31 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
  @see AWSIoTCreateCertificateFromCsrResponse
  */
 - (void)createCertificateFromCsr:(AWSIoTCreateCertificateFromCsrRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTCreateCertificateFromCsrResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Creates an Amazon Web Services IoT Core certificate provider. You can use Amazon Web Services IoT Core certificate provider to customize how to sign a certificate signing request (CSR) in IoT fleet provisioning. For more information, see <a href="https://docs.aws.amazon.com/iot/latest/developerguide/provisioning-cert-provider.html">Customizing certificate signing using Amazon Web Services IoT Core certificate provider</a> from <i>Amazon Web Services IoT Core Developer Guide</i>.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateCertificateProvider</a> action.</p><important><p>After you create a certificate provider, the behavior of <a href="https://docs.aws.amazon.com/iot/latest/developerguide/fleet-provision-api.html#create-cert-csr"><code>CreateCertificateFromCsr</code> API for fleet provisioning</a> will change and all API calls to <code>CreateCertificateFromCsr</code> will invoke the certificate provider to create the certificates. It can take up to a few minutes for this behavior to change after a certificate provider is created.</p></important>
+ 
+ @param request A container for the necessary parameters to execute the CreateCertificateProvider service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTCreateCertificateProviderResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorLimitExceeded`, `AWSIoTErrorResourceAlreadyExists`, `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorUnauthorized`, `AWSIoTErrorServiceUnavailable`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTCreateCertificateProviderRequest
+ @see AWSIoTCreateCertificateProviderResponse
+ */
+- (AWSTask<AWSIoTCreateCertificateProviderResponse *> *)createCertificateProvider:(AWSIoTCreateCertificateProviderRequest *)request;
+
+/**
+ <p>Creates an Amazon Web Services IoT Core certificate provider. You can use Amazon Web Services IoT Core certificate provider to customize how to sign a certificate signing request (CSR) in IoT fleet provisioning. For more information, see <a href="https://docs.aws.amazon.com/iot/latest/developerguide/provisioning-cert-provider.html">Customizing certificate signing using Amazon Web Services IoT Core certificate provider</a> from <i>Amazon Web Services IoT Core Developer Guide</i>.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateCertificateProvider</a> action.</p><important><p>After you create a certificate provider, the behavior of <a href="https://docs.aws.amazon.com/iot/latest/developerguide/fleet-provision-api.html#create-cert-csr"><code>CreateCertificateFromCsr</code> API for fleet provisioning</a> will change and all API calls to <code>CreateCertificateFromCsr</code> will invoke the certificate provider to create the certificates. It can take up to a few minutes for this behavior to change after a certificate provider is created.</p></important>
+ 
+ @param request A container for the necessary parameters to execute the CreateCertificateProvider service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorLimitExceeded`, `AWSIoTErrorResourceAlreadyExists`, `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorUnauthorized`, `AWSIoTErrorServiceUnavailable`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTCreateCertificateProviderRequest
+ @see AWSIoTCreateCertificateProviderResponse
+ */
+- (void)createCertificateProvider:(AWSIoTCreateCertificateProviderRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTCreateCertificateProviderResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p> Use this API to define a Custom Metric published by your devices to Device Defender. </p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateCustomMetric</a> action.</p>
@@ -910,6 +935,56 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (void)createOTAUpdate:(AWSIoTCreateOTAUpdateRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTCreateOTAUpdateResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Creates an IoT software package that can be deployed to your fleet.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreatePackage</a> and <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetIndexingConfiguration</a> actions.</p>
+ 
+ @param request A container for the necessary parameters to execute the CreatePackage service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTCreatePackageResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorConflict`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorServiceQuotaExceeded`.
+ 
+ @see AWSIoTCreatePackageRequest
+ @see AWSIoTCreatePackageResponse
+ */
+- (AWSTask<AWSIoTCreatePackageResponse *> *)createPackage:(AWSIoTCreatePackageRequest *)request;
+
+/**
+ <p>Creates an IoT software package that can be deployed to your fleet.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreatePackage</a> and <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetIndexingConfiguration</a> actions.</p>
+ 
+ @param request A container for the necessary parameters to execute the CreatePackage service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorConflict`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorServiceQuotaExceeded`.
+ 
+ @see AWSIoTCreatePackageRequest
+ @see AWSIoTCreatePackageResponse
+ */
+- (void)createPackage:(AWSIoTCreatePackageRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTCreatePackageResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Creates a new version for an existing IoT software package.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreatePackageVersion</a> and <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetIndexingConfiguration</a> actions.</p>
+ 
+ @param request A container for the necessary parameters to execute the CreatePackageVersion service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTCreatePackageVersionResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorConflict`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorServiceQuotaExceeded`.
+ 
+ @see AWSIoTCreatePackageVersionRequest
+ @see AWSIoTCreatePackageVersionResponse
+ */
+- (AWSTask<AWSIoTCreatePackageVersionResponse *> *)createPackageVersion:(AWSIoTCreatePackageVersionRequest *)request;
+
+/**
+ <p>Creates a new version for an existing IoT software package.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreatePackageVersion</a> and <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetIndexingConfiguration</a> actions.</p>
+ 
+ @param request A container for the necessary parameters to execute the CreatePackageVersion service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorConflict`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorServiceQuotaExceeded`.
+ 
+ @see AWSIoTCreatePackageVersionRequest
+ @see AWSIoTCreatePackageVersionResponse
+ */
+- (void)createPackageVersion:(AWSIoTCreatePackageVersionRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTCreatePackageVersionResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
  <p>Creates an IoT policy.</p><p>The created policy is the default version for the policy. This operation creates a policy version with a version identifier of <b>1</b> and sets <b>1</b> as the policy's default version.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreatePolicy</a> action.</p>
  
  @param request A container for the necessary parameters to execute the CreatePolicy service method.
@@ -1160,7 +1235,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (void)createThing:(AWSIoTCreateThingRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTCreateThingResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Create a thing group.</p><note><p>This is a control plane operation. See <a href="https://docs.aws.amazon.com/iot/latest/developerguide/iot-authorization.html">Authorization</a> for information about authorizing control plane actions.</p></note><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateThingGroup</a> action.</p>
+ <p>Create a thing group.</p><note><p>This is a control plane operation. See <a href="https://docs.aws.amazon.com/iot/latest/developerguide/iot-authorization.html">Authorization</a> for information about authorizing control plane actions.</p><p>If the <code>ThingGroup</code> that you create has the exact same attributes as an existing <code>ThingGroup</code>, you will get a 200 success response. </p></note><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateThingGroup</a> action.</p>
  
  @param request A container for the necessary parameters to execute the CreateThingGroup service method.
 
@@ -1172,7 +1247,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (AWSTask<AWSIoTCreateThingGroupResponse *> *)createThingGroup:(AWSIoTCreateThingGroupRequest *)request;
 
 /**
- <p>Create a thing group.</p><note><p>This is a control plane operation. See <a href="https://docs.aws.amazon.com/iot/latest/developerguide/iot-authorization.html">Authorization</a> for information about authorizing control plane actions.</p></note><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateThingGroup</a> action.</p>
+ <p>Create a thing group.</p><note><p>This is a control plane operation. See <a href="https://docs.aws.amazon.com/iot/latest/developerguide/iot-authorization.html">Authorization</a> for information about authorizing control plane actions.</p><p>If the <code>ThingGroup</code> that you create has the exact same attributes as an existing <code>ThingGroup</code>, you will get a 200 success response. </p></note><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">CreateThingGroup</a> action.</p>
  
  @param request A container for the necessary parameters to execute the CreateThingGroup service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -1402,6 +1477,31 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
  @see AWSIoTDeleteCertificateRequest
  */
 - (void)deleteCertificate:(AWSIoTDeleteCertificateRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Deletes a certificate provider.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DeleteCertificateProvider</a> action. </p><p>If you delete the certificate provider resource, the behavior of <code>CreateCertificateFromCsr</code> will resume, and IoT will create certificates signed by IoT from a certificate signing request (CSR).</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteCertificateProvider service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTDeleteCertificateProviderResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorDeleteConflict`, `AWSIoTErrorResourceNotFound`, `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorUnauthorized`, `AWSIoTErrorServiceUnavailable`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTDeleteCertificateProviderRequest
+ @see AWSIoTDeleteCertificateProviderResponse
+ */
+- (AWSTask<AWSIoTDeleteCertificateProviderResponse *> *)deleteCertificateProvider:(AWSIoTDeleteCertificateProviderRequest *)request;
+
+/**
+ <p>Deletes a certificate provider.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DeleteCertificateProvider</a> action. </p><p>If you delete the certificate provider resource, the behavior of <code>CreateCertificateFromCsr</code> will resume, and IoT will create certificates signed by IoT from a certificate signing request (CSR).</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteCertificateProvider service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorDeleteConflict`, `AWSIoTErrorResourceNotFound`, `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorUnauthorized`, `AWSIoTErrorServiceUnavailable`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTDeleteCertificateProviderRequest
+ @see AWSIoTDeleteCertificateProviderResponse
+ */
+- (void)deleteCertificateProvider:(AWSIoTDeleteCertificateProviderRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTDeleteCertificateProviderResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p> Deletes a Device Defender detect custom metric. </p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DeleteCustomMetric</a> action.</p><note><p>Before you can delete a custom metric, you must first remove the custom metric from all security profiles it's a part of. The security profile associated with the custom metric can be found using the <a href="https://docs.aws.amazon.com/iot/latest/apireference/API_ListSecurityProfiles.html">ListSecurityProfiles</a> API with <code>metricName</code> set to your custom metric name.</p></note>
@@ -1640,6 +1740,56 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
  @see AWSIoTDeleteOTAUpdateResponse
  */
 - (void)deleteOTAUpdate:(AWSIoTDeleteOTAUpdateRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTDeleteOTAUpdateResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Deletes a specific version from a software package.</p><p><b>Note:</b> All package versions must be deleted before deleting the software package.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DeletePackageVersion</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeletePackage service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTDeletePackageResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`.
+ 
+ @see AWSIoTDeletePackageRequest
+ @see AWSIoTDeletePackageResponse
+ */
+- (AWSTask<AWSIoTDeletePackageResponse *> *)deletePackage:(AWSIoTDeletePackageRequest *)request;
+
+/**
+ <p>Deletes a specific version from a software package.</p><p><b>Note:</b> All package versions must be deleted before deleting the software package.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DeletePackageVersion</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeletePackage service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`.
+ 
+ @see AWSIoTDeletePackageRequest
+ @see AWSIoTDeletePackageResponse
+ */
+- (void)deletePackage:(AWSIoTDeletePackageRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTDeletePackageResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Deletes a specific version from a software package.</p><p><b>Note:</b> If a package version is designated as default, you must remove the designation from the software package using the <a>UpdatePackage</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeletePackageVersion service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTDeletePackageVersionResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`.
+ 
+ @see AWSIoTDeletePackageVersionRequest
+ @see AWSIoTDeletePackageVersionResponse
+ */
+- (AWSTask<AWSIoTDeletePackageVersionResponse *> *)deletePackageVersion:(AWSIoTDeletePackageVersionRequest *)request;
+
+/**
+ <p>Deletes a specific version from a software package.</p><p><b>Note:</b> If a package version is designated as default, you must remove the designation from the software package using the <a>UpdatePackage</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeletePackageVersion service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`.
+ 
+ @see AWSIoTDeletePackageVersionRequest
+ @see AWSIoTDeletePackageVersionResponse
+ */
+- (void)deletePackageVersion:(AWSIoTDeletePackageVersionRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTDeletePackageVersionResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p>Deletes the specified policy.</p><p>A policy cannot be deleted if it has non-default versions or it is attached to any certificate.</p><p>To delete a policy, use the <a>DeletePolicyVersion</a> action to delete all non-default versions of the policy; use the <a>DetachPolicy</a> action to detach the policy from any certificate; and then use the DeletePolicy action to delete the policy.</p><p>When a policy is deleted using DeletePolicy, its default version is deleted with it.</p><note><p>Because of the distributed nature of Amazon Web Services, it can take up to five minutes after a policy is detached before it's ready to be deleted.</p></note><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DeletePolicy</a> action.</p>
@@ -2255,6 +2405,31 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (void)describeCertificate:(AWSIoTDescribeCertificateRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTDescribeCertificateResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Describes a certificate provider.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DescribeCertificateProvider</a> action. </p>
+ 
+ @param request A container for the necessary parameters to execute the DescribeCertificateProvider service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTDescribeCertificateProviderResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorResourceNotFound`, `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorUnauthorized`, `AWSIoTErrorServiceUnavailable`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTDescribeCertificateProviderRequest
+ @see AWSIoTDescribeCertificateProviderResponse
+ */
+- (AWSTask<AWSIoTDescribeCertificateProviderResponse *> *)describeCertificateProvider:(AWSIoTDescribeCertificateProviderRequest *)request;
+
+/**
+ <p>Describes a certificate provider.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DescribeCertificateProvider</a> action. </p>
+ 
+ @param request A container for the necessary parameters to execute the DescribeCertificateProvider service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorResourceNotFound`, `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorUnauthorized`, `AWSIoTErrorServiceUnavailable`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTDescribeCertificateProviderRequest
+ @see AWSIoTDescribeCertificateProviderResponse
+ */
+- (void)describeCertificateProvider:(AWSIoTDescribeCertificateProviderRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTDescribeCertificateProviderResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
  <p> Gets information about a Device Defender detect custom metric. </p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DescribeCustomMetric</a> action.</p>
  
  @param request A container for the necessary parameters to execute the DescribeCustomMetric service method.
@@ -2380,7 +2555,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (void)describeDomainConfiguration:(AWSIoTDescribeDomainConfigurationRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTDescribeDomainConfigurationResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Returns a unique endpoint specific to the Amazon Web Services account making the call.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DescribeEndpoint</a> action.</p>
+ <p>Returns or creates a unique endpoint specific to the Amazon Web Services account making the call.</p><note><p>The first time <code>DescribeEndpoint</code> is called, an endpoint is created. All subsequent calls to <code>DescribeEndpoint</code> return the same endpoint.</p></note><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DescribeEndpoint</a> action.</p>
  
  @param request A container for the necessary parameters to execute the DescribeEndpoint service method.
 
@@ -2392,7 +2567,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (AWSTask<AWSIoTDescribeEndpointResponse *> *)describeEndpoint:(AWSIoTDescribeEndpointRequest *)request;
 
 /**
- <p>Returns a unique endpoint specific to the Amazon Web Services account making the call.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DescribeEndpoint</a> action.</p>
+ <p>Returns or creates a unique endpoint specific to the Amazon Web Services account making the call.</p><note><p>The first time <code>DescribeEndpoint</code> is called, an endpoint is created. All subsequent calls to <code>DescribeEndpoint</code> return the same endpoint.</p></note><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">DescribeEndpoint</a> action.</p>
  
  @param request A container for the necessary parameters to execute the DescribeEndpoint service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -3193,6 +3368,81 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (void)getOTAUpdate:(AWSIoTGetOTAUpdateRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTGetOTAUpdateResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Gets information about the specified software package.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetPackage</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetPackage service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTGetPackageResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorResourceNotFound`.
+ 
+ @see AWSIoTGetPackageRequest
+ @see AWSIoTGetPackageResponse
+ */
+- (AWSTask<AWSIoTGetPackageResponse *> *)getPackage:(AWSIoTGetPackageRequest *)request;
+
+/**
+ <p>Gets information about the specified software package.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetPackage</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetPackage service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorResourceNotFound`.
+ 
+ @see AWSIoTGetPackageRequest
+ @see AWSIoTGetPackageResponse
+ */
+- (void)getPackage:(AWSIoTGetPackageRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTGetPackageResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Gets information about the specified software package's configuration.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetPackageConfiguration</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetPackageConfiguration service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTGetPackageConfigurationResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`.
+ 
+ @see AWSIoTGetPackageConfigurationRequest
+ @see AWSIoTGetPackageConfigurationResponse
+ */
+- (AWSTask<AWSIoTGetPackageConfigurationResponse *> *)getPackageConfiguration:(AWSIoTGetPackageConfigurationRequest *)request;
+
+/**
+ <p>Gets information about the specified software package's configuration.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetPackageConfiguration</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetPackageConfiguration service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`.
+ 
+ @see AWSIoTGetPackageConfigurationRequest
+ @see AWSIoTGetPackageConfigurationResponse
+ */
+- (void)getPackageConfiguration:(AWSIoTGetPackageConfigurationRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTGetPackageConfigurationResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Gets information about the specified package version. </p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetPackageVersion</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetPackageVersion service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTGetPackageVersionResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorResourceNotFound`.
+ 
+ @see AWSIoTGetPackageVersionRequest
+ @see AWSIoTGetPackageVersionResponse
+ */
+- (AWSTask<AWSIoTGetPackageVersionResponse *> *)getPackageVersion:(AWSIoTGetPackageVersionRequest *)request;
+
+/**
+ <p>Gets information about the specified package version. </p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetPackageVersion</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetPackageVersion service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorResourceNotFound`.
+ 
+ @see AWSIoTGetPackageVersionRequest
+ @see AWSIoTGetPackageVersionResponse
+ */
+- (void)getPackageVersion:(AWSIoTGetPackageVersionRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTGetPackageVersionResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
  <p>Groups the aggregated values that match the query into percentile groupings. The default percentile groupings are: 1,5,25,50,75,95,99, although you can specify your own when you call <code>GetPercentiles</code>. This function returns a value for each percentile group specified (or the default percentile groupings). The percentile group "1" contains the aggregated field value that occurs in approximately one percent of the values that match the query. The percentile group "5" contains the aggregated field value that occurs in approximately five percent of the values that match the query, and so on. The result is an approximation, the more values that match the query, the more accurate the percentile values.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetPercentiles</a> action.</p>
  
  @param request A container for the necessary parameters to execute the GetPercentiles service method.
@@ -3268,7 +3518,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (void)getPolicyVersion:(AWSIoTGetPolicyVersionRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTGetPolicyVersionResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Gets a registration code used to register a CA certificate with IoT.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetRegistrationCode</a> action.</p>
+ <p>Gets a registration code used to register a CA certificate with IoT.</p><p>IoT will create a registration code as part of this API call if the registration code doesn't exist or has been deleted. If you already have a registration code, this API call will return the same registration code.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetRegistrationCode</a> action.</p>
  
  @param request A container for the necessary parameters to execute the GetRegistrationCode service method.
 
@@ -3280,7 +3530,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (AWSTask<AWSIoTGetRegistrationCodeResponse *> *)getRegistrationCode:(AWSIoTGetRegistrationCodeRequest *)request;
 
 /**
- <p>Gets a registration code used to register a CA certificate with IoT.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetRegistrationCode</a> action.</p>
+ <p>Gets a registration code used to register a CA certificate with IoT.</p><p>IoT will create a registration code as part of this API call if the registration code doesn't exist or has been deleted. If you already have a registration code, this API call will return the same registration code.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetRegistrationCode</a> action.</p>
  
  @param request A container for the necessary parameters to execute the GetRegistrationCode service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -3641,6 +3891,31 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
  @see AWSIoTListCACertificatesResponse
  */
 - (void)listCACertificates:(AWSIoTListCACertificatesRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTListCACertificatesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Lists all your certificate providers in your Amazon Web Services account.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListCertificateProviders</a> action. </p>
+ 
+ @param request A container for the necessary parameters to execute the ListCertificateProviders service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTListCertificateProvidersResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorUnauthorized`, `AWSIoTErrorServiceUnavailable`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTListCertificateProvidersRequest
+ @see AWSIoTListCertificateProvidersResponse
+ */
+- (AWSTask<AWSIoTListCertificateProvidersResponse *> *)listCertificateProviders:(AWSIoTListCertificateProvidersRequest *)request;
+
+/**
+ <p>Lists all your certificate providers in your Amazon Web Services account.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListCertificateProviders</a> action. </p>
+ 
+ @param request A container for the necessary parameters to execute the ListCertificateProviders service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorUnauthorized`, `AWSIoTErrorServiceUnavailable`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTListCertificateProvidersRequest
+ @see AWSIoTListCertificateProvidersResponse
+ */
+- (void)listCertificateProviders:(AWSIoTListCertificateProvidersRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTListCertificateProvidersResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p>Lists the certificates registered in your Amazon Web Services account.</p><p>The results are paginated with a default page size of 25. You can use the returned marker to retrieve additional results.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListCertificates</a> action.</p>
@@ -4093,6 +4368,56 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (void)listOutgoingCertificates:(AWSIoTListOutgoingCertificatesRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTListOutgoingCertificatesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Lists the software package versions associated to the account.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListPackageVersions</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the ListPackageVersions service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTListPackageVersionsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`.
+ 
+ @see AWSIoTListPackageVersionsRequest
+ @see AWSIoTListPackageVersionsResponse
+ */
+- (AWSTask<AWSIoTListPackageVersionsResponse *> *)listPackageVersions:(AWSIoTListPackageVersionsRequest *)request;
+
+/**
+ <p>Lists the software package versions associated to the account.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListPackageVersions</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the ListPackageVersions service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`.
+ 
+ @see AWSIoTListPackageVersionsRequest
+ @see AWSIoTListPackageVersionsResponse
+ */
+- (void)listPackageVersions:(AWSIoTListPackageVersionsRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTListPackageVersionsResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Lists the software packages associated to the account.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListPackages</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the ListPackages service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTListPackagesResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`.
+ 
+ @see AWSIoTListPackagesRequest
+ @see AWSIoTListPackagesResponse
+ */
+- (AWSTask<AWSIoTListPackagesResponse *> *)listPackages:(AWSIoTListPackagesRequest *)request;
+
+/**
+ <p>Lists the software packages associated to the account.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListPackages</a> action.</p>
+ 
+ @param request A container for the necessary parameters to execute the ListPackages service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`.
+ 
+ @see AWSIoTListPackagesRequest
+ @see AWSIoTListPackagesResponse
+ */
+- (void)listPackages:(AWSIoTListPackagesRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTListPackagesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
  <p>Lists your policies.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListPolicies</a> action.</p>
  
  @param request A container for the necessary parameters to execute the ListPolicies service method.
@@ -4266,6 +4591,31 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
  @see AWSIoTListProvisioningTemplatesResponse
  */
 - (void)listProvisioningTemplates:(AWSIoTListProvisioningTemplatesRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTListProvisioningTemplatesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>The related resources of an Audit finding. The following resources can be returned from calling this API:</p><ul><li><p>DEVICE_CERTIFICATE</p></li><li><p>CA_CERTIFICATE</p></li><li><p>IOT_POLICY</p></li><li><p>COGNITO_IDENTITY_POOL</p></li><li><p>CLIENT_ID</p></li><li><p>ACCOUNT_SETTINGS</p></li><li><p>ROLE_ALIAS</p></li><li><p>IAM_ROLE</p></li><li><p>ISSUER_CERTIFICATE</p></li></ul><note><p>This API is similar to DescribeAuditFinding's <a href="https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html">RelatedResources</a> but provides pagination and is not limited to 10 resources. When calling <a href="https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html">DescribeAuditFinding</a> for the intermediate CA revoked for active device certificates check, RelatedResources will not be populated. You must use this API, ListRelatedResourcesForAuditFinding, to list the certificates.</p></note>
+ 
+ @param request A container for the necessary parameters to execute the ListRelatedResourcesForAuditFinding service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTListRelatedResourcesForAuditFindingResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorResourceNotFound`, `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTListRelatedResourcesForAuditFindingRequest
+ @see AWSIoTListRelatedResourcesForAuditFindingResponse
+ */
+- (AWSTask<AWSIoTListRelatedResourcesForAuditFindingResponse *> *)listRelatedResourcesForAuditFinding:(AWSIoTListRelatedResourcesForAuditFindingRequest *)request;
+
+/**
+ <p>The related resources of an Audit finding. The following resources can be returned from calling this API:</p><ul><li><p>DEVICE_CERTIFICATE</p></li><li><p>CA_CERTIFICATE</p></li><li><p>IOT_POLICY</p></li><li><p>COGNITO_IDENTITY_POOL</p></li><li><p>CLIENT_ID</p></li><li><p>ACCOUNT_SETTINGS</p></li><li><p>ROLE_ALIAS</p></li><li><p>IAM_ROLE</p></li><li><p>ISSUER_CERTIFICATE</p></li></ul><note><p>This API is similar to DescribeAuditFinding's <a href="https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html">RelatedResources</a> but provides pagination and is not limited to 10 resources. When calling <a href="https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html">DescribeAuditFinding</a> for the intermediate CA revoked for active device certificates check, RelatedResources will not be populated. You must use this API, ListRelatedResourcesForAuditFinding, to list the certificates.</p></note>
+ 
+ @param request A container for the necessary parameters to execute the ListRelatedResourcesForAuditFinding service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorResourceNotFound`, `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTListRelatedResourcesForAuditFindingRequest
+ @see AWSIoTListRelatedResourcesForAuditFindingResponse
+ */
+- (void)listRelatedResourcesForAuditFinding:(AWSIoTListRelatedResourcesForAuditFindingRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTListRelatedResourcesForAuditFindingResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p>Lists the role aliases registered in your account.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListRoleAliases</a> action.</p>
@@ -4618,7 +4968,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (void)listThingTypes:(AWSIoTListThingTypesRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTListThingTypesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Lists your things. Use the <b>attributeName</b> and <b>attributeValue</b> parameters to filter your things. For example, calling <code>ListThings</code> with attributeName=Color and attributeValue=Red retrieves all things in the registry that contain an attribute <b>Color</b> with the value <b>Red</b>. </p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListThings</a> action.</p><note><p>You will not be charged for calling this API if an <code>Access denied</code> error is returned. You will also not be charged if no attributes or pagination token was provided in request and no pagination token and no results were returned.</p></note>
+ <p>Lists your things. Use the <b>attributeName</b> and <b>attributeValue</b> parameters to filter your things. For example, calling <code>ListThings</code> with attributeName=Color and attributeValue=Red retrieves all things in the registry that contain an attribute <b>Color</b> with the value <b>Red</b>. For more information, see <a href="https://docs.aws.amazon.com/iot/latest/developerguide/thing-registry.html#list-things">List Things</a> from the <i>Amazon Web Services IoT Core Developer Guide</i>.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListThings</a> action.</p><note><p>You will not be charged for calling this API if an <code>Access denied</code> error is returned. You will also not be charged if no attributes or pagination token was provided in request and no pagination token and no results were returned.</p></note>
  
  @param request A container for the necessary parameters to execute the ListThings service method.
 
@@ -4630,7 +4980,7 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (AWSTask<AWSIoTListThingsResponse *> *)listThings:(AWSIoTListThingsRequest *)request;
 
 /**
- <p>Lists your things. Use the <b>attributeName</b> and <b>attributeValue</b> parameters to filter your things. For example, calling <code>ListThings</code> with attributeName=Color and attributeValue=Red retrieves all things in the registry that contain an attribute <b>Color</b> with the value <b>Red</b>. </p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListThings</a> action.</p><note><p>You will not be charged for calling this API if an <code>Access denied</code> error is returned. You will also not be charged if no attributes or pagination token was provided in request and no pagination token and no results were returned.</p></note>
+ <p>Lists your things. Use the <b>attributeName</b> and <b>attributeValue</b> parameters to filter your things. For example, calling <code>ListThings</code> with attributeName=Color and attributeValue=Red retrieves all things in the registry that contain an attribute <b>Color</b> with the value <b>Red</b>. For more information, see <a href="https://docs.aws.amazon.com/iot/latest/developerguide/thing-registry.html#list-things">List Things</a> from the <i>Amazon Web Services IoT Core Developer Guide</i>.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">ListThings</a> action.</p><note><p>You will not be charged for calling this API if an <code>Access denied</code> error is returned. You will also not be charged if no attributes or pagination token was provided in request and no pagination token and no results were returned.</p></note>
  
  @param request A container for the necessary parameters to execute the ListThings service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -5544,6 +5894,31 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
 - (void)updateCertificate:(AWSIoTUpdateCertificateRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Updates a certificate provider.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">UpdateCertificateProvider</a> action. </p>
+ 
+ @param request A container for the necessary parameters to execute the UpdateCertificateProvider service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTUpdateCertificateProviderResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorResourceNotFound`, `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorUnauthorized`, `AWSIoTErrorServiceUnavailable`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTUpdateCertificateProviderRequest
+ @see AWSIoTUpdateCertificateProviderResponse
+ */
+- (AWSTask<AWSIoTUpdateCertificateProviderResponse *> *)updateCertificateProvider:(AWSIoTUpdateCertificateProviderRequest *)request;
+
+/**
+ <p>Updates a certificate provider.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">UpdateCertificateProvider</a> action. </p>
+ 
+ @param request A container for the necessary parameters to execute the UpdateCertificateProvider service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorResourceNotFound`, `AWSIoTErrorInvalidRequest`, `AWSIoTErrorThrottling`, `AWSIoTErrorUnauthorized`, `AWSIoTErrorServiceUnavailable`, `AWSIoTErrorInternalFailure`.
+ 
+ @see AWSIoTUpdateCertificateProviderRequest
+ @see AWSIoTUpdateCertificateProviderResponse
+ */
+- (void)updateCertificateProvider:(AWSIoTUpdateCertificateProviderRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTUpdateCertificateProviderResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
  <p>Updates a Device Defender detect custom metric. </p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">UpdateCustomMetric</a> action.</p>
  
  @param request A container for the necessary parameters to execute the UpdateCustomMetric service method.
@@ -5761,6 +6136,81 @@ FOUNDATION_EXPORT NSString *const AWSIoTSDKVersion;
  @see AWSIoTUpdateMitigationActionResponse
  */
 - (void)updateMitigationAction:(AWSIoTUpdateMitigationActionRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTUpdateMitigationActionResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Updates the supported fields for a specific software package.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">UpdatePackage</a> and <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetIndexingConfiguration</a> actions.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdatePackage service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTUpdatePackageResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorConflict`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorResourceNotFound`.
+ 
+ @see AWSIoTUpdatePackageRequest
+ @see AWSIoTUpdatePackageResponse
+ */
+- (AWSTask<AWSIoTUpdatePackageResponse *> *)updatePackage:(AWSIoTUpdatePackageRequest *)request;
+
+/**
+ <p>Updates the supported fields for a specific software package.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">UpdatePackage</a> and <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetIndexingConfiguration</a> actions.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdatePackage service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorConflict`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorResourceNotFound`.
+ 
+ @see AWSIoTUpdatePackageRequest
+ @see AWSIoTUpdatePackageResponse
+ */
+- (void)updatePackage:(AWSIoTUpdatePackageRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTUpdatePackageResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Updates the software package configuration.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">UpdatePackageConfiguration</a> and <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html">iam:PassRole</a> actions.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdatePackageConfiguration service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTUpdatePackageConfigurationResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorConflict`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`.
+ 
+ @see AWSIoTUpdatePackageConfigurationRequest
+ @see AWSIoTUpdatePackageConfigurationResponse
+ */
+- (AWSTask<AWSIoTUpdatePackageConfigurationResponse *> *)updatePackageConfiguration:(AWSIoTUpdatePackageConfigurationRequest *)request;
+
+/**
+ <p>Updates the software package configuration.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">UpdatePackageConfiguration</a> and <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html">iam:PassRole</a> actions.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdatePackageConfiguration service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorConflict`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`.
+ 
+ @see AWSIoTUpdatePackageConfigurationRequest
+ @see AWSIoTUpdatePackageConfigurationResponse
+ */
+- (void)updatePackageConfiguration:(AWSIoTUpdatePackageConfigurationRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTUpdatePackageConfigurationResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Updates the supported fields for a specific package version.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">UpdatePackageVersion</a> and <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetIndexingConfiguration</a> actions.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdatePackageVersion service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSIoTUpdatePackageVersionResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorConflict`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorResourceNotFound`.
+ 
+ @see AWSIoTUpdatePackageVersionRequest
+ @see AWSIoTUpdatePackageVersionResponse
+ */
+- (AWSTask<AWSIoTUpdatePackageVersionResponse *> *)updatePackageVersion:(AWSIoTUpdatePackageVersionRequest *)request;
+
+/**
+ <p>Updates the supported fields for a specific package version.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">UpdatePackageVersion</a> and <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">GetIndexingConfiguration</a> actions.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdatePackageVersion service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSIoTErrorDomain` domain and the following error code: `AWSIoTErrorThrottling`, `AWSIoTErrorConflict`, `AWSIoTErrorInternalServer`, `AWSIoTErrorValidation`, `AWSIoTErrorResourceNotFound`.
+ 
+ @see AWSIoTUpdatePackageVersionRequest
+ @see AWSIoTUpdatePackageVersionResponse
+ */
+- (void)updatePackageVersion:(AWSIoTUpdatePackageVersionRequest *)request completionHandler:(void (^ _Nullable)(AWSIoTUpdatePackageVersionResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p>Updates a provisioning template.</p><p>Requires permission to access the <a href="https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions">UpdateProvisioningTemplate</a> action.</p>

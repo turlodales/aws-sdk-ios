@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -54,10 +54,23 @@ typedef NS_ENUM(NSInteger, AWSLocationDistanceUnit) {
     AWSLocationDistanceUnitMiles,
 };
 
+typedef NS_ENUM(NSInteger, AWSLocationForecastedGeofenceEventType) {
+    AWSLocationForecastedGeofenceEventTypeUnknown,
+    AWSLocationForecastedGeofenceEventTypeEnter,
+    AWSLocationForecastedGeofenceEventTypeExit,
+    AWSLocationForecastedGeofenceEventTypeIdle,
+};
+
 typedef NS_ENUM(NSInteger, AWSLocationIntendedUse) {
     AWSLocationIntendedUseUnknown,
     AWSLocationIntendedUseSingleUse,
     AWSLocationIntendedUseStorage,
+};
+
+typedef NS_ENUM(NSInteger, AWSLocationOptimizationMode) {
+    AWSLocationOptimizationModeUnknown,
+    AWSLocationOptimizationModeFastestRoute,
+    AWSLocationOptimizationModeShortestRoute,
 };
 
 typedef NS_ENUM(NSInteger, AWSLocationPositionFiltering) {
@@ -84,11 +97,25 @@ typedef NS_ENUM(NSInteger, AWSLocationRouteMatrixErrorCode) {
     AWSLocationRouteMatrixErrorCodeOtherValidationError,
 };
 
+typedef NS_ENUM(NSInteger, AWSLocationSpeedUnit) {
+    AWSLocationSpeedUnitUnknown,
+    AWSLocationSpeedUnitKilometersPerHour,
+    AWSLocationSpeedUnitMilesPerHour,
+};
+
+typedef NS_ENUM(NSInteger, AWSLocationStatus) {
+    AWSLocationStatusUnknown,
+    AWSLocationStatusActive,
+    AWSLocationStatusExpired,
+};
+
 typedef NS_ENUM(NSInteger, AWSLocationTravelMode) {
     AWSLocationTravelModeUnknown,
     AWSLocationTravelModeCar,
     AWSLocationTravelModeTruck,
     AWSLocationTravelModeWalking,
+    AWSLocationTravelModeBicycle,
+    AWSLocationTravelModeMotorcycle,
 };
 
 typedef NS_ENUM(NSInteger, AWSLocationValidationExceptionReason) {
@@ -106,6 +133,8 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
     AWSLocationVehicleWeightUnitPounds,
 };
 
+@class AWSLocationApiKeyFilter;
+@class AWSLocationApiKeyRestrictions;
 @class AWSLocationAssociateTrackerConsumerRequest;
 @class AWSLocationAssociateTrackerConsumerResponse;
 @class AWSLocationBatchDeleteDevicePositionHistoryError;
@@ -137,9 +166,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @class AWSLocationCalculateRouteResponse;
 @class AWSLocationCalculateRouteSummary;
 @class AWSLocationCalculateRouteTruckModeOptions;
+@class AWSLocationCellSignals;
 @class AWSLocationCircle;
 @class AWSLocationCreateGeofenceCollectionRequest;
 @class AWSLocationCreateGeofenceCollectionResponse;
+@class AWSLocationCreateKeyRequest;
+@class AWSLocationCreateKeyResponse;
 @class AWSLocationCreateMapRequest;
 @class AWSLocationCreateMapResponse;
 @class AWSLocationCreatePlaceIndexRequest;
@@ -151,6 +183,8 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @class AWSLocationDataSourceConfiguration;
 @class AWSLocationDeleteGeofenceCollectionRequest;
 @class AWSLocationDeleteGeofenceCollectionResponse;
+@class AWSLocationDeleteKeyRequest;
+@class AWSLocationDeleteKeyResponse;
 @class AWSLocationDeleteMapRequest;
 @class AWSLocationDeleteMapResponse;
 @class AWSLocationDeletePlaceIndexRequest;
@@ -161,6 +195,8 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @class AWSLocationDeleteTrackerResponse;
 @class AWSLocationDescribeGeofenceCollectionRequest;
 @class AWSLocationDescribeGeofenceCollectionResponse;
+@class AWSLocationDescribeKeyRequest;
+@class AWSLocationDescribeKeyResponse;
 @class AWSLocationDescribeMapRequest;
 @class AWSLocationDescribeMapResponse;
 @class AWSLocationDescribePlaceIndexRequest;
@@ -171,8 +207,13 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @class AWSLocationDescribeTrackerResponse;
 @class AWSLocationDevicePosition;
 @class AWSLocationDevicePositionUpdate;
+@class AWSLocationDeviceState;
 @class AWSLocationDisassociateTrackerConsumerRequest;
 @class AWSLocationDisassociateTrackerConsumerResponse;
+@class AWSLocationForecastGeofenceEventsDeviceState;
+@class AWSLocationForecastGeofenceEventsRequest;
+@class AWSLocationForecastGeofenceEventsResponse;
+@class AWSLocationForecastedEvent;
 @class AWSLocationGeofenceGeometry;
 @class AWSLocationGetDevicePositionHistoryRequest;
 @class AWSLocationGetDevicePositionHistoryResponse;
@@ -188,6 +229,9 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @class AWSLocationGetMapStyleDescriptorResponse;
 @class AWSLocationGetMapTileRequest;
 @class AWSLocationGetMapTileResponse;
+@class AWSLocationGetPlaceRequest;
+@class AWSLocationGetPlaceResponse;
+@class AWSLocationInferredState;
 @class AWSLocationLeg;
 @class AWSLocationLegGeometry;
 @class AWSLocationListDevicePositionsRequest;
@@ -199,6 +243,9 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @class AWSLocationListGeofenceResponseEntry;
 @class AWSLocationListGeofencesRequest;
 @class AWSLocationListGeofencesResponse;
+@class AWSLocationListKeysRequest;
+@class AWSLocationListKeysResponse;
+@class AWSLocationListKeysResponseEntry;
 @class AWSLocationListMapsRequest;
 @class AWSLocationListMapsResponse;
 @class AWSLocationListMapsResponseEntry;
@@ -215,7 +262,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @class AWSLocationListTrackersRequest;
 @class AWSLocationListTrackersResponse;
 @class AWSLocationListTrackersResponseEntry;
+@class AWSLocationLteCellDetails;
+@class AWSLocationLteLocalId;
+@class AWSLocationLteNetworkMeasurements;
 @class AWSLocationMapConfiguration;
+@class AWSLocationMapConfigurationUpdate;
 @class AWSLocationPlace;
 @class AWSLocationPlaceGeometry;
 @class AWSLocationPositionalAccuracy;
@@ -239,12 +290,15 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @class AWSLocationTagResourceRequest;
 @class AWSLocationTagResourceResponse;
 @class AWSLocationTimeZone;
+@class AWSLocationTrackingFilterGeometry;
 @class AWSLocationTruckDimensions;
 @class AWSLocationTruckWeight;
 @class AWSLocationUntagResourceRequest;
 @class AWSLocationUntagResourceResponse;
 @class AWSLocationUpdateGeofenceCollectionRequest;
 @class AWSLocationUpdateGeofenceCollectionResponse;
+@class AWSLocationUpdateKeyRequest;
+@class AWSLocationUpdateKeyResponse;
 @class AWSLocationUpdateMapRequest;
 @class AWSLocationUpdateMapResponse;
 @class AWSLocationUpdatePlaceIndexRequest;
@@ -254,6 +308,46 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @class AWSLocationUpdateTrackerRequest;
 @class AWSLocationUpdateTrackerResponse;
 @class AWSLocationValidationExceptionField;
+@class AWSLocationVerifyDevicePositionRequest;
+@class AWSLocationVerifyDevicePositionResponse;
+@class AWSLocationWiFiAccessPoint;
+
+/**
+ <p>Options for filtering API keys.</p>
+ */
+@interface AWSLocationApiKeyFilter : AWSModel
+
+
+/**
+ <p>Filter on <code>Active</code> or <code>Expired</code> API keys.</p>
+ */
+@property (nonatomic, assign) AWSLocationStatus keyStatus;
+
+@end
+
+/**
+ <p>API Restrictions on the allowed actions, resources, and referers for an API key resource.</p>
+ Required parameters: [AllowActions, AllowResources]
+ */
+@interface AWSLocationApiKeyRestrictions : AWSModel
+
+
+/**
+ <p>A list of allowed actions that an API key resource grants permissions to perform. You must have at least one action for each type of resource. For example, if you have a place resource, you must include at least one place action.</p><p>The following are valid values for the actions.</p><ul><li><p><b>Map actions</b></p><ul><li><p><code>geo:GetMap*</code> - Allows all actions needed for map rendering.</p></li></ul></li><li><p><b>Place actions</b></p><ul><li><p><code>geo:SearchPlaceIndexForText</code> - Allows geocoding.</p></li><li><p><code>geo:SearchPlaceIndexForPosition</code> - Allows reverse geocoding.</p></li><li><p><code>geo:SearchPlaceIndexForSuggestions</code> - Allows generating suggestions from text.</p></li><li><p><code>GetPlace</code> - Allows finding a place by place ID.</p></li></ul></li><li><p><b>Route actions</b></p><ul><li><p><code>geo:CalculateRoute</code> - Allows point to point routing.</p></li><li><p><code>geo:CalculateRouteMatrix</code> - Allows calculating a matrix of routes.</p></li></ul></li></ul><note><p>You must use these strings exactly. For example, to provide access to map rendering, the only valid action is <code>geo:GetMap*</code> as an input to the list. <code>["geo:GetMap*"]</code> is valid but <code>["geo:GetMapTile"]</code> is not. Similarly, you cannot use <code>["geo:SearchPlaceIndexFor*"]</code> - you must list each of the Place actions separately.</p></note>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable allowActions;
+
+/**
+ <p>An optional list of allowed HTTP referers for which requests must originate from. Requests using this API key from other domains will not be allowed.</p><p>Requirements:</p><ul><li><p>Contain only alphanumeric characters (A–Z, a–z, 0–9) or any symbols in this list <code>$\-._+!*`(),;/?:@=&amp;</code></p></li><li><p>May contain a percent (%) if followed by 2 hexadecimal digits (A-F, a-f, 0-9); this is used for URL encoding purposes.</p></li><li><p>May contain wildcard characters question mark (?) and asterisk (*).</p><p>Question mark (?) will replace any single character (including hexadecimal digits).</p><p>Asterisk (*) will replace any multiple characters (including multiple hexadecimal digits).</p></li><li><p>No spaces allowed. For example, <code>https://example.com</code>.</p></li></ul>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable allowReferers;
+
+/**
+ <p>A list of allowed resource ARNs that a API key bearer can perform actions on.</p><ul><li><p>The ARN must be the correct ARN for a map, place, or route ARN. You may include wildcards in the resource-id to match multiple resources of the same type.</p></li><li><p>The resources must be in the same <code>partition</code>, <code>region</code>, and <code>account-id</code> as the key that is being created.</p></li><li><p>Other than wildcards, you must include the full ARN, including the <code>arn</code>, <code>partition</code>, <code>service</code>, <code>region</code>, <code>account-id</code> and <code>resource-id</code> delimited by colons (:).</p></li><li><p>No spaces allowed, even with wildcards. For example, <code>arn:aws:geo:region:<i>account-id</i>:map/ExampleMap*</code>.</p></li></ul><p>For more information about ARN format, see <a href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names (ARNs)</a>.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable allowResources;
+
+@end
 
 /**
  
@@ -262,7 +356,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) for the geofence collection to be associated to tracker resource. Used when you need to specify a resource across all AWS.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollectionConsumer</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the geofence collection to be associated to tracker resource. Used when you need to specify a resource across all Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollectionConsumer</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable consumerArn;
 
@@ -333,7 +427,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains error details for each geofence that failed to delete from the geofence collection.</p>
- Required parameters: [Error, GeofenceId]
+ Required parameters: [GeofenceId, Error]
  */
 @interface AWSLocationBatchDeleteGeofenceError : AWSModel
 
@@ -383,7 +477,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains error details for each device that failed to evaluate its position against the geofences in a given geofence collection.</p>
- Required parameters: [DeviceId, Error, SampleTime]
+ Required parameters: [DeviceId, SampleTime, Error]
  */
 @interface AWSLocationBatchEvaluateGeofencesError : AWSModel
 
@@ -511,7 +605,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains error details for each geofence that failed to be stored in a given geofence collection.</p>
- Required parameters: [Error, GeofenceId]
+ Required parameters: [GeofenceId, Error]
  */
 @interface AWSLocationBatchPutGeofenceError : AWSModel
 
@@ -559,7 +653,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable geofenceId;
 
 /**
- <p>Contains the details of the position of the geofence. Can be either a polygon or a circle. Including both will return a validation error.</p><note><p>Each <a href="https://docs.aws.amazon.com/location-geofences/latest/APIReference/API_GeofenceGeometry.html"> geofence polygon</a> can have a maximum of 1,000 vertices.</p></note>
+ <p>Associates one of more properties with the geofence. A property is a key-value pair stored with the geofence and added to any geofence event triggered with that geofence.</p><p>Format: <code>"key" : "value"</code></p>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable geofenceProperties;
+
+/**
+ <p>Contains the details to specify the position of the geofence. Can be a polygon, a circle or a polygon encoded in Geobuf format. Including multiple selections will return a validation error.</p><note><p>The <a href="https://docs.aws.amazon.com/location-geofences/latest/APIReference/API_GeofenceGeometry.html"> geofence polygon</a> format supports a maximum of 1,000 vertices. The <a href="https://docs.aws.amazon.com/location-geofences/latest/APIReference/API_GeofenceGeometry.html">Geofence geobuf</a> format supports a maximum of 100,000 vertices.</p></note>
  */
 @property (nonatomic, strong) AWSLocationGeofenceGeometry * _Nullable geometry;
 
@@ -585,7 +684,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains a summary of each geofence that was successfully stored in a given geofence collection.</p>
- Required parameters: [CreateTime, GeofenceId, UpdateTime]
+ Required parameters: [GeofenceId, CreateTime, UpdateTime]
  */
 @interface AWSLocationBatchPutGeofenceSuccess : AWSModel
 
@@ -609,7 +708,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains error details for each device that failed to update its position.</p>
- Required parameters: [DeviceId, Error, SampleTime]
+ Required parameters: [DeviceId, SampleTime, Error]
  */
 @interface AWSLocationBatchUpdateDevicePositionError : AWSModel
 
@@ -643,7 +742,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable trackerName;
 
 /**
- <p>Contains the position update details for each device.</p>
+ <p>Contains the position update details for each device, up to 10 devices.</p>
  */
 @property (nonatomic, strong) NSArray<AWSLocationDevicePositionUpdate *> * _Nullable updates;
 
@@ -722,7 +821,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, assign) AWSLocationDistanceUnit distanceUnit;
 
 /**
- <p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility.</p><p>The <code>TravelMode</code> you specify also determines how you specify route preferences: </p><ul><li><p>If traveling by <code>Car</code> use the <code>CarModeOptions</code> parameter.</p></li><li><p>If traveling by <code>Truck</code> use the <code>TruckModeOptions</code> parameter.</p></li></ul><p>Default Value: <code>Car</code></p>
+ <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize the request.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
+
+/**
+ <p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility.</p><p>The <code>TravelMode</code> you specify also determines how you specify route preferences: </p><ul><li><p>If traveling by <code>Car</code> use the <code>CarModeOptions</code> parameter.</p></li><li><p>If traveling by <code>Truck</code> use the <code>TruckModeOptions</code> parameter.</p></li></ul><note><p><code>Bicycle</code> or <code>Motorcycle</code> are only valid when using <code>Grab</code> as a data provider, and only within Southeast Asia.</p><p><code>Truck</code> is not available for Grab.</p><p>For more information about using Grab as a data provider, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/grab.html">GrabMaps</a> in the <i>Amazon Location Service Developer Guide</i>.</p></note><p>Default Value: <code>Car</code></p>
  */
 @property (nonatomic, assign) AWSLocationTravelMode travelMode;
 
@@ -764,13 +868,13 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>A summary of the calculated route matrix.</p>
- Required parameters: [DataSource, DistanceUnit, ErrorCount, RouteCount]
+ Required parameters: [DataSource, RouteCount, ErrorCount, DistanceUnit]
  */
 @interface AWSLocationCalculateRouteMatrixSummary : AWSModel
 
 
 /**
- <p>The data provider of traffic and road network data used to calculate the routes. Indicates one of the available providers:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
+ <p>The data provider of traffic and road network data used to calculate the routes. Indicates one of the available providers:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Grab</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataSource;
 
@@ -798,6 +902,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
+ <p>Specifies the desired time of arrival. Uses the given time to calculate the route. Otherwise, the best time of day to travel with the best traffic conditions is used to calculate the route.</p><note><p>ArrivalTime is not supported Esri.</p></note>
+ */
+@property (nonatomic, strong) NSDate * _Nullable arrivalTime;
+
+/**
  <p>The name of the route calculator resource that you want to use to calculate the route. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable calculatorName;
@@ -818,7 +927,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable departurePosition;
 
 /**
- <p>Specifies the desired time of departure. Uses the given time to calculate the route. Otherwise, the best time of day to travel with the best traffic conditions is used to calculate the route.</p><note><p>Setting a departure time in the past returns a <code>400 ValidationException</code> error.</p></note><ul><li><p>In <a href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. For example, <code>2020–07-2T12:15:20.000Z+01:00</code></p></li></ul>
+ <p>Specifies the desired time of departure. Uses the given time to calculate the route. Otherwise, the best time of day to travel with the best traffic conditions is used to calculate the route.</p><ul><li><p>In <a href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. For example, <code>2020–07-2T12:15:20.000Z+01:00</code></p></li></ul>
  */
 @property (nonatomic, strong) NSDate * _Nullable departureTime;
 
@@ -838,7 +947,17 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSNumber * _Nullable includeLegGeometry;
 
 /**
- <p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility. You can choose <code>Car</code>, <code>Truck</code>, or <code>Walking</code> as options for the <code>TravelMode</code>.</p><p>The <code>TravelMode</code> you specify also determines how you specify route preferences: </p><ul><li><p>If traveling by <code>Car</code> use the <code>CarModeOptions</code> parameter.</p></li><li><p>If traveling by <code>Truck</code> use the <code>TruckModeOptions</code> parameter.</p></li></ul><p>Default Value: <code>Car</code></p>
+ <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize the request.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
+
+/**
+ <p>Specifies the distance to optimize for when calculating a route.</p>
+ */
+@property (nonatomic, assign) AWSLocationOptimizationMode optimizeFor;
+
+/**
+ <p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility. You can choose <code>Car</code>, <code>Truck</code>, <code>Walking</code>, <code>Bicycle</code> or <code>Motorcycle</code> as options for the <code>TravelMode</code>.</p><note><p><code>Bicycle</code> and <code>Motorcycle</code> are only valid when using Grab as a data provider, and only within Southeast Asia.</p><p><code>Truck</code> is not available for Grab.</p><p>For more details on the using Grab for routing, including areas of coverage, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/grab.html">GrabMaps</a> in the <i>Amazon Location Service Developer Guide</i>.</p></note><p>The <code>TravelMode</code> you specify also determines how you specify route preferences: </p><ul><li><p>If traveling by <code>Car</code> use the <code>CarModeOptions</code> parameter.</p></li><li><p>If traveling by <code>Truck</code> use the <code>TruckModeOptions</code> parameter.</p></li></ul><p>Default Value: <code>Car</code></p>
  */
 @property (nonatomic, assign) AWSLocationTravelMode travelMode;
 
@@ -875,13 +994,13 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>A summary of the calculated route.</p>
- Required parameters: [DataSource, Distance, DistanceUnit, DurationSeconds, RouteBBox]
+ Required parameters: [RouteBBox, DataSource, Distance, DurationSeconds, DistanceUnit]
  */
 @interface AWSLocationCalculateRouteSummary : AWSModel
 
 
 /**
- <p>The data provider of traffic and road network data used to calculate the route. Indicates one of the available providers:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
+ <p>The data provider of traffic and road network data used to calculate the route. Indicates one of the available providers:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Grab</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataSource;
 
@@ -936,6 +1055,20 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @end
 
 /**
+ <p>The cellular network communication infrastructure that the device uses.</p>
+ Required parameters: [LteCellDetails]
+ */
+@interface AWSLocationCellSignals : AWSModel
+
+
+/**
+ <p>Information about the Long-Term Evolution (LTE) network the device is connected to.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSLocationLteCellDetails *> * _Nullable lteCellDetails;
+
+@end
+
+/**
  <p>A circle on the earth, as defined by a center point and a radius.</p>
  Required parameters: [Center, Radius]
  */
@@ -971,7 +1104,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>A key identifier for an <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">AWS KMS customer managed key</a>. Enter a key ID, key ARN, alias name, or alias ARN. </p>
+ <p>A key identifier for an <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Amazon Web Services KMS customer managed key</a>. Enter a key ID, key ARN, alias name, or alias ARN. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable kmsKeyId;
 
@@ -999,7 +1132,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) for the geofence collection resource. Used when you need to specify a resource across all AWS. </p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollection</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the geofence collection resource. Used when you need to specify a resource across all Amazon Web Services. </p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollection</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable collectionArn;
 
@@ -1018,11 +1151,77 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 /**
  
  */
+@interface AWSLocationCreateKeyRequest : AWSRequest
+
+
+/**
+ <p>An optional description for the API key resource.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable detail;
+
+/**
+ <p>The optional timestamp for when the API key resource will expire in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. One of <code>NoExpiry</code> or <code>ExpireTime</code> must be set.</p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable expireTime;
+
+/**
+ <p>A custom name for the API key resource.</p><p>Requirements:</p><ul><li><p>Contain only alphanumeric characters (A–Z, a–z, 0–9), hyphens (-), periods (.), and underscores (_). </p></li><li><p>Must be a unique API key name.</p></li><li><p>No spaces allowed. For example, <code>ExampleAPIKey</code>.</p></li></ul>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyName;
+
+/**
+ <p>Optionally set to <code>true</code> to set no expiration time for the API key. One of <code>NoExpiry</code> or <code>ExpireTime</code> must be set.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable noExpiry;
+
+/**
+ <p>The API key restrictions for the API key resource.</p>
+ */
+@property (nonatomic, strong) AWSLocationApiKeyRestrictions * _Nullable restrictions;
+
+/**
+ <p>Applies one or more tags to the map resource. A tag is a key-value pair that helps manage, identify, search, and filter your resources by labelling them.</p><p>Format: <code>"key" : "value"</code></p><p>Restrictions:</p><ul><li><p>Maximum 50 tags per resource</p></li><li><p>Each resource tag must be unique with a maximum of one value.</p></li><li><p>Maximum key length: 128 Unicode characters in UTF-8</p></li><li><p>Maximum value length: 256 Unicode characters in UTF-8</p></li><li><p>Can use alphanumeric characters (A–Z, a–z, 0–9), and the following characters: + - = . _ : / @. </p></li><li><p>Cannot use "aws:" as a prefix for a key.</p></li></ul>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationCreateKeyResponse : AWSModel
+
+
+/**
+ <p>The timestamp for when the API key resource was created in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable createTime;
+
+/**
+ <p>The key value/string of an API key. This value is used when making API calls to authorize the call. For example, see <a href="https://docs.aws.amazon.com/location/latest/APIReference/API_GetMapGlyphs.html">GetMapGlyphs</a>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
+
+/**
+ <p>The Amazon Resource Name (ARN) for the API key resource. Used when you need to specify a resource across all Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:key/ExampleKey</code></p></li></ul>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyArn;
+
+/**
+ <p>The name of the API key resource.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyName;
+
+@end
+
+/**
+ 
+ */
 @interface AWSLocationCreateMapRequest : AWSRequest
 
 
 /**
- <p>Specifies the map style selected from an available data provider.</p>
+ <p>Specifies the <code>MapConfiguration</code>, including the map style, for the map resource that you create. The map style defines the look of maps and the data provider for your map resource.</p>
  */
 @property (nonatomic, strong) AWSLocationMapConfiguration * _Nullable configuration;
 
@@ -1060,7 +1259,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSDate * _Nullable createTime;
 
 /**
- <p>The Amazon Resource Name (ARN) for the map resource. Used to specify a resource across all AWS.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:maps/ExampleMap</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the map resource. Used to specify a resource across all Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:map/ExampleMap</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable mapArn;
 
@@ -1078,7 +1277,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>Specifies the geospatial data provider for the new place index.</p><note><p>This field is case-sensitive. Enter the valid values as shown. For example, entering <code>HERE</code> returns an error.</p></note><p>Valid values include:</p><ul><li><p><code>Esri</code> – For additional information about <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri</a>'s coverage in your region of interest, see <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocode-coverage.htm">Esri details on geocoding coverage</a>.</p></li><li><p><code>Here</code> – For additional information about <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies</a>' coverage in your region of interest, see <a href="https://developer.here.com/documentation/geocoder/dev_guide/topics/coverage-geocoder.html">HERE details on goecoding coverage</a>.</p><important><p>If you specify HERE Technologies (<code>Here</code>) as the data provider, you may not <a href="https://docs.aws.amazon.com/location-places/latest/APIReference/API_DataSourceConfiguration.html">store results</a> for locations in Japan. For more information, see the <a href="https://aws.amazon.com/service-terms/">AWS Service Terms</a> for Amazon Location Service.</p></important></li></ul><p>For additional information , see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Data providers</a> on the <i>Amazon Location Service Developer Guide</i>.</p>
+ <p>Specifies the geospatial data provider for the new place index.</p><note><p>This field is case-sensitive. Enter the valid values as shown. For example, entering <code>HERE</code> returns an error.</p></note><p>Valid values include:</p><ul><li><p><code>Esri</code> – For additional information about <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri</a>'s coverage in your region of interest, see <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocode-coverage.htm">Esri details on geocoding coverage</a>.</p></li><li><p><code>Grab</code> – Grab provides place index functionality for Southeast Asia. For additional information about <a href="https://docs.aws.amazon.com/location/latest/developerguide/grab.html">GrabMaps</a>' coverage, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/grab.html#grab-coverage-area">GrabMaps countries and areas covered</a>.</p></li><li><p><code>Here</code> – For additional information about <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies</a>' coverage in your region of interest, see <a href="https://developer.here.com/documentation/geocoder/dev_guide/topics/coverage-geocoder.html">HERE details on goecoding coverage</a>.</p><important><p>If you specify HERE Technologies (<code>Here</code>) as the data provider, you may not <a href="https://docs.aws.amazon.com/location-places/latest/APIReference/API_DataSourceConfiguration.html">store results</a> for locations in Japan. For more information, see the <a href="http://aws.amazon.com/service-terms/">Amazon Web Services Service Terms</a> for Amazon Location Service.</p></important></li></ul><p>For additional information , see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Data providers</a> on the <i>Amazon Location Service Developer Guide</i>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataSource;
 
@@ -1121,7 +1320,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSDate * _Nullable createTime;
 
 /**
- <p>The Amazon Resource Name (ARN) for the place index resource. Used to specify a resource across AWS. </p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:place-index/ExamplePlaceIndex</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the place index resource. Used to specify a resource across Amazon Web Services. </p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:place-index/ExamplePlaceIndex</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable indexArn;
 
@@ -1144,7 +1343,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable calculatorName;
 
 /**
- <p>Specifies the data provider of traffic and road network data.</p><note><p>This field is case-sensitive. Enter the valid values as shown. For example, entering <code>HERE</code> returns an error. Route calculators that use Esri as a data source only calculate routes that are shorter than 400 km.</p></note><p>Valid values include:</p><ul><li><p><code>Esri</code> – For additional information about <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri</a>'s coverage in your region of interest, see <a href="https://doc.arcgis.com/en/arcgis-online/reference/network-coverage.htm">Esri details on street networks and traffic coverage</a>.</p></li><li><p><code>Here</code> – For additional information about <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies</a>' coverage in your region of interest, see <a href="https://developer.here.com/documentation/routing-api/dev_guide/topics/coverage/car-routing.html">HERE car routing coverage</a> and <a href="https://developer.here.com/documentation/routing-api/dev_guide/topics/coverage/truck-routing.html">HERE truck routing coverage</a>.</p></li></ul><p>For additional information , see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Data providers</a> on the <i>Amazon Location Service Developer Guide</i>.</p>
+ <p>Specifies the data provider of traffic and road network data.</p><note><p>This field is case-sensitive. Enter the valid values as shown. For example, entering <code>HERE</code> returns an error.</p></note><p>Valid values include:</p><ul><li><p><code>Esri</code> – For additional information about <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri</a>'s coverage in your region of interest, see <a href="https://doc.arcgis.com/en/arcgis-online/reference/network-coverage.htm">Esri details on street networks and traffic coverage</a>.</p><p>Route calculators that use Esri as a data source only calculate routes that are shorter than 400 km.</p></li><li><p><code>Grab</code> – Grab provides routing functionality for Southeast Asia. For additional information about <a href="https://docs.aws.amazon.com/location/latest/developerguide/grab.html">GrabMaps</a>' coverage, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/grab.html#grab-coverage-area">GrabMaps countries and areas covered</a>.</p></li><li><p><code>Here</code> – For additional information about <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies</a>' coverage in your region of interest, see <a href="https://developer.here.com/documentation/routing-api/dev_guide/topics/coverage/car-routing.html">HERE car routing coverage</a> and <a href="https://developer.here.com/documentation/routing-api/dev_guide/topics/coverage/truck-routing.html">HERE truck routing coverage</a>.</p></li></ul><p>For additional information , see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Data providers</a> on the <i>Amazon Location Service Developer Guide</i>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataSource;
 
@@ -1172,7 +1371,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) for the route calculator resource. Use the ARN when you specify a resource across all AWS.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:route-calculator/ExampleCalculator</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the route calculator resource. Use the ARN when you specify a resource across all Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:route-calculator/ExampleCalculator</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable calculatorArn;
 
@@ -1200,7 +1399,17 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>A key identifier for an <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">AWS KMS customer managed key</a>. Enter a key ID, key ARN, alias name, or alias ARN.</p>
+ <p>Whether to enable position <code>UPDATE</code> events from this tracker to be sent to EventBridge.</p><note><p>You do not need enable this feature to get <code>ENTER</code> and <code>EXIT</code> events for geofences with this tracker. Those events are always sent to EventBridge.</p></note>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable eventBridgeEnabled;
+
+/**
+ <p>Enables <code>GeospatialQueries</code> for a tracker that uses a <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Amazon Web Services KMS customer managed key</a>.</p><p>This parameter is only used if you are using a KMS customer managed key.</p><note><p>If you wish to encrypt your data using your own KMS customer managed key, then the Bounding Polygon Queries feature will be disabled by default. This is because by using this feature, a representation of your device positions will not be encrypted using the your KMS managed key. The exact device position, however; is still encrypted using your managed key.</p><p>You can choose to opt-in to the Bounding Polygon Quseries feature. This is done by setting the <code>KmsKeyEnableGeospatialQueries</code> parameter to true when creating or updating a Tracker.</p></note>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable kmsKeyEnableGeospatialQueries;
+
+/**
+ <p>A key identifier for an <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Amazon Web Services KMS customer managed key</a>. Enter a key ID, key ARN, alias name, or alias ARN.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable kmsKeyId;
 
@@ -1243,7 +1452,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSDate * _Nullable createTime;
 
 /**
- <p>The Amazon Resource Name (ARN) for the tracker resource. Used when you need to specify a resource across all AWS.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:tracker/ExampleTracker</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the tracker resource. Used when you need to specify a resource across all Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:tracker/ExampleTracker</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable trackerArn;
 
@@ -1284,6 +1493,32 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  
  */
 @interface AWSLocationDeleteGeofenceCollectionResponse : AWSModel
+
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationDeleteKeyRequest : AWSRequest
+
+
+/**
+ <p>ForceDelete bypasses an API key's expiry conditions and deletes the key. Set the parameter <code>true</code> to delete the key or to <code>false</code> to not preemptively delete the API key.</p><p>Valid values: <code>true</code>, or <code>false</code>.</p><p>Required: No</p><note><p>This action is irreversible. Only use ForceDelete if you are certain the key is no longer in use.</p></note>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable forceDelete;
+
+/**
+ <p>The name of the API key to delete.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyName;
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationDeleteKeyResponse : AWSModel
 
 
 @end
@@ -1392,7 +1627,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) for the geofence collection resource. Used when you need to specify a resource across all AWS. </p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollection</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the geofence collection resource. Used when you need to specify a resource across all Amazon Web Services. </p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollection</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable collectionArn;
 
@@ -1412,7 +1647,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>A key identifier for an <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">AWS KMS customer managed key</a> assigned to the Amazon Location resource</p>
+ <p>The number of geofences in the geofence collection.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable geofenceCount;
+
+/**
+ <p>A key identifier for an <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Amazon Web Services KMS customer managed key</a> assigned to the Amazon Location resource</p>
  */
 @property (nonatomic, strong) NSString * _Nullable kmsKeyId;
 
@@ -1433,6 +1673,72 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>The timestamp for when the geofence collection was last updated in <a href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code></p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable updateTime;
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationDescribeKeyRequest : AWSRequest
+
+
+/**
+ <p>The name of the API key resource.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyName;
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationDescribeKeyResponse : AWSModel
+
+
+/**
+ <p>The timestamp for when the API key resource was created in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable createTime;
+
+/**
+ <p>The optional description for the API key resource.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable detail;
+
+/**
+ <p>The timestamp for when the API key resource will expire in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable expireTime;
+
+/**
+ <p>The key value/string of an API key.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
+
+/**
+ <p>The Amazon Resource Name (ARN) for the API key resource. Used when you need to specify a resource across all Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:key/ExampleKey</code></p></li></ul>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyArn;
+
+/**
+ <p>The name of the API key resource.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyName;
+
+/**
+ <p>API Restrictions on the allowed actions, resources, and referers for an API key resource.</p>
+ */
+@property (nonatomic, strong) AWSLocationApiKeyRestrictions * _Nullable restrictions;
+
+/**
+ <p>Tags associated with the API key resource.</p>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
+
+/**
+ <p>The timestamp for when the API key resource was last updated in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
  */
 @property (nonatomic, strong) NSDate * _Nullable updateTime;
 
@@ -1478,7 +1784,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>The Amazon Resource Name (ARN) for the map resource. Used to specify a resource across all AWS.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:maps/ExampleMap</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the map resource. Used to specify a resource across all Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:map/ExampleMap</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable mapArn;
 
@@ -1529,7 +1835,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSDate * _Nullable createTime;
 
 /**
- <p>The data provider of geospatial data. Values can be one of the following:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
+ <p>The data provider of geospatial data. Values can be one of the following:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Grab</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataSource;
 
@@ -1544,7 +1850,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>The Amazon Resource Name (ARN) for the place index resource. Used to specify a resource across AWS. </p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:place-index/ExamplePlaceIndex</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the place index resource. Used to specify a resource across Amazon Web Services. </p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:place-index/ExamplePlaceIndex</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable indexArn;
 
@@ -1590,7 +1896,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) for the Route calculator resource. Use the ARN when you specify a resource across AWS.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:route-calculator/ExampleCalculator</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the Route calculator resource. Use the ARN when you specify a resource across Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:route-calculator/ExampleCalculator</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable calculatorArn;
 
@@ -1605,7 +1911,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSDate * _Nullable createTime;
 
 /**
- <p>The data provider of traffic and road network data. Indicates one of the available providers:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
+ <p>The data provider of traffic and road network data. Indicates one of the available providers:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Grab</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataSource;
 
@@ -1661,7 +1967,17 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>A key identifier for an <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">AWS KMS customer managed key</a> assigned to the Amazon Location resource.</p>
+ <p>Whether <code>UPDATE</code> events from this tracker in EventBridge are enabled. If set to <code>true</code> these events will be sent to EventBridge.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable eventBridgeEnabled;
+
+/**
+ <p>Enables <code>GeospatialQueries</code> for a tracker that uses a <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Amazon Web Services KMS customer managed key</a>.</p><p>This parameter is only used if you are using a KMS customer managed key.</p><note><p>If you wish to encrypt your data using your own KMS customer managed key, then the Bounding Polygon Queries feature will be disabled by default. This is because by using this feature, a representation of your device positions will not be encrypted using the your KMS managed key. The exact device position, however; is still encrypted using your managed key.</p><p>You can choose to opt-in to the Bounding Polygon Quseries feature. This is done by setting the <code>KmsKeyEnableGeospatialQueries</code> parameter to true when creating or updating a Tracker.</p></note>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable kmsKeyEnableGeospatialQueries;
+
+/**
+ <p>A key identifier for an <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Amazon Web Services KMS customer managed key</a> assigned to the Amazon Location resource.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable kmsKeyId;
 
@@ -1686,7 +2002,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
 /**
- <p>The Amazon Resource Name (ARN) for the tracker resource. Used when you need to specify a resource across all AWS.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:tracker/ExampleTracker</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the tracker resource. Used when you need to specify a resource across all Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:tracker/ExampleTracker</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable trackerArn;
 
@@ -1704,7 +2020,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains the device position details.</p>
- Required parameters: [Position, ReceivedTime, SampleTime]
+ Required parameters: [SampleTime, ReceivedTime, Position]
  */
 @interface AWSLocationDevicePosition : AWSModel
 
@@ -1743,7 +2059,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains the position update details for a device.</p>
- Required parameters: [DeviceId, Position, SampleTime]
+ Required parameters: [DeviceId, SampleTime, Position]
  */
 @interface AWSLocationDevicePositionUpdate : AWSModel
 
@@ -1776,13 +2092,57 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @end
 
 /**
+ <p>The device's position, IP address, and Wi-Fi access points.</p>
+ Required parameters: [DeviceId, SampleTime, Position]
+ */
+@interface AWSLocationDeviceState : AWSModel
+
+
+/**
+ <p>Defines the level of certainty of the position.</p>
+ */
+@property (nonatomic, strong) AWSLocationPositionalAccuracy * _Nullable accuracy;
+
+/**
+ <p>The cellular network infrastructure that the device is connected to.</p>
+ */
+@property (nonatomic, strong) AWSLocationCellSignals * _Nullable cellSignals;
+
+/**
+ <p>The device identifier.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable deviceId;
+
+/**
+ <p>The device's Ipv4 address.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable ipv4Address;
+
+/**
+ <p>The last known device position.</p>
+ */
+@property (nonatomic, strong) NSArray<NSNumber *> * _Nullable position;
+
+/**
+ <p>The timestamp at which the device's position was determined. Uses <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601 </a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable sampleTime;
+
+/**
+ <p>The Wi-Fi access points the device is using.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSLocationWiFiAccessPoint *> * _Nullable wiFiAccessPoints;
+
+@end
+
+/**
  
  */
 @interface AWSLocationDisassociateTrackerConsumerRequest : AWSRequest
 
 
 /**
- <p>The Amazon Resource Name (ARN) for the geofence collection to be disassociated from the tracker resource. Used when you need to specify a resource across all AWS. </p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollectionConsumer</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) for the geofence collection to be disassociated from the tracker resource. Used when you need to specify a resource across all Amazon Web Services. </p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollectionConsumer</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable consumerArn;
 
@@ -1802,7 +2162,141 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @end
 
 /**
- <p>Contains the geofence geometry details.</p><p>A geofence geometry is made up of either a polygon or a circle. Can be either a polygon or a circle. Including both will return a validation error.</p><note><p>Amazon Location doesn't currently support polygons with holes, multipolygons, polygons that are wound clockwise, or that cross the antimeridian. </p></note>
+ <p>The device's position, IP address, and WiFi access points.</p>
+ Required parameters: [Position]
+ */
+@interface AWSLocationForecastGeofenceEventsDeviceState : AWSModel
+
+
+/**
+ <p>The device's position.</p>
+ */
+@property (nonatomic, strong) NSArray<NSNumber *> * _Nullable position;
+
+/**
+ <p>The device's speed.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable speed;
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationForecastGeofenceEventsRequest : AWSRequest
+
+
+/**
+ <p>The name of the geofence collection.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable collectionName;
+
+/**
+ <p>The device's state, including current position and speed.</p>
+ */
+@property (nonatomic, strong) AWSLocationForecastGeofenceEventsDeviceState * _Nullable deviceState;
+
+/**
+ <p>The distance unit used for the <code>NearestDistance</code> property returned in a forecasted event. The measurement system must match for <code>DistanceUnit</code> and <code>SpeedUnit</code>; if <code>Kilometers</code> is specified for <code>DistanceUnit</code>, then <code>SpeedUnit</code> must be <code>KilometersPerHour</code>. </p><p>Default Value: <code>Kilometers</code></p>
+ */
+@property (nonatomic, assign) AWSLocationDistanceUnit distanceUnit;
+
+/**
+ <p>An optional limit for the number of resources returned in a single call.</p><p>Default value: <code>20</code></p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
+
+/**
+ <p>The pagination token specifying which page of results to return in the response. If no token is provided, the default page is the first page.</p><p>Default value: <code>null</code></p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>The speed unit for the device captured by the device state. The measurement system must match for <code>DistanceUnit</code> and <code>SpeedUnit</code>; if <code>Kilometers</code> is specified for <code>DistanceUnit</code>, then <code>SpeedUnit</code> must be <code>KilometersPerHour</code>.</p><p>Default Value: <code>KilometersPerHour</code>.</p>
+ */
+@property (nonatomic, assign) AWSLocationSpeedUnit speedUnit;
+
+/**
+ <p>Specifies the time horizon in minutes for the forecasted events.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable timeHorizonMinutes;
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationForecastGeofenceEventsResponse : AWSModel
+
+
+/**
+ <p>The distance unit for the forecasted events.</p>
+ */
+@property (nonatomic, assign) AWSLocationDistanceUnit distanceUnit;
+
+/**
+ <p>The list of forecasted events.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSLocationForecastedEvent *> * _Nullable forecastedEvents;
+
+/**
+ <p>The pagination token specifying which page of results to return in the response. If no token is provided, the default page is the first page. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>The speed unit for the forecasted events.</p>
+ */
+@property (nonatomic, assign) AWSLocationSpeedUnit speedUnit;
+
+@end
+
+/**
+ <p>A forecasted event represents a geofence event in relation to the requested device state, that may occur given the provided device state and time horizon.</p>
+ Required parameters: [EventId, GeofenceId, IsDeviceInGeofence, NearestDistance, EventType]
+ */
+@interface AWSLocationForecastedEvent : AWSModel
+
+
+/**
+ <p>The forecasted event identifier.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable eventId;
+
+/**
+ <p>The event type, forecasting three states for which a device can be in relative to a geofence:</p><p><code>ENTER</code>: If a device is outside of a geofence, but would breach the fence if the device is moving at its current speed within time horizon window.</p><p><code>EXIT</code>: If a device is inside of a geofence, but would breach the fence if the device is moving at its current speed within time horizon window.</p><p><code>IDLE</code>: If a device is inside of a geofence, and the device is not moving.</p>
+ */
+@property (nonatomic, assign) AWSLocationForecastedGeofenceEventType eventType;
+
+/**
+ <p>The forecasted time the device will breach the geofence in <a href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code></p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable forecastedBreachTime;
+
+/**
+ <p>The geofence identifier pertaining to the forecasted event.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable geofenceId;
+
+/**
+ <p>The geofence properties.</p>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable geofenceProperties;
+
+/**
+ <p>Indicates if the device is located within the geofence.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable isDeviceInGeofence;
+
+/**
+ <p>The closest distance from the device's position to the geofence.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable nearestDistance;
+
+@end
+
+/**
+ <p>Contains the geofence geometry details.</p><p>A geofence geometry is made up of either a polygon or a circle. Can be a polygon, a circle or a polygon encoded in Geobuf format. Including multiple selections will return a validation error.</p><note><p>Amazon Location doesn't currently support polygons with holes, multipolygons, polygons that are wound clockwise, or that cross the antimeridian. </p></note>
  */
 @interface AWSLocationGeofenceGeometry : AWSModel
 
@@ -1813,7 +2307,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) AWSLocationCircle * _Nullable circle;
 
 /**
- <p>An array of 1 or more linear rings. A linear ring is an array of 4 or more vertices, where the first and last vertex are the same to form a closed boundary. Each vertex is a 2-dimensional point of the form: <code>[longitude, latitude]</code>. </p><p>The first linear ring is an outer ring, describing the polygon's boundary. Subsequent linear rings may be inner or outer rings to describe holes and islands. Outer rings must list their vertices in counter-clockwise order around the ring's center, where the left side is the polygon's exterior. Inner rings must list their vertices in clockwise order, where the left side is the polygon's interior.</p><p>A geofence polygon can consist of between 4 and 1,000 vertices.</p>
+ <p>Geobuf is a compact binary encoding for geographic data that provides lossless compression of GeoJSON polygons. The Geobuf must be Base64-encoded.</p><p>A polygon in Geobuf format can have up to 100,000 vertices.</p>
+ */
+@property (nonatomic, strong) NSData * _Nullable geobuf;
+
+/**
+ <p>A polygon is a list of linear rings which are each made up of a list of vertices.</p><p>Each vertex is a 2-dimensional point of the form: <code>[longitude, latitude]</code>. This is represented as an array of doubles of length 2 (so <code>[double, double]</code>).</p><p>An array of 4 or more vertices, where the first and last vertex are the same (to form a closed boundary), is called a linear ring. The linear ring vertices must be listed in counter-clockwise order around the ring’s interior. The linear ring is represented as an array of vertices, or an array of arrays of doubles (<code>[[double, double], ...]</code>).</p><p>A geofence consists of a single linear ring. To allow for future expansion, the Polygon parameter takes an array of linear rings, which is represented as an array of arrays of arrays of doubles (<code>[[[double, double], ...], ...]</code>).</p><p>A linear ring for use in geofences can consist of between 4 and 1,000 vertices.</p>
  */
 @property (nonatomic, strong) NSArray<NSArray<NSArray<NSNumber *> *> *> * _Nullable polygon;
 
@@ -1920,7 +2419,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable positionProperties;
 
 /**
- <p>The timestamp for when the tracker resource received the device position in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601 </a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
+ <p>The timestamp for when the tracker resource received the device position. Uses <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601 </a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
  */
 @property (nonatomic, strong) NSDate * _Nullable receivedTime;
 
@@ -1966,6 +2465,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable geofenceId;
 
 /**
+ <p>User defined properties of the geofence. A property is a key-value pair stored with the geofence and added to any geofence event triggered with that geofence.</p><p>Format: <code>"key" : "value"</code></p>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable geofenceProperties;
+
+/**
  <p>Contains the geofence geometry details describing a polygon or a circle.</p>
  */
 @property (nonatomic, strong) AWSLocationGeofenceGeometry * _Nullable geometry;
@@ -1989,7 +2493,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>A comma-separated list of fonts to load glyphs from in order of preference. For example, <code>Noto Sans Regular, Arial Unicode</code>.</p><p>Valid fonts stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri</a> styles: </p><ul><li><p>VectorEsriDarkGrayCanvas – <code>Ubuntu Medium Italic</code> | <code>Ubuntu Medium</code> | <code>Ubuntu Italic</code> | <code>Ubuntu Regular</code> | <code>Ubuntu Bold</code></p></li><li><p>VectorEsriLightGrayCanvas – <code>Ubuntu Italic</code> | <code>Ubuntu Regular</code> | <code>Ubuntu Light</code> | <code>Ubuntu Bold</code></p></li><li><p>VectorEsriTopographic – <code>Noto Sans Italic</code> | <code>Noto Sans Regular</code> | <code>Noto Sans Bold</code> | <code>Noto Serif Regular</code> | <code>Roboto Condensed Light Italic</code></p></li><li><p>VectorEsriStreets – <code>Arial Regular</code> | <code>Arial Italic</code> | <code>Arial Bold</code></p></li><li><p>VectorEsriNavigation – <code>Arial Regular</code> | <code>Arial Italic</code> | <code>Arial Bold</code></p></li></ul><p>Valid font stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies</a> styles: </p><ul><li><p>VectorHereContrast – <code>Fira GO Regular</code> | <code>Fira GO Bold</code></p></li><li><p>VectorHereExplore, VectorHereExploreTruck – <code>Firo GO Italic</code> | <code>Fira GO Map</code> | <code>Fira GO Map Bold</code> | <code>Noto Sans CJK JP Bold</code> | <code>Noto Sans CJK JP Light</code> | <code>Noto Sans CJK JP Regular</code></p></li></ul>
+ <p>A comma-separated list of fonts to load glyphs from in order of preference. For example, <code>Noto Sans Regular, Arial Unicode</code>.</p><p>Valid font stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri</a> styles: </p><ul><li><p>VectorEsriDarkGrayCanvas – <code>Ubuntu Medium Italic</code> | <code>Ubuntu Medium</code> | <code>Ubuntu Italic</code> | <code>Ubuntu Regular</code> | <code>Ubuntu Bold</code></p></li><li><p>VectorEsriLightGrayCanvas – <code>Ubuntu Italic</code> | <code>Ubuntu Regular</code> | <code>Ubuntu Light</code> | <code>Ubuntu Bold</code></p></li><li><p>VectorEsriTopographic – <code>Noto Sans Italic</code> | <code>Noto Sans Regular</code> | <code>Noto Sans Bold</code> | <code>Noto Serif Regular</code> | <code>Roboto Condensed Light Italic</code></p></li><li><p>VectorEsriStreets – <code>Arial Regular</code> | <code>Arial Italic</code> | <code>Arial Bold</code></p></li><li><p>VectorEsriNavigation – <code>Arial Regular</code> | <code>Arial Italic</code> | <code>Arial Bold</code></p></li></ul><p>Valid font stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies</a> styles:</p><ul><li><p>VectorHereContrast – <code>Fira GO Regular</code> | <code>Fira GO Bold</code></p></li><li><p>VectorHereExplore, VectorHereExploreTruck, HybridHereExploreSatellite – <code>Fira GO Italic</code> | <code>Fira GO Map</code> | <code>Fira GO Map Bold</code> | <code>Noto Sans CJK JP Bold</code> | <code>Noto Sans CJK JP Light</code> | <code>Noto Sans CJK JP Regular</code></p></li></ul><p>Valid font stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/grab.html">GrabMaps</a> styles:</p><ul><li><p>VectorGrabStandardLight, VectorGrabStandardDark – <code>Noto Sans Regular</code> | <code>Noto Sans Medium</code> | <code>Noto Sans Bold</code></p></li></ul><p>Valid font stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/open-data.html">Open Data</a> styles:</p><ul><li><p>VectorOpenDataStandardLight, VectorOpenDataStandardDark, VectorOpenDataVisualizationLight, VectorOpenDataVisualizationDark – <code>Amazon Ember Regular,Noto Sans Regular</code> | <code>Amazon Ember Bold,Noto Sans Bold</code> | <code>Amazon Ember Medium,Noto Sans Medium</code> | <code>Amazon Ember Regular Italic,Noto Sans Italic</code> | <code>Amazon Ember Condensed RC Regular,Noto Sans Regular</code> | <code>Amazon Ember Condensed RC Bold,Noto Sans Bold</code> | <code>Amazon Ember Regular,Noto Sans Regular,Noto Sans Arabic Regular</code> | <code>Amazon Ember Condensed RC Bold,Noto Sans Bold,Noto Sans Arabic Condensed Bold</code> | <code>Amazon Ember Bold,Noto Sans Bold,Noto Sans Arabic Bold</code> | <code>Amazon Ember Regular Italic,Noto Sans Italic,Noto Sans Arabic Regular</code> | <code>Amazon Ember Condensed RC Regular,Noto Sans Regular,Noto Sans Arabic Condensed Regular</code> | <code>Amazon Ember Medium,Noto Sans Medium,Noto Sans Arabic Medium</code></p></li></ul><note><p>The fonts used by the Open Data map styles are combined fonts that use <code>Amazon Ember</code> for most glyphs but <code>Noto Sans</code> for glyphs unsupported by <code>Amazon Ember</code>.</p></note>
  */
 @property (nonatomic, strong) NSString * _Nullable fontStack;
 
@@ -1997,6 +2501,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>A Unicode range of characters to download glyphs for. Each response will contain 256 characters. For example, 0–255 includes all characters from range <code>U+0000</code> to <code>00FF</code>. Must be aligned to multiples of 256.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable fontUnicodeRange;
+
+/**
+ <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize the request.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
 
 /**
  <p>The map resource associated with the glyph ﬁle.</p>
@@ -2012,9 +2521,14 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>The blob's content type.</p>
+ <p>The glyph, as binary blob.</p>
  */
 @property (nonatomic, strong) NSData * _Nullable blob;
+
+/**
+ <p>The HTTP Cache-Control directive for the value.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable cacheControl;
 
 /**
  <p>The map glyph content type. For example, <code>application/octet-stream</code>.</p>
@@ -2030,9 +2544,14 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>The name of the sprite ﬁle. Use the following ﬁle names for the sprite sheet:</p><ul><li><p><code>sprites.png</code></p></li><li><p><code>sprites@2x.png</code> for high pixel density displays</p></li></ul><p>For the JSON document contain image offsets. Use the following ﬁle names:</p><ul><li><p><code>sprites.json</code></p></li><li><p><code>sprites@2x.json</code> for high pixel density displays</p></li></ul>
+ <p>The name of the sprite ﬁle. Use the following ﬁle names for the sprite sheet:</p><ul><li><p><code>sprites.png</code></p></li><li><p><code>sprites@2x.png</code> for high pixel density displays</p></li></ul><p>For the JSON document containing image offsets. Use the following ﬁle names:</p><ul><li><p><code>sprites.json</code></p></li><li><p><code>sprites@2x.json</code> for high pixel density displays</p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable fileName;
+
+/**
+ <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize the request.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
 
 /**
  <p>The map resource associated with the sprite ﬁle.</p>
@@ -2053,6 +2572,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSData * _Nullable blob;
 
 /**
+ <p>The HTTP Cache-Control directive for the value.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable cacheControl;
+
+/**
  <p>The content type of the sprite sheet and offsets. For example, the sprite sheet content type is <code>image/png</code>, and the sprite offset JSON document is <code>application/json</code>. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable contentType;
@@ -2064,6 +2588,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  */
 @interface AWSLocationGetMapStyleDescriptorRequest : AWSRequest
 
+
+/**
+ <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize the request.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
 
 /**
  <p>The map resource to retrieve the style descriptor from.</p>
@@ -2084,6 +2613,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSData * _Nullable blob;
 
 /**
+ <p>The HTTP Cache-Control directive for the value.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable cacheControl;
+
+/**
  <p>The style descriptor's content type. For example, <code>application/json</code>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contentType;
@@ -2095,6 +2629,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  */
 @interface AWSLocationGetMapTileRequest : AWSRequest
 
+
+/**
+ <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize the request.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
 
 /**
  <p>The map resource to retrieve the map tiles from.</p>
@@ -2130,6 +2669,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSData * _Nullable blob;
 
 /**
+ <p>The HTTP Cache-Control directive for the value.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable cacheControl;
+
+/**
  <p>The map tile's content type. For example, <code>application/vnd.mapbox-vector-tile</code>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contentType;
@@ -2137,8 +2681,78 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @end
 
 /**
+ 
+ */
+@interface AWSLocationGetPlaceRequest : AWSRequest
+
+
+/**
+ <p>The name of the place index resource that you want to use for the search.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable indexName;
+
+/**
+ <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize the request.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
+
+/**
+ <p>The preferred language used to return results. The value must be a valid <a href="https://tools.ietf.org/search/bcp47">BCP 47</a> language tag, for example, <code>en</code> for English.</p><p>This setting affects the languages used in the results, but not the results themselves. If no language is specified, or not supported for a particular result, the partner automatically chooses a language for the result.</p><p>For an example, we'll use the Greek language. You search for a location around Athens, Greece, with the <code>language</code> parameter set to <code>en</code>. The <code>city</code> in the results will most likely be returned as <code>Athens</code>.</p><p>If you set the <code>language</code> parameter to <code>el</code>, for Greek, then the <code>city</code> in the results will more likely be returned as <code>Αθήνα</code>.</p><p>If the data provider does not have a value for Greek, the result will be in a language that the provider does support.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable language;
+
+/**
+ <p>The identifier of the place to find.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable placeId;
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationGetPlaceResponse : AWSModel
+
+
+/**
+ <p>Details about the result, such as its address and position.</p>
+ */
+@property (nonatomic, strong) AWSLocationPlace * _Nullable place;
+
+@end
+
+/**
+ <p>The inferred state of the device, given the provided position, IP address, cellular signals, and Wi-Fi- access points.</p>
+ Required parameters: [ProxyDetected]
+ */
+@interface AWSLocationInferredState : AWSModel
+
+
+/**
+ <p>The level of certainty of the inferred position.</p>
+ */
+@property (nonatomic, strong) AWSLocationPositionalAccuracy * _Nullable accuracy;
+
+/**
+ <p>The distance between the inferred position and the device's self-reported position.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable deviationDistance;
+
+/**
+ <p>The device position inferred by the provided position, IP address, cellular signals, and Wi-Fi- access points.</p>
+ */
+@property (nonatomic, strong) NSArray<NSNumber *> * _Nullable position;
+
+/**
+ <p>Indicates if a proxy was used.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable proxyDetected;
+
+@end
+
+/**
  <p>Contains the calculated route's details for each path between a pair of positions. The number of legs returned corresponds to one fewer than the total number of positions in the request. </p><p>For example, a route with a departure position and destination position returns one leg with the positions <a href="https://docs.aws.amazon.com/location/latest/developerguide/snap-to-nearby-road.html">snapped to a nearby road</a>:</p><ul><li><p>The <code>StartPosition</code> is the departure position.</p></li><li><p>The <code>EndPosition</code> is the destination position.</p></li></ul><p>A route with a waypoint between the departure and destination position returns two legs with the positions snapped to a nearby road:</p><ul><li><p>Leg 1: The <code>StartPosition</code> is the departure position . The <code>EndPosition</code> is the waypoint positon.</p></li><li><p>Leg 2: The <code>StartPosition</code> is the waypoint position. The <code>EndPosition</code> is the destination position.</p></li></ul>
- Required parameters: [Distance, DurationSeconds, EndPosition, StartPosition, Steps]
+ Required parameters: [StartPosition, EndPosition, Distance, DurationSeconds, Steps]
  */
 @interface AWSLocationLeg : AWSModel
 
@@ -2195,6 +2809,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
+ <p>The geometry used to filter device positions.</p>
+ */
+@property (nonatomic, strong) AWSLocationTrackingFilterGeometry * _Nullable filterGeometry;
+
+/**
  <p>An optional limit for the number of entries returned in a single call.</p><p>Default value: <code>100</code></p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
@@ -2218,7 +2837,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>Contains details about each device's last known position. These details includes the device ID, the time when the position was sampled on the device, the time that the service received the update, and the most recent coordinates.</p>
+ <p>Contains details about each device's last known position.</p>
  */
 @property (nonatomic, strong) NSArray<AWSLocationListDevicePositionsResponseEntry *> * _Nullable entries;
 
@@ -2231,7 +2850,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains the tracker resource details.</p>
- Required parameters: [DeviceId, Position, SampleTime]
+ Required parameters: [DeviceId, SampleTime, Position]
  */
 @interface AWSLocationListDevicePositionsResponseEntry : AWSModel
 
@@ -2288,7 +2907,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>Lists the geofence collections that exist in your AWS account.</p>
+ <p>Lists the geofence collections that exist in your Amazon Web Services account.</p>
  */
 @property (nonatomic, strong) NSArray<AWSLocationListGeofenceCollectionsResponseEntry *> * _Nullable entries;
 
@@ -2300,8 +2919,8 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @end
 
 /**
- <p>Contains the geofence collection details.</p>
- Required parameters: [CollectionName, CreateTime, Description, UpdateTime]
+ <p>Contains the geofence collection details.</p><note><p>The returned geometry will always match the geometry format used when the geofence was created.</p></note>
+ Required parameters: [CollectionName, Description, CreateTime, UpdateTime]
  */
 @interface AWSLocationListGeofenceCollectionsResponseEntry : AWSModel
 
@@ -2339,8 +2958,8 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @end
 
 /**
- <p>Contains a list of geofences stored in a given geofence collection.</p>
- Required parameters: [CreateTime, GeofenceId, Geometry, Status, UpdateTime]
+ <p>Contains a list of geofences stored in a given geofence collection.</p><note><p>The returned geometry will always match the geometry format used when the geofence was created.</p></note>
+ Required parameters: [GeofenceId, Geometry, Status, CreateTime, UpdateTime]
  */
 @interface AWSLocationListGeofenceResponseEntry : AWSModel
 
@@ -2354,6 +2973,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>The geofence identifier.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable geofenceId;
+
+/**
+ <p>User defined properties of the geofence. A property is a key-value pair stored with the geofence and added to any geofence event triggered with that geofence.</p><p>Format: <code>"key" : "value"</code></p>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable geofenceProperties;
 
 /**
  <p>Contains the geofence geometry details describing a polygon or a circle.</p>
@@ -2416,6 +3040,86 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 /**
  
  */
+@interface AWSLocationListKeysRequest : AWSRequest
+
+
+/**
+ <p>Optionally filter the list to only <code>Active</code> or <code>Expired</code> API keys.</p>
+ */
+@property (nonatomic, strong) AWSLocationApiKeyFilter * _Nullable filter;
+
+/**
+ <p>An optional limit for the number of resources returned in a single call. </p><p>Default value: <code>100</code></p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
+
+/**
+ <p>The pagination token specifying which page of results to return in the response. If no token is provided, the default page is the first page. </p><p>Default value: <code>null</code></p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationListKeysResponse : AWSModel
+
+
+/**
+ <p>Contains API key resources in your Amazon Web Services account. Details include API key name, allowed referers and timestamp for when the API key will expire.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSLocationListKeysResponseEntry *> * _Nullable entries;
+
+/**
+ <p>A pagination token indicating there are additional pages available. You can use the token in a following request to fetch the next set of results. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+@end
+
+/**
+ <p>An API key resource listed in your Amazon Web Services account.</p>
+ Required parameters: [KeyName, ExpireTime, Restrictions, CreateTime, UpdateTime]
+ */
+@interface AWSLocationListKeysResponseEntry : AWSModel
+
+
+/**
+ <p>The timestamp of when the API key was created, in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>.</p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable createTime;
+
+/**
+ <p>The optional description for the API key resource.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable detail;
+
+/**
+ <p>The timestamp for when the API key resource will expire, in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>.</p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable expireTime;
+
+/**
+ <p>The name of the API key resource.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyName;
+
+/**
+ <p>API Restrictions on the allowed actions, resources, and referers for an API key resource.</p>
+ */
+@property (nonatomic, strong) AWSLocationApiKeyRestrictions * _Nullable restrictions;
+
+/**
+ <p>The timestamp of when the API key was last updated, in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>.</p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable updateTime;
+
+@end
+
+/**
+ 
+ */
 @interface AWSLocationListMapsRequest : AWSRequest
 
 
@@ -2438,7 +3142,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>Contains a list of maps in your AWS account</p>
+ <p>Contains a list of maps in your Amazon Web Services account</p>
  */
 @property (nonatomic, strong) NSArray<AWSLocationListMapsResponseEntry *> * _Nullable entries;
 
@@ -2450,8 +3154,8 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @end
 
 /**
- <p>Contains details of an existing map resource in your AWS account.</p>
- Required parameters: [CreateTime, DataSource, Description, MapName, UpdateTime]
+ <p>Contains details of an existing map resource in your Amazon Web Services account.</p>
+ Required parameters: [MapName, Description, DataSource, CreateTime, UpdateTime]
  */
 @interface AWSLocationListMapsResponseEntry : AWSModel
 
@@ -2513,7 +3217,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>Lists the place index resources that exist in your AWS account</p>
+ <p>Lists the place index resources that exist in your Amazon Web Services account</p>
  */
 @property (nonatomic, strong) NSArray<AWSLocationListPlaceIndexesResponseEntry *> * _Nullable entries;
 
@@ -2525,8 +3229,8 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @end
 
 /**
- <p>A place index resource listed in your AWS account.</p>
- Required parameters: [CreateTime, DataSource, Description, IndexName, UpdateTime]
+ <p>A place index resource listed in your Amazon Web Services account.</p>
+ Required parameters: [IndexName, Description, DataSource, CreateTime, UpdateTime]
  */
 @interface AWSLocationListPlaceIndexesResponseEntry : AWSModel
 
@@ -2537,7 +3241,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSDate * _Nullable createTime;
 
 /**
- <p>The data provider of geospatial data. Values can be one of the following:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
+ <p>The data provider of geospatial data. Values can be one of the following:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Grab</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataSource;
 
@@ -2588,7 +3292,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>Lists the route calculator resources that exist in your AWS account</p>
+ <p>Lists the route calculator resources that exist in your Amazon Web Services account</p>
  */
 @property (nonatomic, strong) NSArray<AWSLocationListRouteCalculatorsResponseEntry *> * _Nullable entries;
 
@@ -2600,8 +3304,8 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @end
 
 /**
- <p>A route calculator resource listed in your AWS account.</p>
- Required parameters: [CalculatorName, CreateTime, DataSource, Description, UpdateTime]
+ <p>A route calculator resource listed in your Amazon Web Services account.</p>
+ Required parameters: [CalculatorName, Description, DataSource, CreateTime, UpdateTime]
  */
 @interface AWSLocationListRouteCalculatorsResponseEntry : AWSModel
 
@@ -2617,7 +3321,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSDate * _Nullable createTime;
 
 /**
- <p>The data provider of traffic and road network data. Indicates one of the available providers:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
+ <p>The data provider of traffic and road network data. Indicates one of the available providers:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Grab</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataSource;
 
@@ -2730,7 +3434,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>Contains tracker resources in your AWS account. Details include tracker name, description and timestamps for when the tracker was created and last updated.</p>
+ <p>Contains tracker resources in your Amazon Web Services account. Details include tracker name, description and timestamps for when the tracker was created and last updated.</p>
  */
 @property (nonatomic, strong) NSArray<AWSLocationListTrackersResponseEntry *> * _Nullable entries;
 
@@ -2743,7 +3447,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains the tracker resource details.</p>
- Required parameters: [CreateTime, Description, TrackerName, UpdateTime]
+ Required parameters: [TrackerName, Description, CreateTime, UpdateTime]
  */
 @interface AWSLocationListTrackersResponseEntry : AWSModel
 
@@ -2781,6 +3485,118 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @end
 
 /**
+ <p>Details about the Long-Term Evolution (LTE) network.</p>
+ Required parameters: [CellId, Mcc, Mnc]
+ */
+@interface AWSLocationLteCellDetails : AWSModel
+
+
+/**
+ <p>The E-UTRAN Cell Identifier (ECI).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable cellId;
+
+/**
+ <p>The LTE local identification information (local ID).</p>
+ */
+@property (nonatomic, strong) AWSLocationLteLocalId * _Nullable localId;
+
+/**
+ <p>The Mobile Country Code (MCC).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable mcc;
+
+/**
+ <p>The Mobile Network Code (MNC)</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable mnc;
+
+/**
+ <p>The network measurements.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSLocationLteNetworkMeasurements *> * _Nullable networkMeasurements;
+
+/**
+ <p>Indicates whether the LTE object is capable of supporting NR (new radio).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable nrCapable;
+
+/**
+ <p>Signal power of the reference signal received, measured in decibel-milliwatts (dBm).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable rsrp;
+
+/**
+ <p>Signal quality of the reference Signal received, measured in decibels (dB).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable rsrq;
+
+/**
+ <p>LTE Tracking Area Code (TAC).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable tac;
+
+/**
+ <p>Timing Advance (TA).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable timingAdvance;
+
+@end
+
+/**
+ <p>LTE local identification information (local ID).</p>
+ Required parameters: [Earfcn, Pci]
+ */
+@interface AWSLocationLteLocalId : AWSModel
+
+
+/**
+ <p>E-UTRA (Evolved Universal Terrestrial Radio Access) absolute radio frequency channel number (EARFCN).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable earfcn;
+
+/**
+ <p>Physical Cell ID (PCI).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable pci;
+
+@end
+
+/**
+ <p>LTE network measurements.</p>
+ Required parameters: [Earfcn, CellId, Pci]
+ */
+@interface AWSLocationLteNetworkMeasurements : AWSModel
+
+
+/**
+ <p>E-UTRAN Cell Identifier (ECI).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable cellId;
+
+/**
+ <p>E-UTRA (Evolved Universal Terrestrial Radio Access) absolute radio frequency channel number (EARFCN).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable earfcn;
+
+/**
+ <p>Physical Cell ID (PCI).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable pci;
+
+/**
+ <p>Signal power of the reference signal received, measured in dBm (decibel-milliwatts).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable rsrp;
+
+/**
+ <p>Signal quality of the reference Signal received, measured in decibels (dB).</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable rsrq;
+
+@end
+
+/**
  <p>Specifies the map tile style selected from an available provider.</p>
  Required parameters: [Style]
  */
@@ -2788,9 +3604,37 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>Specifies the map style selected from an available data provider.</p><p>Valid <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri map styles</a>:</p><ul><li><p><code>VectorEsriDarkGrayCanvas</code> – The Esri Dark Gray Canvas map style. A vector basemap with a dark gray, neutral background with minimal colors, labels, and features that's designed to draw attention to your thematic content. </p></li><li><p><code>RasterEsriImagery</code> – The Esri Imagery map style. A raster basemap that provides one meter or better satellite and aerial imagery in many parts of the world and lower resolution satellite imagery worldwide. </p></li><li><p><code>VectorEsriLightGrayCanvas</code> – The Esri Light Gray Canvas map style, which provides a detailed vector basemap with a light gray, neutral background style with minimal colors, labels, and features that's designed to draw attention to your thematic content. </p></li><li><p><code>VectorEsriTopographic</code> – The Esri Light map style, which provides a detailed vector basemap with a classic Esri map style.</p></li><li><p><code>VectorEsriStreets</code> – The Esri World Streets map style, which provides a detailed vector basemap for the world symbolized with a classic Esri street map style. The vector tile layer is similar in content and style to the World Street Map raster map.</p></li><li><p><code>VectorEsriNavigation</code> – The Esri World Navigation map style, which provides a detailed basemap for the world symbolized with a custom navigation map style that's designed for use during the day in mobile devices.</p></li></ul><p>Valid <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies map styles</a>:</p><ul><li><p><code>VectorHereContrast</code> – The HERE Contrast (Berlin) map style is a high contrast detailed base map of the world that blends 3D and 2D rendering.</p></li><li><p><code>VectorHereExplore</code> – A default HERE map style containing a neutral, global map and its features including roads, buildings, landmarks, and water features. It also now includes a fully designed map of Japan.</p></li><li><p><code>VectorHereExploreTruck</code> – A global map containing truck restrictions and attributes (e.g. width / height / HAZMAT) symbolized with highlighted segments and icons on top of HERE Explore to support use cases within transport and logistics.</p></li></ul><note><p>The <code>VectorHereContrast</code> style has been renamed from <code>VectorHereBerlin</code>. <code>VectorHereBerlin</code> has been deprecated, but will continue to work in applications that use it.</p></note>
+ <p>Specifies the custom layers for the style. Leave unset to not enable any custom layer, or, for styles that support custom layers, you can enable layer(s), such as POI layer for the VectorEsriNavigation style. Default is <code>unset</code>.</p><note><p>Not all map resources or styles support custom layers. See Custom Layers for more information.</p></note>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable customLayers;
+
+/**
+ <p>Specifies the political view for the style. Leave unset to not use a political view, or, for styles that support specific political views, you can choose a view, such as <code>IND</code> for the Indian view.</p><p>Default is unset.</p><note><p>Not all map resources or styles support political view styles. See <a href="https://docs.aws.amazon.com/location/latest/developerguide/map-concepts.html#political-views">Political views</a> for more information.</p></note>
+ */
+@property (nonatomic, strong) NSString * _Nullable politicalView;
+
+/**
+ <p>Specifies the map style selected from an available data provider.</p><p>Valid <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri map styles</a>:</p><ul><li><p><code>VectorEsriDarkGrayCanvas</code> – The Esri Dark Gray Canvas map style. A vector basemap with a dark gray, neutral background with minimal colors, labels, and features that's designed to draw attention to your thematic content. </p></li><li><p><code>RasterEsriImagery</code> – The Esri Imagery map style. A raster basemap that provides one meter or better satellite and aerial imagery in many parts of the world and lower resolution satellite imagery worldwide. </p></li><li><p><code>VectorEsriLightGrayCanvas</code> – The Esri Light Gray Canvas map style, which provides a detailed vector basemap with a light gray, neutral background style with minimal colors, labels, and features that's designed to draw attention to your thematic content. </p></li><li><p><code>VectorEsriTopographic</code> – The Esri Light map style, which provides a detailed vector basemap with a classic Esri map style.</p></li><li><p><code>VectorEsriStreets</code> – The Esri Street Map style, which provides a detailed vector basemap for the world symbolized with a classic Esri street map style. The vector tile layer is similar in content and style to the World Street Map raster map.</p></li><li><p><code>VectorEsriNavigation</code> – The Esri Navigation map style, which provides a detailed basemap for the world symbolized with a custom navigation map style that's designed for use during the day in mobile devices.</p></li></ul><p>Valid <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies map styles</a>:</p><ul><li><p><code>VectorHereContrast</code> – The HERE Contrast (Berlin) map style is a high contrast detailed base map of the world that blends 3D and 2D rendering.</p><note><p>The <code>VectorHereContrast</code> style has been renamed from <code>VectorHereBerlin</code>. <code>VectorHereBerlin</code> has been deprecated, but will continue to work in applications that use it.</p></note></li><li><p><code>VectorHereExplore</code> – A default HERE map style containing a neutral, global map and its features including roads, buildings, landmarks, and water features. It also now includes a fully designed map of Japan.</p></li><li><p><code>VectorHereExploreTruck</code> – A global map containing truck restrictions and attributes (e.g. width / height / HAZMAT) symbolized with highlighted segments and icons on top of HERE Explore to support use cases within transport and logistics.</p></li><li><p><code>RasterHereExploreSatellite</code> – A global map containing high resolution satellite imagery.</p></li><li><p><code>HybridHereExploreSatellite</code> – A global map displaying the road network, street names, and city labels over satellite imagery. This style will automatically retrieve both raster and vector tiles, and your charges will be based on total tiles retrieved.</p><note><p>Hybrid styles use both vector and raster tiles when rendering the map that you see. This means that more tiles are retrieved than when using either vector or raster tiles alone. Your charges will include all tiles retrieved.</p></note></li></ul><p>Valid <a href="https://docs.aws.amazon.com/location/latest/developerguide/grab.html">GrabMaps map styles</a>:</p><ul><li><p><code>VectorGrabStandardLight</code> – The Grab Standard Light map style provides a basemap with detailed land use coloring, area names, roads, landmarks, and points of interest covering Southeast Asia.</p></li><li><p><code>VectorGrabStandardDark</code> – The Grab Standard Dark map style provides a dark variation of the standard basemap covering Southeast Asia.</p></li></ul><note><p>Grab provides maps only for countries in Southeast Asia, and is only available in the Asia Pacific (Singapore) Region (<code>ap-southeast-1</code>). For more information, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/grab.html#grab-coverage-area">GrabMaps countries and area covered</a>.</p></note><p>Valid <a href="https://docs.aws.amazon.com/location/latest/developerguide/open-data.html">Open Data map styles</a>:</p><ul><li><p><code>VectorOpenDataStandardLight</code> – The Open Data Standard Light map style provides a detailed basemap for the world suitable for website and mobile application use. The map includes highways major roads, minor roads, railways, water features, cities, parks, landmarks, building footprints, and administrative boundaries.</p></li><li><p><code>VectorOpenDataStandardDark</code> – Open Data Standard Dark is a dark-themed map style that provides a detailed basemap for the world suitable for website and mobile application use. The map includes highways major roads, minor roads, railways, water features, cities, parks, landmarks, building footprints, and administrative boundaries.</p></li><li><p><code>VectorOpenDataVisualizationLight</code> – The Open Data Visualization Light map style is a light-themed style with muted colors and fewer features that aids in understanding overlaid data.</p></li><li><p><code>VectorOpenDataVisualizationDark</code> – The Open Data Visualization Dark map style is a dark-themed style with muted colors and fewer features that aids in understanding overlaid data.</p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable style;
+
+@end
+
+/**
+ <p>Specifies the political view for the style.</p>
+ */
+@interface AWSLocationMapConfigurationUpdate : AWSModel
+
+
+/**
+ <p>Specifies the custom layers for the style. Leave unset to not enable any custom layer, or, for styles that support custom layers, you can enable layer(s), such as POI layer for the VectorEsriNavigation style. Default is <code>unset</code>.</p><note><p>Not all map resources or styles support custom layers. See Custom Layers for more information.</p></note>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable customLayers;
+
+/**
+ <p>Specifies the political view for the style. Set to an empty string to not use a political view, or, for styles that support specific political views, you can choose a view, such as <code>IND</code> for the Indian view.</p><note><p>Not all map resources or styles support political view styles. See <a href="https://docs.aws.amazon.com/location/latest/developerguide/map-concepts.html#political-views">Political views</a> for more information.</p></note>
+ */
+@property (nonatomic, strong) NSString * _Nullable politicalView;
 
 @end
 
@@ -2805,6 +3649,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>The numerical portion of an address, such as a building number. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable addressNumber;
+
+/**
+ <p>The Amazon Location categories that describe this Place.</p><p>For more information about using categories, including a list of Amazon Location categories, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/category-filtering.html">Categories and filtering</a>, in the <i>Amazon Location Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable categories;
 
 /**
  <p>A country/region specified using <a href="https://www.iso.org/iso-3166-country-codes.html">ISO 3166</a> 3-digit country/region code. For example, <code>CAN</code>.</p>
@@ -2852,14 +3701,34 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable street;
 
 /**
- <p>A country, or an area that's part of a larger region. For example, <code>Metro Vancouver</code>.</p>
+ <p>An area that's part of a larger municipality. For example, <code>Blissville </code> is a submunicipality in the Queen County in New York.</p><note><p>This property supported by Esri and OpenData. The Esri property is <code>district</code>, and the OpenData property is <code>borough</code>.</p></note>
+ */
+@property (nonatomic, strong) NSString * _Nullable subMunicipality;
+
+/**
+ <p>A county, or an area that's part of a larger region. For example, <code>Metro Vancouver</code>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable subRegion;
 
 /**
- <p>The time zone in which the <code>Place</code> is located. Returned only when using Here as the selected partner.</p>
+ <p>Categories from the data provider that describe the Place that are not mapped to any Amazon Location categories.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable supplementalCategories;
+
+/**
+ <p>The time zone in which the <code>Place</code> is located. Returned only when using HERE or Grab as the selected partner.</p>
  */
 @property (nonatomic, strong) AWSLocationTimeZone * _Nullable timeZone;
+
+/**
+ <p>For addresses with multiple units, the unit identifier. Can include numbers and letters, for example <code>3B</code> or <code>Unit 123</code>.</p><note><p>Returned only for a place index that uses Esri or Grab as a data provider. Is not returned for <code>SearchPlaceIndexForPosition</code>.</p></note>
+ */
+@property (nonatomic, strong) NSString * _Nullable unitNumber;
+
+/**
+ <p>For addresses with a <code>UnitNumber</code>, the type of unit. For example, <code>Apartment</code>.</p><note><p>Returned only for a place index that uses Esri as a data provider.</p></note>
+ */
+@property (nonatomic, strong) NSString * _Nullable unitType;
 
 @end
 
@@ -2907,7 +3776,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable geofenceId;
 
 /**
- <p>Contains the details to specify the position of the geofence. Can be either a polygon or a circle. Including both will return a validation error.</p><note><p>Each <a href="https://docs.aws.amazon.com/location-geofences/latest/APIReference/API_GeofenceGeometry.html"> geofence polygon</a> can have a maximum of 1,000 vertices.</p></note>
+ <p>Associates one of more properties with the geofence. A property is a key-value pair stored with the geofence and added to any geofence event triggered with that geofence.</p><p>Format: <code>"key" : "value"</code></p>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable geofenceProperties;
+
+/**
+ <p>Contains the details to specify the position of the geofence. Can be a polygon, a circle or a polygon encoded in Geobuf format. Including multiple selections will return a validation error.</p><note><p>The <a href="https://docs.aws.amazon.com/location-geofences/latest/APIReference/API_GeofenceGeometry.html"> geofence polygon</a> format supports a maximum of 1,000 vertices. The <a href="https://docs.aws.amazon.com/location-geofences/latest/APIReference/API_GeofenceGeometry.html">Geofence Geobuf</a> format supports a maximum of 100,000 vertices.</p></note>
  */
 @property (nonatomic, strong) AWSLocationGeofenceGeometry * _Nullable geometry;
 
@@ -2980,7 +3854,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains a search result from a position search query that is run on a place index resource.</p>
- Required parameters: [Distance, Place]
+ Required parameters: [Place, Distance]
  */
 @interface AWSLocationSearchForPositionResult : AWSModel
 
@@ -2995,6 +3869,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  */
 @property (nonatomic, strong) AWSLocationPlace * _Nullable place;
 
+/**
+ <p>The unique identifier of the place. You can use this with the <code>GetPlace</code> operation to find the place again later.</p><note><p>For <code>SearchPlaceIndexForPosition</code> operations, the <code>PlaceId</code> is returned only by place indexes that use HERE or Grab as a data provider.</p></note>
+ */
+@property (nonatomic, strong) NSString * _Nullable placeId;
+
 @end
 
 /**
@@ -3003,6 +3882,21 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  */
 @interface AWSLocationSearchForSuggestionsResult : AWSModel
 
+
+/**
+ <p>The Amazon Location categories that describe the Place.</p><p>For more information about using categories, including a list of Amazon Location categories, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/category-filtering.html">Categories and filtering</a>, in the <i>Amazon Location Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable categories;
+
+/**
+ <p>The unique identifier of the Place. You can use this with the <code>GetPlace</code> operation to find the place again later, or to get full information for the Place.</p><p>The <code>GetPlace</code> request must use the same <code>PlaceIndex</code> resource as the <code>SearchPlaceIndexForSuggestions</code> that generated the Place ID.</p><note><p>For <code>SearchPlaceIndexForSuggestions</code> operations, the <code>PlaceId</code> is returned by place indexes that use Esri, Grab, or HERE as data providers.</p></note>
+ */
+@property (nonatomic, strong) NSString * _Nullable placeId;
+
+/**
+ <p>Categories from the data provider that describe the Place that are not mapped to any Amazon Location categories.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable supplementalCategories;
 
 /**
  <p>The text of the place suggestion, typically formatted as an address string.</p>
@@ -3029,7 +3923,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) AWSLocationPlace * _Nullable place;
 
 /**
- <p>The relative confidence in the match for a result among the results returned. For example, if more fields for an address match (including house number, street, city, country/region, and postal code), the relevance score is closer to 1.</p><p>Returned only when the partner selected is Esri.</p>
+ <p>The unique identifier of the place. You can use this with the <code>GetPlace</code> operation to find the place again later.</p><note><p>For <code>SearchPlaceIndexForText</code> operations, the <code>PlaceId</code> is returned only by place indexes that use HERE or Grab as a data provider.</p></note>
+ */
+@property (nonatomic, strong) NSString * _Nullable placeId;
+
+/**
+ <p>The relative confidence in the match for a result among the results returned. For example, if more fields for an address match (including house number, street, city, country/region, and postal code), the relevance score is closer to 1.</p><p>Returned only when the partner selected is Esri or Grab.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable relevance;
 
@@ -3045,6 +3944,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>The name of the place index resource you want to use for the search.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable indexName;
+
+/**
+ <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize the request.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
 
 /**
  <p>The preferred language used to return results. The value must be a valid <a href="https://tools.ietf.org/search/bcp47">BCP 47</a> language tag, for example, <code>en</code> for English.</p><p>This setting affects the languages used in the results, but not the results themselves. If no language is specified, or not supported for a particular result, the partner automatically chooses a language for the result.</p><p>For an example, we'll use the Greek language. You search for a location around Athens, Greece, with the <code>language</code> parameter set to <code>en</code>. The <code>city</code> in the results will most likely be returned as <code>Athens</code>.</p><p>If you set the <code>language</code> parameter to <code>el</code>, for Greek, then the <code>city</code> in the results will more likely be returned as <code>Αθήνα</code>.</p><p>If the data provider does not have a value for Greek, the result will be in a language that the provider does support.</p>
@@ -3083,13 +3987,13 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>A summary of the request sent by using <code>SearchPlaceIndexForPosition</code>.</p>
- Required parameters: [DataSource, Position]
+ Required parameters: [Position, DataSource]
  */
 @interface AWSLocationSearchPlaceIndexForPositionSummary : AWSModel
 
 
 /**
- <p>The geospatial data provider attached to the place index resource specified in the request. Values can be one of the following:</p><ul><li><p>Esri</p></li><li><p>Here</p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
+ <p>The geospatial data provider attached to the place index resource specified in the request. Values can be one of the following:</p><ul><li><p>Esri</p></li><li><p>Grab</p></li><li><p>Here</p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataSource;
 
@@ -3127,6 +4031,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable filterBBox;
 
 /**
+ <p>A list of one or more Amazon Location categories to filter the returned places. If you include more than one category, the results will include results that match <i>any</i> of the categories listed.</p><p>For more information about using categories, including a list of Amazon Location categories, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/category-filtering.html">Categories and filtering</a>, in the <i>Amazon Location Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable filterCategories;
+
+/**
  <p>An optional parameter that limits the search results by returning only suggestions within the provided list of countries.</p><ul><li><p>Use the <a href="https://www.iso.org/iso-3166-country-codes.html">ISO 3166</a> 3-digit country code. For example, Australia uses three upper-case characters: <code>AUS</code>.</p></li></ul>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable filterCountries;
@@ -3135,6 +4044,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>The name of the place index resource you want to use for the search.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable indexName;
+
+/**
+ <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize the request.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
 
 /**
  <p>The preferred language used to return results. The value must be a valid <a href="https://tools.ietf.org/search/bcp47">BCP 47</a> language tag, for example, <code>en</code> for English.</p><p>This setting affects the languages used in the results. If no language is specified, or not supported for a particular result, the partner automatically chooses a language for the result.</p><p>For an example, we'll use the Greek language. You search for <code>Athens, Gr</code> to get suggestions with the <code>language</code> parameter set to <code>en</code>. The results found will most likely be returned as <code>Athens, Greece</code>.</p><p>If you set the <code>language</code> parameter to <code>el</code>, for Greek, then the result found will more likely be returned as <code>Αθήνα, Ελλάδα</code>.</p><p>If the data provider does not have a value for Greek, the result will be in a language that the provider does support.</p>
@@ -3173,7 +4087,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>A summary of the request sent by using <code>SearchPlaceIndexForSuggestions</code>.</p>
- Required parameters: [DataSource, Text]
+ Required parameters: [Text, DataSource]
  */
 @interface AWSLocationSearchPlaceIndexForSuggestionsSummary : AWSModel
 
@@ -3184,7 +4098,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable biasPosition;
 
 /**
- <p>The geospatial data provider attached to the place index resource specified in the request. Values can be one of the following:</p><ul><li><p>Esri</p></li><li><p>Here</p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
+ <p>The geospatial data provider attached to the place index resource specified in the request. Values can be one of the following:</p><ul><li><p>Esri</p></li><li><p>Grab</p></li><li><p>Here</p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataSource;
 
@@ -3192,6 +4106,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>Contains the coordinates for the optional bounding box specified in the request.</p>
  */
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable filterBBox;
+
+/**
+ <p>The optional category filter specified in the request.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable filterCategories;
 
 /**
  <p>Contains the optional country filter specified in the request.</p>
@@ -3232,6 +4151,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable filterBBox;
 
 /**
+ <p>A list of one or more Amazon Location categories to filter the returned places. If you include more than one category, the results will include results that match <i>any</i> of the categories listed.</p><p>For more information about using categories, including a list of Amazon Location categories, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/category-filtering.html">Categories and filtering</a>, in the <i>Amazon Location Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable filterCategories;
+
+/**
  <p>An optional parameter that limits the search results by returning only places that are in a specified list of countries.</p><ul><li><p>Valid values include <a href="https://www.iso.org/iso-3166-country-codes.html">ISO 3166</a> 3-digit country codes. For example, Australia uses three upper-case characters: <code>AUS</code>.</p></li></ul>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable filterCountries;
@@ -3240,6 +4164,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>The name of the place index resource you want to use for the search.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable indexName;
+
+/**
+ <p>The optional <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">API key</a> to authorize the request.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
 
 /**
  <p>The preferred language used to return results. The value must be a valid <a href="https://tools.ietf.org/search/bcp47">BCP 47</a> language tag, for example, <code>en</code> for English.</p><p>This setting affects the languages used in the results, but not the results themselves. If no language is specified, or not supported for a particular result, the partner automatically chooses a language for the result.</p><p>For an example, we'll use the Greek language. You search for <code>Athens, Greece</code>, with the <code>language</code> parameter set to <code>en</code>. The result found will most likely be returned as <code>Athens</code>.</p><p>If you set the <code>language</code> parameter to <code>el</code>, for Greek, then the result found will more likely be returned as <code>Αθήνα</code>.</p><p>If the data provider does not have a value for Greek, the result will be in a language that the provider does support.</p>
@@ -3278,7 +4207,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>A summary of the request sent by using <code>SearchPlaceIndexForText</code>.</p>
- Required parameters: [DataSource, Text]
+ Required parameters: [Text, DataSource]
  */
 @interface AWSLocationSearchPlaceIndexForTextSummary : AWSModel
 
@@ -3289,7 +4218,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable biasPosition;
 
 /**
- <p>The geospatial data provider attached to the place index resource specified in the request. Values can be one of the following:</p><ul><li><p>Esri</p></li><li><p>Here</p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
+ <p>The geospatial data provider attached to the place index resource specified in the request. Values can be one of the following:</p><ul><li><p>Esri</p></li><li><p>Grab</p></li><li><p>Here</p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataSource;
 
@@ -3297,6 +4226,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>Contains the coordinates for the optional bounding box specified in the request.</p>
  */
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable filterBBox;
+
+/**
+ <p>The optional category filter specified in the request.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable filterCategories;
 
 /**
  <p>Contains the optional country filter specified in the request.</p>
@@ -3327,7 +4261,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p> Represents an element of a leg within a route. A step contains instructions for how to move to the next step in the leg. </p>
- Required parameters: [Distance, DurationSeconds, EndPosition, StartPosition]
+ Required parameters: [StartPosition, EndPosition, Distance, DurationSeconds]
  */
 @interface AWSLocationStep : AWSModel
 
@@ -3401,6 +4335,19 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>The time zone's offset, in seconds, from UTC.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable offset;
+
+@end
+
+/**
+ <p>The geomerty used to filter device positions.</p>
+ */
+@interface AWSLocationTrackingFilterGeometry : AWSModel
+
+
+/**
+ <p>The set of arrays which define the polygon. A polygon can have between 4 and 1000 vertices.</p>
+ */
+@property (nonatomic, strong) NSArray<NSArray<NSArray<NSNumber *> *> *> * _Nullable polygon;
 
 @end
 
@@ -3511,7 +4458,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) of the updated geofence collection. Used to specify a resource across AWS.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollection</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) of the updated geofence collection. Used to specify a resource across Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:geofence-collection/ExampleGeofenceCollection</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable collectionArn;
 
@@ -3530,8 +4477,74 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 /**
  
  */
+@interface AWSLocationUpdateKeyRequest : AWSRequest
+
+
+/**
+ <p>Updates the description for the API key resource.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable detail;
+
+/**
+ <p>Updates the timestamp for when the API key resource will expire in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable expireTime;
+
+/**
+ <p>The boolean flag to be included for updating <code>ExpireTime</code> or <code>Restrictions</code> details.</p><p>Must be set to <code>true</code> to update an API key resource that has been used in the past 7 days.</p><p><code>False</code> if force update is not preferred</p><p>Default value: <code>False</code></p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable forceUpdate;
+
+/**
+ <p>The name of the API key resource to update.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyName;
+
+/**
+ <p>Whether the API key should expire. Set to <code>true</code> to set the API key to have no expiration time.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable noExpiry;
+
+/**
+ <p>Updates the API key restrictions for the API key resource.</p>
+ */
+@property (nonatomic, strong) AWSLocationApiKeyRestrictions * _Nullable restrictions;
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationUpdateKeyResponse : AWSModel
+
+
+/**
+ <p>The Amazon Resource Name (ARN) for the API key resource. Used when you need to specify a resource across all Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:key/ExampleKey</code></p></li></ul>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyArn;
+
+/**
+ <p>The name of the API key resource.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyName;
+
+/**
+ <p>The timestamp for when the API key resource was last updated in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable updateTime;
+
+@end
+
+/**
+ 
+ */
 @interface AWSLocationUpdateMapRequest : AWSRequest
 
+
+/**
+ <p>Updates the parts of the map configuration that can be updated, including the political view.</p>
+ */
+@property (nonatomic, strong) AWSLocationMapConfigurationUpdate * _Nullable configurationUpdate;
 
 /**
  <p>Updates the description for the map resource.</p>
@@ -3557,7 +4570,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) of the updated map resource. Used to specify a resource across AWS.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:maps/ExampleMap</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) of the updated map resource. Used to specify a resource across AWS.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:map/ExampleMap</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable mapArn;
 
@@ -3608,7 +4621,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) of the upated place index resource. Used to specify a resource across AWS.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:place- index/ExamplePlaceIndex</code></p></li></ul>
+ <p>The Amazon Resource Name (ARN) of the upated place index resource. Used to specify a resource across Amazon Web Services.</p><ul><li><p>Format example: <code>arn:aws:geo:region:account-id:place- index/ExamplePlaceIndex</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable indexArn;
 
@@ -3682,6 +4695,16 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
+ <p>Whether to enable position <code>UPDATE</code> events from this tracker to be sent to EventBridge.</p><note><p>You do not need enable this feature to get <code>ENTER</code> and <code>EXIT</code> events for geofences with this tracker. Those events are always sent to EventBridge.</p></note>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable eventBridgeEnabled;
+
+/**
+ <p>Enables <code>GeospatialQueries</code> for a tracker that uses a <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Amazon Web Services KMS customer managed key</a>.</p><p>This parameter is only used if you are using a KMS customer managed key.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable kmsKeyEnableGeospatialQueries;
+
+/**
  <p>Updates the position filtering for the tracker resource.</p><p>Valid values:</p><ul><li><p><code>TimeBased</code> - Location updates are evaluated against linked geofence collections, but not every location update is stored. If your update frequency is more often than 30 seconds, only one update per 30 seconds is stored for each unique device ID. </p></li><li><p><code>DistanceBased</code> - If the device has moved less than 30 m (98.4 ft), location updates are ignored. Location updates within this distance are neither evaluated against linked geofence collections, nor stored. This helps control costs by reducing the number of geofence evaluations and historical device positions to paginate through. Distance-based filtering can also reduce the effects of GPS noise when displaying device trajectories on a map. </p></li><li><p><code>AccuracyBased</code> - If the device has moved less than the measured accuracy, location updates are ignored. For example, if two consecutive updates from a device have a horizontal accuracy of 5 m and 10 m, the second update is ignored if the device has moved less than 15 m. Ignored location updates are neither evaluated against linked geofence collections, nor stored. This helps educe the effects of GPS noise when displaying device trajectories on a map, and can help control costs by reducing the number of geofence evaluations. </p></li></ul>
  */
 @property (nonatomic, assign) AWSLocationPositionFiltering positionFiltering;
@@ -3728,7 +4751,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>The input failed to meet the constraints specified by the AWS service in a specified field. </p>
- Required parameters: [Message, Name]
+ Required parameters: [Name, Message]
  */
 @interface AWSLocationValidationExceptionField : AWSModel
 
@@ -3742,6 +4765,81 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>The field name where the invalid entry was detected.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationVerifyDevicePositionRequest : AWSRequest
+
+
+/**
+ <p>The device's state, including position, IP address, cell signals and Wi-Fi access points.</p>
+ */
+@property (nonatomic, strong) AWSLocationDeviceState * _Nullable deviceState;
+
+/**
+ <p>The distance unit for the verification request.</p><p>Default Value: <code>Kilometers</code></p>
+ */
+@property (nonatomic, assign) AWSLocationDistanceUnit distanceUnit;
+
+/**
+ <p>The name of the tracker resource to be associated with verification request.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable trackerName;
+
+@end
+
+/**
+ 
+ */
+@interface AWSLocationVerifyDevicePositionResponse : AWSModel
+
+
+/**
+ <p>The device identifier.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable deviceId;
+
+/**
+ <p>The distance unit for the verification response.</p>
+ */
+@property (nonatomic, assign) AWSLocationDistanceUnit distanceUnit;
+
+/**
+ <p>The inferred state of the device, given the provided position, IP address, cellular signals, and Wi-Fi- access points.</p>
+ */
+@property (nonatomic, strong) AWSLocationInferredState * _Nullable inferredState;
+
+/**
+ <p>The timestamp for when the tracker resource received the device position in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601 </a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable receivedTime;
+
+/**
+ <p>The timestamp at which the device's position was determined. Uses <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601 </a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable sampleTime;
+
+@end
+
+/**
+ <p>Wi-Fi access point.</p>
+ Required parameters: [MacAddress, Rss]
+ */
+@interface AWSLocationWiFiAccessPoint : AWSModel
+
+
+/**
+ <p>Medium access control address (Mac).</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable macAddress;
+
+/**
+ <p>Received signal strength (dBm) of the WLAN measurement data.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable rss;
 
 @end
 

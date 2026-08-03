@@ -33,7 +33,7 @@ static NSString *userId;
 @interface AWSPinpointTargetingClientTests : XCTestCase
 @property (nonatomic, strong) AWSPinpoint *pinpoint;
 @property (nonatomic, strong) AWSPinpointConfiguration *configuration;
-@property (nonatomic, strong) UIApplication *application;
+@property (nonatomic, strong) id mockApplication;
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
 @property (nonatomic, strong) AWSUICKeyChainStore *keychain;
 
@@ -72,6 +72,7 @@ static NSString *userId;
 }
 
 - (void)tearDown {
+    [self.mockApplication stopMocking];
     [super tearDown];
 }
 
@@ -122,6 +123,7 @@ static NSString *userId;
     UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:notificationType categories:nil];
     OCMStub([mockApplication currentUserNotificationSettings]).andReturn(notificationSettings);
     OCMStub([mockApplication isRegisteredForRemoteNotifications]).andReturn(withRemoteNotifications);
+    self.mockApplication = mockApplication;
 }
 
 - (void)testConstructors {
@@ -195,6 +197,38 @@ static NSString *userId;
     [self.keychain setData:newTokenData forKey:AWSDeviceTokenKey];
     endpointProfile = [pinpoint.targetingClient currentEndpointProfile];
     XCTAssertEqualObjects(endpointProfile.address, newTokenString);
+}
+
+- (void)testCurrentProfileWithCompletion {
+    [self initializePinpointWithConfiguration:[self getAWSPinpointConfigurationWithOptOut:NO] forceCreate:YES];
+    [self.pinpoint.targetingClient currentEndpointProfileWithCompletion:^(AWSPinpointEndpointProfile * _Nonnull profile) {
+        XCTAssertTrue([profile.optOut isEqualToString:@"ALL"]);
+    }];
+}
+
+- (void)testCurrentProfileWithCompletionOnMultipleThreads {
+    [self initializePinpointWithConfiguration:[self getAWSPinpointConfigurationWithOptOut:NO] forceCreate:YES];
+    void (^validationBlock)(void) = ^(void) {
+        [self.pinpoint.targetingClient currentEndpointProfileWithCompletion:^(AWSPinpointEndpointProfile * _Nonnull profile) {
+            XCTAssertTrue([profile.optOut isEqualToString:@"ALL"]);
+        }];
+    };
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        validationBlock();
+    });
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        validationBlock();
+    });
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        validationBlock();
+    });
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        validationBlock();
+    });
 }
 
 - (void)testCurrentProfileReturnsOptOutAll {

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, AWSTranslateErrorType) {
     AWSTranslateErrorServiceUnavailable,
     AWSTranslateErrorTextSizeLimitExceeded,
     AWSTranslateErrorTooManyRequests,
+    AWSTranslateErrorTooManyTags,
     AWSTranslateErrorUnsupportedDisplayLanguageCode,
     AWSTranslateErrorUnsupportedLanguagePair,
 };
@@ -122,6 +123,7 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 @class AWSTranslateDeleteTerminologyRequest;
 @class AWSTranslateDescribeTextTranslationJobRequest;
 @class AWSTranslateDescribeTextTranslationJobResponse;
+@class AWSTranslateDocument;
 @class AWSTranslateEncryptionKey;
 @class AWSTranslateGetParallelDataRequest;
 @class AWSTranslateGetParallelDataResponse;
@@ -136,6 +138,8 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 @class AWSTranslateListLanguagesResponse;
 @class AWSTranslateListParallelDataRequest;
 @class AWSTranslateListParallelDataResponse;
+@class AWSTranslateListTagsForResourceRequest;
+@class AWSTranslateListTagsForResourceResponse;
 @class AWSTranslateListTerminologiesRequest;
 @class AWSTranslateListTerminologiesResponse;
 @class AWSTranslateListTextTranslationJobsRequest;
@@ -148,15 +152,23 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 @class AWSTranslateStartTextTranslationJobResponse;
 @class AWSTranslateStopTextTranslationJobRequest;
 @class AWSTranslateStopTextTranslationJobResponse;
+@class AWSTranslateTag;
+@class AWSTranslateTagResourceRequest;
+@class AWSTranslateTagResourceResponse;
 @class AWSTranslateTerm;
 @class AWSTranslateTerminologyData;
 @class AWSTranslateTerminologyDataLocation;
 @class AWSTranslateTerminologyProperties;
 @class AWSTranslateTextTranslationJobFilter;
 @class AWSTranslateTextTranslationJobProperties;
+@class AWSTranslateTranslateDocumentRequest;
+@class AWSTranslateTranslateDocumentResponse;
 @class AWSTranslateTranslateTextRequest;
 @class AWSTranslateTranslateTextResponse;
+@class AWSTranslateTranslatedDocument;
 @class AWSTranslateTranslationSettings;
+@class AWSTranslateUntagResourceRequest;
+@class AWSTranslateUntagResourceResponse;
 @class AWSTranslateUpdateParallelDataRequest;
 @class AWSTranslateUpdateParallelDataResponse;
 
@@ -208,6 +220,11 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
  <p>Specifies the format and S3 location of the parallel data input file.</p>
  */
 @property (nonatomic, strong) AWSTranslateParallelDataConfig * _Nullable parallelDataConfig;
+
+/**
+ <p>Tags to be associated with this resource. A tag is a key-value pair that adds metadata to a resource. Each tag key for the resource must be unique. For more information, see <a href="https://docs.aws.amazon.com/translate/latest/dg/tagging.html"> Tagging your resources</a>.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSTranslateTag *> * _Nullable tags;
 
 @end
 
@@ -296,6 +313,25 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
  <p>An object that contains the properties associated with an asynchronous batch translation job.</p>
  */
 @property (nonatomic, strong) AWSTranslateTextTranslationJobProperties * _Nullable textTranslationJobProperties;
+
+@end
+
+/**
+ <p>The content and content type of a document.</p>
+ Required parameters: [Content, ContentType]
+ */
+@interface AWSTranslateDocument : AWSModel
+
+
+/**
+ <p>The <code>Content</code>field type is Binary large object (blob). This object contains the document content converted into base64-encoded binary data. If you use one of the AWS SDKs, the SDK performs the Base64-encoding on this field before sending the request. </p>
+ */
+@property (nonatomic, strong) NSData * _Nullable content;
+
+/**
+ <p>Describes the format of the document. You can specify one of the following:</p><ul><li><p><code>text/html</code> - The input data consists of HTML content. Amazon Translate translates only the text in the HTML element.</p></li><li><p><code>text/plain</code> - The input data consists of unformatted text. Amazon Translate translates every character in the content. </p></li><li><p><code>application/vnd.openxmlformats-officedocument.wordprocessingml.document</code> - The input data consists of a Word document (.docx).</p></li></ul>
+ */
+@property (nonatomic, strong) NSString * _Nullable contentType;
 
 @end
 
@@ -427,6 +463,11 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
+ <p>Tags to be associated with this resource. A tag is a key-value pair that adds metadata to a resource. Each tag key for the resource must be unique. For more information, see <a href="https://docs.aws.amazon.com/translate/latest/dg/tagging.html"> Tagging your resources</a>.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSTranslateTag *> * _Nullable tags;
+
+/**
  <p>The terminology data for the custom terminology being imported.</p>
  */
 @property (nonatomic, strong) AWSTranslateTerminologyData * _Nullable terminologyData;
@@ -464,7 +505,7 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 @property (nonatomic, strong) NSString * _Nullable contentType;
 
 /**
- <p>The URI of the AWS S3 folder that contains the input files. Amazon Translate translates all the files in the folder. The folder must be in the same Region as the API endpoint you are calling.</p><note><p>The URI can also point to a single input document, or it can provide the prefix for a collection of input documents. For example. if you use the URI <code>S3://bucketName/prefix</code> and the prefix is a single file, Amazon Translate uses that files as input. If more than one file begins with the prefix, Amazon Translate uses all of them as input.</p></note>
+ <p>The URI of the AWS S3 folder that contains the input files. Amazon Translate translates all the files in the folder and all its sub-folders. The folder must be in the same Region as the API endpoint you are calling.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable s3Uri;
 
@@ -591,6 +632,32 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
  <p>The properties of the parallel data resources returned by this request.</p>
  */
 @property (nonatomic, strong) NSArray<AWSTranslateParallelDataProperties *> * _Nullable parallelDataPropertiesList;
+
+@end
+
+/**
+ 
+ */
+@interface AWSTranslateListTagsForResourceRequest : AWSRequest
+
+
+/**
+ <p>The Amazon Resource Name (ARN) of the given Amazon Translate resource you are querying. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable resourceArn;
+
+@end
+
+/**
+ 
+ */
+@interface AWSTranslateListTagsForResourceResponse : AWSModel
+
+
+/**
+ <p>Tags associated with the Amazon Translate resource being queried. A tag is a key-value pair that adds as a metadata to a resource used by Amazon Translate. For example, a tag with "Sales" as the key might be added to a resource to indicate its use by the sales department. </p>
+ */
+@property (nonatomic, strong) NSArray<AWSTranslateTag *> * _Nullable tags;
 
 @end
 
@@ -833,7 +900,7 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>The Amazon Resource Name (ARN) of an AWS Identity Access and Management (IAM) role that grants Amazon Translate read access to your input data. For more information, see <a>identity-and-access-management</a>.</p>
+ <p>The Amazon Resource Name (ARN) of an AWS Identity Access and Management (IAM) role that grants Amazon Translate read access to your input data. For more information, see <a href="https://docs.aws.amazon.com/translate/latest/dg/identity-and-access-management.html">Identity and access management </a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable dataAccessRoleArn;
 
@@ -853,27 +920,27 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 @property (nonatomic, strong) AWSTranslateOutputDataConfig * _Nullable outputDataConfig;
 
 /**
- <p>The name of a parallel data resource to add to the translation job. This resource consists of examples that show how you want segments of text to be translated. When you add parallel data to a translation job, you create an <i>Active Custom Translation</i> job. </p><p>This parameter accepts only one parallel data resource.</p><note><p>Active Custom Translation jobs are priced at a higher rate than other jobs that don't use parallel data. For more information, see <a href="http://aws.amazon.com/translate/pricing/">Amazon Translate pricing</a>.</p></note><p>For a list of available parallel data resources, use the <a>ListParallelData</a> operation.</p><p>For more information, see <a>customizing-translations-parallel-data</a>.</p>
+ <p>The name of a parallel data resource to add to the translation job. This resource consists of examples that show how you want segments of text to be translated. If you specify multiple target languages for the job, the parallel data file must include translations for all the target languages.</p><p>When you add parallel data to a translation job, you create an <i>Active Custom Translation</i> job. </p><p>This parameter accepts only one parallel data resource.</p><note><p>Active Custom Translation jobs are priced at a higher rate than other jobs that don't use parallel data. For more information, see <a href="http://aws.amazon.com/translate/pricing/">Amazon Translate pricing</a>.</p></note><p>For a list of available parallel data resources, use the <a>ListParallelData</a> operation.</p><p>For more information, see <a href="https://docs.aws.amazon.com/translate/latest/dg/customizing-translations-parallel-data.html"> Customizing your translations with parallel data</a>.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable parallelDataNames;
 
 /**
- <p>Settings to configure your translation output, including the option to mask profane words and phrases. <code>StartTextTranslationJob</code> does not support the formality setting.</p>
+ <p>Settings to configure your translation output, including the option to set the formality level of the output text and the option to mask profane words and phrases.</p>
  */
 @property (nonatomic, strong) AWSTranslateTranslationSettings * _Nullable settings;
 
 /**
- <p>The language code of the input language. For a list of language codes, see <a>what-is-languages</a>.</p><p>Amazon Translate does not automatically detect a source language during batch translation jobs.</p>
+ <p>The language code of the input language. Specify the language if all input documents share the same language. If you don't know the language of the source files, or your input documents contains different source languages, select <code>auto</code>. Amazon Translate auto detects the source language for each input document. For a list of supported language codes, see <a href="https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html">Supported languages</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable sourceLanguageCode;
 
 /**
- <p>The language code of the output language.</p>
+ <p>The target languages of the translation job. Enter up to 10 language codes. Each input file is translated into each target language.</p><p>Each language code is 2 or 5 characters long. For a list of language codes, see <a href="https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html">Supported languages</a>.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable targetLanguageCodes;
 
 /**
- <p>The name of a custom terminology resource to add to the translation job. This resource lists examples source terms and the desired translation for each term.</p><p>This parameter accepts only one custom terminology resource.</p><p>For a list of available custom terminology resources, use the <a>ListTerminologies</a> operation.</p><p>For more information, see <a>how-custom-terminology</a>.</p>
+ <p>The name of a custom terminology resource to add to the translation job. This resource lists examples source terms and the desired translation for each term.</p><p>This parameter accepts only one custom terminology resource.</p><p>If you specify multiple target languages for the job, translate uses the designated terminology for each requested target language that has an entry for the source term in the terminology file.</p><p>For a list of available custom terminology resources, use the <a>ListTerminologies</a> operation.</p><p>For more information, see <a href="https://docs.aws.amazon.com/translate/latest/dg/how-custom-terminology.html">Custom terminology</a>.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable terminologyNames;
 
@@ -925,6 +992,51 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
  <p>The status of the designated job. Upon successful completion, the job's status will be <code>STOPPED</code>.</p>
  */
 @property (nonatomic, assign) AWSTranslateJobStatus jobStatus;
+
+@end
+
+/**
+ <p>A key-value pair that adds as a metadata to a resource used by Amazon Translate. </p>
+ Required parameters: [Key, Value]
+ */
+@interface AWSTranslateTag : AWSModel
+
+
+/**
+ <p>The initial part of a key-value pair that forms a tag associated with a given resource. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable key;
+
+/**
+ <p> The second part of a key-value pair that forms a tag associated with a given resource.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable value;
+
+@end
+
+/**
+ 
+ */
+@interface AWSTranslateTagResourceRequest : AWSRequest
+
+
+/**
+ <p>The Amazon Resource Name (ARN) of the given Amazon Translate resource to which you want to associate the tags. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable resourceArn;
+
+/**
+ <p>Tags being associated with a specific Amazon Translate resource. There can be a maximum of 50 tags (both existing and pending) associated with a specific resource.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSTranslateTag *> * _Nullable tags;
+
+@end
+
+/**
+ 
+ */
+@interface AWSTranslateTagResourceResponse : AWSModel
+
 
 @end
 
@@ -1152,7 +1264,7 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable parallelDataNames;
 
 /**
- <p>Settings that configure the translation output.</p>
+ <p>Settings that modify the translation output.</p>
  */
 @property (nonatomic, strong) AWSTranslateTranslationSettings * _Nullable settings;
 
@@ -1181,6 +1293,72 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 /**
  
  */
+@interface AWSTranslateTranslateDocumentRequest : AWSRequest
+
+
+/**
+ <p>The content and content type for the document to be translated. The document size must not exceed 100 KB.</p>
+ */
+@property (nonatomic, strong) AWSTranslateDocument * _Nullable document;
+
+/**
+ <p>Settings to configure your translation output, including the option to set the formality level of the output text and the option to mask profane words and phrases.</p>
+ */
+@property (nonatomic, strong) AWSTranslateTranslationSettings * _Nullable settings;
+
+/**
+ <p>The language code for the language of the source text. Do not use <code>auto</code>, because <code>TranslateDocument</code> does not support language auto-detection. For a list of supported language codes, see <a href="https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html">Supported languages</a>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable sourceLanguageCode;
+
+/**
+ <p>The language code requested for the translated document. For a list of supported language codes, see <a href="https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html">Supported languages</a>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable targetLanguageCode;
+
+/**
+ <p>The name of a terminology list file to add to the translation job. This file provides source terms and the desired translation for each term. A terminology list can contain a maximum of 256 terms. You can use one custom terminology resource in your translation request.</p><p>Use the <a>ListTerminologies</a> operation to get the available terminology lists.</p><p>For more information about custom terminology lists, see <a href="https://docs.aws.amazon.com/translate/latest/dg/how-custom-terminology.html">Custom terminology</a>.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable terminologyNames;
+
+@end
+
+/**
+ 
+ */
+@interface AWSTranslateTranslateDocumentResponse : AWSModel
+
+
+/**
+ <p>Settings to configure your translation output, including the option to set the formality level of the output text and the option to mask profane words and phrases.</p>
+ */
+@property (nonatomic, strong) AWSTranslateTranslationSettings * _Nullable appliedSettings;
+
+/**
+ <p>The names of the custom terminologies applied to the input text by Amazon Translate to produce the translated text document.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSTranslateAppliedTerminology *> * _Nullable appliedTerminologies;
+
+/**
+ <p>The language code of the source document.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable sourceLanguageCode;
+
+/**
+ <p>The language code of the translated document. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable targetLanguageCode;
+
+/**
+ <p>The document containing the translated content. The document format matches the source document format.</p>
+ */
+@property (nonatomic, strong) AWSTranslateTranslatedDocument * _Nullable translatedDocument;
+
+@end
+
+/**
+ 
+ */
 @interface AWSTranslateTranslateTextRequest : AWSRequest
 
 
@@ -1190,22 +1368,22 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 @property (nonatomic, strong) AWSTranslateTranslationSettings * _Nullable settings;
 
 /**
- <p>The language code for the language of the source text. The language must be a language supported by Amazon Translate. For a list of language codes, see <a>what-is-languages</a>.</p><p>To have Amazon Translate determine the source language of your text, you can specify <code>auto</code> in the <code>SourceLanguageCode</code> field. If you specify <code>auto</code>, Amazon Translate will call <a href="https://docs.aws.amazon.com/comprehend/latest/dg/comprehend-general.html">Amazon Comprehend</a> to determine the source language.</p><note><p>If you specify <code>auto</code>, you must send the <code>TranslateText</code> request in a region that supports Amazon Comprehend. Otherwise, the request returns an error indicating that autodetect is not supported. </p></note>
+ <p>The language code for the language of the source text. For a list of language codes, see <a href="https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html">Supported languages</a>.</p><p>To have Amazon Translate determine the source language of your text, you can specify <code>auto</code> in the <code>SourceLanguageCode</code> field. If you specify <code>auto</code>, Amazon Translate will call <a href="https://docs.aws.amazon.com/comprehend/latest/dg/comprehend-general.html">Amazon Comprehend</a> to determine the source language.</p><note><p>If you specify <code>auto</code>, you must send the <code>TranslateText</code> request in a region that supports Amazon Comprehend. Otherwise, the request returns an error indicating that autodetect is not supported. </p></note>
  */
 @property (nonatomic, strong) NSString * _Nullable sourceLanguageCode;
 
 /**
- <p>The language code requested for the language of the target text. The language must be a language supported by Amazon Translate.</p>
+ <p>The language code requested for the language of the target text. For a list of language codes, see <a href="https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html">Supported languages</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable targetLanguageCode;
 
 /**
- <p>The name of the terminology list file to be used in the TranslateText request. You can use 1 terminology list at most in a <code>TranslateText</code> request. Terminology lists can contain a maximum of 256 terms.</p>
+ <p>The name of a terminology list file to add to the translation job. This file provides source terms and the desired translation for each term. A terminology list can contain a maximum of 256 terms. You can use one custom terminology resource in your translation request.</p><p>Use the <a>ListTerminologies</a> operation to get the available terminology lists.</p><p>For more information about custom terminology lists, see <a href="https://docs.aws.amazon.com/translate/latest/dg/how-custom-terminology.html">Custom terminology</a>.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable terminologyNames;
 
 /**
- <p>The text to translate. The text string can be a maximum of 5,000 bytes long. Depending on your character set, this may be fewer than 5,000 characters.</p>
+ <p>The text to translate. The text string can be a maximum of 10,000 bytes long. Depending on your character set, this may be fewer than 10,000 characters.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable text;
 
@@ -1218,7 +1396,7 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 
 
 /**
- <p>Settings that configure the translation output.</p>
+ <p>Optional settings that modify the translation output.</p>
  */
 @property (nonatomic, strong) AWSTranslateTranslationSettings * _Nullable appliedSettings;
 
@@ -1245,20 +1423,60 @@ typedef NS_ENUM(NSInteger, AWSTranslateTerminologyDataFormat) {
 @end
 
 /**
- <p>Settings that configure the translation output.</p>
+ <p>The translated content.</p>
+ Required parameters: [Content]
+ */
+@interface AWSTranslateTranslatedDocument : AWSModel
+
+
+/**
+ <p>The document containing the translated content.</p>
+ */
+@property (nonatomic, strong) NSData * _Nullable content;
+
+@end
+
+/**
+ <p>Settings to configure your translation output, including the option to set the formality level of the output text and the option to mask profane words and phrases.</p>
  */
 @interface AWSTranslateTranslationSettings : AWSModel
 
 
 /**
- <p>You can optionally specify the desired level of formality for real-time translations to supported target languages. The formality setting controls the level of formal language usage (also known as <a href="https://en.wikipedia.org/wiki/Register_(sociolinguistics)">register</a>) in the translation output. You can set the value to informal or formal. If you don't specify a value for formality, or if the target language doesn't support formality, the translation will ignore the formality setting.</p><p>Note that asynchronous translation jobs don't support formality. If you provide a value for formality, the <code>StartTextTranslationJob</code> API throws an exception (InvalidRequestException).</p><p>For target languages that support formality, see <a href="https://docs.aws.amazon.com/translate/latest/dg/what-is.html">Supported Languages and Language Codes in the Amazon Translate Developer Guide</a>.</p>
+ <p>You can optionally specify the desired level of formality for translations to supported target languages. The formality setting controls the level of formal language usage (also known as <a href="https://en.wikipedia.org/wiki/Register_(sociolinguistics)">register</a>) in the translation output. You can set the value to informal or formal. If you don't specify a value for formality, or if the target language doesn't support formality, the translation will ignore the formality setting.</p><p> If you specify multiple target languages for the job, translate ignores the formality setting for any unsupported target language.</p><p>For a list of target languages that support formality, see <a href="https://docs.aws.amazon.com/translate/latest/dg/customizing-translations-formality.html#customizing-translations-formality-languages">Supported languages</a> in the Amazon Translate Developer Guide.</p>
  */
 @property (nonatomic, assign) AWSTranslateFormality formality;
 
 /**
- <p>Enable the profanity setting if you want Amazon Translate to mask profane words and phrases in your translation output.</p><p>To mask profane words and phrases, Amazon Translate replaces them with the grawlix string “?$#@$“. This 5-character sequence is used for each profane word or phrase, regardless of the length or number of words.</p><p>Amazon Translate doesn't detect profanity in all of its supported languages. For languages that support profanity detection, see <a href="https://docs.aws.amazon.com/translate/latest/dg/what-is.html">Supported Languages and Language Codes in the Amazon Translate Developer Guide</a>.</p>
+ <p>Enable the profanity setting if you want Amazon Translate to mask profane words and phrases in your translation output.</p><p>To mask profane words and phrases, Amazon Translate replaces them with the grawlix string “?$#@$“. This 5-character sequence is used for each profane word or phrase, regardless of the length or number of words.</p><p>Amazon Translate doesn't detect profanity in all of its supported languages. For languages that don't support profanity detection, see <a href="https://docs.aws.amazon.com/translate/latest/dg/customizing-translations-profanity.html#customizing-translations-profanity-languages">Unsupported languages</a> in the Amazon Translate Developer Guide.</p><p>If you specify multiple target languages for the job, all the target languages must support profanity masking. If any of the target languages don't support profanity masking, the translation job won't mask profanity for any target language.</p>
  */
 @property (nonatomic, assign) AWSTranslateProfanity profanity;
+
+@end
+
+/**
+ 
+ */
+@interface AWSTranslateUntagResourceRequest : AWSRequest
+
+
+/**
+ <p> The Amazon Resource Name (ARN) of the given Amazon Translate resource from which you want to remove the tags. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable resourceArn;
+
+/**
+ <p>The initial part of a key-value pair that forms a tag being removed from a given resource. Keys must be unique and cannot be duplicated for a particular resource. </p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable tagKeys;
+
+@end
+
+/**
+ 
+ */
+@interface AWSTranslateUntagResourceResponse : AWSModel
+
 
 @end
 

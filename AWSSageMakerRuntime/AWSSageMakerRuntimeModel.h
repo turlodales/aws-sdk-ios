@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -73,7 +73,12 @@ typedef NS_ENUM(NSInteger, AWSSageMakerRuntimeErrorType) {
 @property (nonatomic, strong) NSString * _Nullable inputLocation;
 
 /**
- <p>Maximum age in seconds a request can be in the queue before it is marked as expired.</p>
+ <p>Maximum amount of time in seconds a request can be processed before it is marked as expired. The default is 15 minutes, or 900 seconds.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable invocationTimeoutSeconds;
+
+/**
+ <p>Maximum age in seconds a request can be in the queue before it is marked as expired. The default is 6 hours, or 21,600 seconds.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable requestTTLSeconds;
 
@@ -84,6 +89,11 @@ typedef NS_ENUM(NSInteger, AWSSageMakerRuntimeErrorType) {
  */
 @interface AWSSageMakerRuntimeInvokeEndpointAsyncOutput : AWSModel
 
+
+/**
+ <p>The Amazon S3 URI where the inference failure response payload is stored.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable failureLocation;
 
 /**
  <p>Identifier for an inference request. This will be the same as the <code>InferenceId</code> specified in the input. Amazon SageMaker will generate an identifier for you if you do not specify one.</p>
@@ -124,6 +134,11 @@ typedef NS_ENUM(NSInteger, AWSSageMakerRuntimeErrorType) {
 @property (nonatomic, strong) NSString * _Nullable customAttributes;
 
 /**
+ <p>An optional JMESPath expression used to override the <code>EnableExplanations</code> parameter of the <code>ClarifyExplainerConfig</code> API. See the <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">EnableExplanations</a> section in the developer guide for more information. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable enableExplanations;
+
+/**
  <p>The name of the endpoint that you specified when you created the endpoint using the <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/API_CreateEndpoint.html">CreateEndpoint</a> API. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable endpointName;
@@ -157,7 +172,7 @@ typedef NS_ENUM(NSInteger, AWSSageMakerRuntimeErrorType) {
 
 
 /**
- <p>Includes the inference provided by the model.</p><p>For information about the format of the response body, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/cdf-inference.html">Common Data Formats-Inference</a>.</p>
+ <p>Includes the inference provided by the model. </p><p>For information about the format of the response body, see <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/cdf-inference.html">Common Data Formats-Inference</a>.</p><p>If the explainer is activated, the body includes the explanations provided by the model. For more information, see the <b>Response section</b> under <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-invoke-endpoint.html#clarify-online-explainability-response">Invoke the Endpoint</a> in the Developer Guide.</p>
  */
 @property (nonatomic, strong) NSData * _Nullable body;
 

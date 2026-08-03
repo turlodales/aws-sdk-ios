@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -84,6 +84,7 @@
 - (void) test_AWSCognitoIdentityProviderChallengeResponseType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderChangePasswordRequest API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderChangePasswordResponse API_AVAILABLE(ios(11));
+- (void) test_AWSCognitoIdentityProviderCloudWatchLogsConfigurationType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderCodeDeliveryDetailsType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderCompromisedCredentialsActionsType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderCompromisedCredentialsRiskConfigurationType API_AVAILABLE(ios(11));
@@ -154,6 +155,8 @@
 - (void) test_AWSCognitoIdentityProviderGetGroupResponse API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderGetIdentityProviderByIdentifierRequest API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderGetIdentityProviderByIdentifierResponse API_AVAILABLE(ios(11));
+- (void) test_AWSCognitoIdentityProviderGetLogDeliveryConfigurationRequest API_AVAILABLE(ios(11));
+- (void) test_AWSCognitoIdentityProviderGetLogDeliveryConfigurationResponse API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderGetSigningCertificateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderGetSigningCertificateResponse API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderGetUICustomizationRequest API_AVAILABLE(ios(11));
@@ -192,6 +195,8 @@
 - (void) test_AWSCognitoIdentityProviderListUsersInGroupResponse API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderListUsersRequest API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderListUsersResponse API_AVAILABLE(ios(11));
+- (void) test_AWSCognitoIdentityProviderLogConfigurationType API_AVAILABLE(ios(11));
+- (void) test_AWSCognitoIdentityProviderLogDeliveryConfigurationType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderMFAOptionType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderMessageTemplateType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderLatestDeviceMetadataType API_AVAILABLE(ios(11));
@@ -199,6 +204,7 @@
 - (void) test_AWSCognitoIdentityProviderNotifyEmailType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderNumberAttributeConstraintsType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderPasswordPolicyType API_AVAILABLE(ios(11));
+- (void) test_AWSCognitoIdentityProviderPreTokenGenerationVersionConfigType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderProviderDescription API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderProviderUserIdentifierType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderRecoveryOptionType API_AVAILABLE(ios(11));
@@ -214,6 +220,8 @@
 - (void) test_AWSCognitoIdentityProviderRiskExceptionConfigurationType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderSMSMfaSettingsType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderSchemaAttributeType API_AVAILABLE(ios(11));
+- (void) test_AWSCognitoIdentityProviderSetLogDeliveryConfigurationRequest API_AVAILABLE(ios(11));
+- (void) test_AWSCognitoIdentityProviderSetLogDeliveryConfigurationResponse API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderSetRiskConfigurationRequest API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderSetRiskConfigurationResponse API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderSetUICustomizationRequest API_AVAILABLE(ios(11));
@@ -540,6 +548,10 @@
     [self validateSecureCodingForClass:[AWSCognitoIdentityProviderChangePasswordResponse class]];
 }
 
+- (void) test_AWSCognitoIdentityProviderCloudWatchLogsConfigurationType {
+    [self validateSecureCodingForClass:[AWSCognitoIdentityProviderCloudWatchLogsConfigurationType class]];
+}
+
 - (void) test_AWSCognitoIdentityProviderCodeDeliveryDetailsType {
     [self validateSecureCodingForClass:[AWSCognitoIdentityProviderCodeDeliveryDetailsType class]];
 }
@@ -820,6 +832,14 @@
     [self validateSecureCodingForClass:[AWSCognitoIdentityProviderGetIdentityProviderByIdentifierResponse class]];
 }
 
+- (void) test_AWSCognitoIdentityProviderGetLogDeliveryConfigurationRequest {
+    [self validateSecureCodingForClass:[AWSCognitoIdentityProviderGetLogDeliveryConfigurationRequest class]];
+}
+
+- (void) test_AWSCognitoIdentityProviderGetLogDeliveryConfigurationResponse {
+    [self validateSecureCodingForClass:[AWSCognitoIdentityProviderGetLogDeliveryConfigurationResponse class]];
+}
+
 - (void) test_AWSCognitoIdentityProviderGetSigningCertificateRequest {
     [self validateSecureCodingForClass:[AWSCognitoIdentityProviderGetSigningCertificateRequest class]];
 }
@@ -972,6 +992,14 @@
     [self validateSecureCodingForClass:[AWSCognitoIdentityProviderListUsersResponse class]];
 }
 
+- (void) test_AWSCognitoIdentityProviderLogConfigurationType {
+    [self validateSecureCodingForClass:[AWSCognitoIdentityProviderLogConfigurationType class]];
+}
+
+- (void) test_AWSCognitoIdentityProviderLogDeliveryConfigurationType {
+    [self validateSecureCodingForClass:[AWSCognitoIdentityProviderLogDeliveryConfigurationType class]];
+}
+
 - (void) test_AWSCognitoIdentityProviderMFAOptionType {
     [self validateSecureCodingForClass:[AWSCognitoIdentityProviderMFAOptionType class]];
 }
@@ -998,6 +1026,10 @@
 
 - (void) test_AWSCognitoIdentityProviderPasswordPolicyType {
     [self validateSecureCodingForClass:[AWSCognitoIdentityProviderPasswordPolicyType class]];
+}
+
+- (void) test_AWSCognitoIdentityProviderPreTokenGenerationVersionConfigType {
+    [self validateSecureCodingForClass:[AWSCognitoIdentityProviderPreTokenGenerationVersionConfigType class]];
 }
 
 - (void) test_AWSCognitoIdentityProviderProviderDescription {
@@ -1058,6 +1090,14 @@
 
 - (void) test_AWSCognitoIdentityProviderSchemaAttributeType {
     [self validateSecureCodingForClass:[AWSCognitoIdentityProviderSchemaAttributeType class]];
+}
+
+- (void) test_AWSCognitoIdentityProviderSetLogDeliveryConfigurationRequest {
+    [self validateSecureCodingForClass:[AWSCognitoIdentityProviderSetLogDeliveryConfigurationRequest class]];
+}
+
+- (void) test_AWSCognitoIdentityProviderSetLogDeliveryConfigurationResponse {
+    [self validateSecureCodingForClass:[AWSCognitoIdentityProviderSetLogDeliveryConfigurationResponse class]];
 }
 
 - (void) test_AWSCognitoIdentityProviderSetRiskConfigurationRequest {

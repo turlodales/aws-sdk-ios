@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@
     \"serviceFullName\":\"AWS IoT\",\
     \"serviceId\":\"IoT\",\
     \"signatureVersion\":\"v4\",\
-    \"signingName\":\"execute-api\",\
+    \"signingName\":\"iot\",\
     \"uid\":\"iot-2015-05-28\"\
   },\
   \"operations\":{\
@@ -207,7 +207,7 @@
         {\"shape\":\"ServiceUnavailableException\"},\
         {\"shape\":\"InternalFailureException\"}\
       ],\
-      \"documentation\":\"<p>Attaches the specified principal to the specified thing. A principal can be X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities or federated identities.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">AttachThingPrincipal</a> action.</p>\"\
+      \"documentation\":\"<p>Attaches the specified principal to the specified thing. A principal can be X.509 certificates, Amazon Cognito identities or federated identities.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">AttachThingPrincipal</a> action.</p>\"\
     },\
     \"CancelAuditMitigationActionsTask\":{\
       \"name\":\"CancelAuditMitigationActionsTask\",\
@@ -411,7 +411,26 @@
         {\"shape\":\"ServiceUnavailableException\"},\
         {\"shape\":\"InternalFailureException\"}\
       ],\
-      \"documentation\":\"<p>Creates an X.509 certificate using the specified certificate signing request.</p> <p> <b>Note:</b> The CSR must include a public key that is either an RSA key with a length of at least 2048 bits or an ECC key from NIST P-256, NIST P-384, or NIST P-512 curves. For supported certificates, consult <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html#x509-cert-algorithms\\\"> Certificate signing algorithms supported by IoT</a>.</p> <p> <b>Note:</b> Reusing the same certificate signing request (CSR) results in a distinct certificate.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">CreateCertificateFromCsr</a> action.</p> <p>You can create multiple certificates in a batch by creating a directory, copying multiple .csr files into that directory, and then specifying that directory on the command line. The following commands show how to create a batch of certificates given a batch of CSRs.</p> <p>Assuming a set of CSRs are located inside of the directory my-csr-directory:</p> <p>On Linux and OS X, the command is:</p> <p>$ ls my-csr-directory/ | xargs -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</p> <p>This command lists all of the CSRs in my-csr-directory and pipes each CSR file name to the aws iot create-certificate-from-csr Amazon Web Services CLI command to create a certificate for the corresponding CSR.</p> <p>The aws iot create-certificate-from-csr part of the command can also be run in parallel to speed up the certificate creation process:</p> <p>$ ls my-csr-directory/ | xargs -P 10 -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</p> <p>On Windows PowerShell, the command to create certificates for all CSRs in my-csr-directory is:</p> <p>&gt; ls -Name my-csr-directory | %{aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/$_}</p> <p>On a Windows command prompt, the command to create certificates for all CSRs in my-csr-directory is:</p> <p>&gt; forfiles /p my-csr-directory /c \\\"cmd /c aws iot create-certificate-from-csr --certificate-signing-request file://@path\\\"</p>\"\
+      \"documentation\":\"<p>Creates an X.509 certificate using the specified certificate signing request. </p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">CreateCertificateFromCsr</a> action. </p> <note> <p>The CSR must include a public key that is either an RSA key with a length of at least 2048 bits or an ECC key from NIST P-256, NIST P-384, or NIST P-521 curves. For supported certificates, consult <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html#x509-cert-algorithms\\\"> Certificate signing algorithms supported by IoT</a>. </p> </note> <note> <p>Reusing the same certificate signing request (CSR) results in a distinct certificate.</p> </note> <p>You can create multiple certificates in a batch by creating a directory, copying multiple <code>.csr</code> files into that directory, and then specifying that directory on the command line. The following commands show how to create a batch of certificates given a batch of CSRs. In the following commands, we assume that a set of CSRs are located inside of the directory my-csr-directory:</p> <p>On Linux and OS X, the command is: </p> <p> <code>$ ls my-csr-directory/ | xargs -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</code> </p> <p>This command lists all of the CSRs in my-csr-directory and pipes each CSR file name to the <code>aws iot create-certificate-from-csr</code> Amazon Web Services CLI command to create a certificate for the corresponding CSR. </p> <p>You can also run the <code>aws iot create-certificate-from-csr</code> part of the command in parallel to speed up the certificate creation process:</p> <p> <code>$ ls my-csr-directory/ | xargs -P 10 -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{} </code> </p> <p>On Windows PowerShell, the command to create certificates for all CSRs in my-csr-directory is:</p> <p> <code>&gt; ls -Name my-csr-directory | %{aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/$_} </code> </p> <p>On a Windows command prompt, the command to create certificates for all CSRs in my-csr-directory is:</p> <p> <code>&gt; forfiles /p my-csr-directory /c \\\"cmd /c aws iot create-certificate-from-csr --certificate-signing-request file://@path\\\" </code> </p>\"\
+    },\
+    \"CreateCertificateProvider\":{\
+      \"name\":\"CreateCertificateProvider\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/certificate-providers/{certificateProviderName}\"\
+      },\
+      \"input\":{\"shape\":\"CreateCertificateProviderRequest\"},\
+      \"output\":{\"shape\":\"CreateCertificateProviderResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"LimitExceededException\"},\
+        {\"shape\":\"ResourceAlreadyExistsException\"},\
+        {\"shape\":\"InvalidRequestException\"},\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"UnauthorizedException\"},\
+        {\"shape\":\"ServiceUnavailableException\"},\
+        {\"shape\":\"InternalFailureException\"}\
+      ],\
+      \"documentation\":\"<p>Creates an Amazon Web Services IoT Core certificate provider. You can use Amazon Web Services IoT Core certificate provider to customize how to sign a certificate signing request (CSR) in IoT fleet provisioning. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/provisioning-cert-provider.html\\\">Customizing certificate signing using Amazon Web Services IoT Core certificate provider</a> from <i>Amazon Web Services IoT Core Developer Guide</i>.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">CreateCertificateProvider</a> action.</p> <important> <p>After you create a certificate provider, the behavior of <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/fleet-provision-api.html#create-cert-csr\\\"> <code>CreateCertificateFromCsr</code> API for fleet provisioning</a> will change and all API calls to <code>CreateCertificateFromCsr</code> will invoke the certificate provider to create the certificates. It can take up to a few minutes for this behavior to change after a certificate provider is created.</p> </important>\"\
     },\
     \"CreateCustomMetric\":{\
       \"name\":\"CreateCustomMetric\",\
@@ -598,6 +617,44 @@
         {\"shape\":\"ServiceUnavailableException\"}\
       ],\
       \"documentation\":\"<p>Creates an IoT OTA update on a target group of things or groups.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">CreateOTAUpdate</a> action.</p>\"\
+    },\
+    \"CreatePackage\":{\
+      \"name\":\"CreatePackage\",\
+      \"http\":{\
+        \"method\":\"PUT\",\
+        \"requestUri\":\"/packages/{packageName}\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"CreatePackageRequest\"},\
+      \"output\":{\"shape\":\"CreatePackageResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"ConflictException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ValidationException\"},\
+        {\"shape\":\"ServiceQuotaExceededException\"}\
+      ],\
+      \"documentation\":\"<p>Creates an IoT software package that can be deployed to your fleet.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">CreatePackage</a> and <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">GetIndexingConfiguration</a> actions.</p>\",\
+      \"idempotent\":true\
+    },\
+    \"CreatePackageVersion\":{\
+      \"name\":\"CreatePackageVersion\",\
+      \"http\":{\
+        \"method\":\"PUT\",\
+        \"requestUri\":\"/packages/{packageName}/versions/{versionName}\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"CreatePackageVersionRequest\"},\
+      \"output\":{\"shape\":\"CreatePackageVersionResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"ConflictException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ValidationException\"},\
+        {\"shape\":\"ServiceQuotaExceededException\"}\
+      ],\
+      \"documentation\":\"<p>Creates a new version for an existing IoT software package.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">CreatePackageVersion</a> and <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">GetIndexingConfiguration</a> actions.</p>\",\
+      \"idempotent\":true\
     },\
     \"CreatePolicy\":{\
       \"name\":\"CreatePolicy\",\
@@ -798,7 +855,7 @@
         {\"shape\":\"ThrottlingException\"},\
         {\"shape\":\"InternalFailureException\"}\
       ],\
-      \"documentation\":\"<p>Create a thing group.</p> <note> <p>This is a control plane operation. See <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-authorization.html\\\">Authorization</a> for information about authorizing control plane actions.</p> </note> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">CreateThingGroup</a> action.</p>\"\
+      \"documentation\":\"<p>Create a thing group.</p> <note> <p>This is a control plane operation. See <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-authorization.html\\\">Authorization</a> for information about authorizing control plane actions.</p> <p>If the <code>ThingGroup</code> that you create has the exact same attributes as an existing <code>ThingGroup</code>, you will get a 200 success response. </p> </note> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">CreateThingGroup</a> action.</p>\"\
     },\
     \"CreateThingType\":{\
       \"name\":\"CreateThingType\",\
@@ -955,6 +1012,25 @@
         {\"shape\":\"ResourceNotFoundException\"}\
       ],\
       \"documentation\":\"<p>Deletes the specified certificate.</p> <p>A certificate cannot be deleted if it has a policy or IoT thing attached to it or if its status is set to ACTIVE. To delete a certificate, first use the <a>DetachPolicy</a> action to detach all policies. Next, use the <a>UpdateCertificate</a> action to set the certificate to the INACTIVE status.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">DeleteCertificate</a> action.</p>\"\
+    },\
+    \"DeleteCertificateProvider\":{\
+      \"name\":\"DeleteCertificateProvider\",\
+      \"http\":{\
+        \"method\":\"DELETE\",\
+        \"requestUri\":\"/certificate-providers/{certificateProviderName}\"\
+      },\
+      \"input\":{\"shape\":\"DeleteCertificateProviderRequest\"},\
+      \"output\":{\"shape\":\"DeleteCertificateProviderResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"DeleteConflictException\"},\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"InvalidRequestException\"},\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"UnauthorizedException\"},\
+        {\"shape\":\"ServiceUnavailableException\"},\
+        {\"shape\":\"InternalFailureException\"}\
+      ],\
+      \"documentation\":\"<p>Deletes a certificate provider.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">DeleteCertificateProvider</a> action. </p> <p>If you delete the certificate provider resource, the behavior of <code>CreateCertificateFromCsr</code> will resume, and IoT will create certificates signed by IoT from a certificate signing request (CSR).</p>\"\
     },\
     \"DeleteCustomMetric\":{\
       \"name\":\"DeleteCustomMetric\",\
@@ -1118,6 +1194,40 @@
         {\"shape\":\"VersionConflictException\"}\
       ],\
       \"documentation\":\"<p>Delete an OTA update.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">DeleteOTAUpdate</a> action.</p>\"\
+    },\
+    \"DeletePackage\":{\
+      \"name\":\"DeletePackage\",\
+      \"http\":{\
+        \"method\":\"DELETE\",\
+        \"requestUri\":\"/packages/{packageName}\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"DeletePackageRequest\"},\
+      \"output\":{\"shape\":\"DeletePackageResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ValidationException\"}\
+      ],\
+      \"documentation\":\"<p>Deletes a specific version from a software package.</p> <p> <b>Note:</b> All package versions must be deleted before deleting the software package.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">DeletePackageVersion</a> action.</p>\",\
+      \"idempotent\":true\
+    },\
+    \"DeletePackageVersion\":{\
+      \"name\":\"DeletePackageVersion\",\
+      \"http\":{\
+        \"method\":\"DELETE\",\
+        \"requestUri\":\"/packages/{packageName}/versions/{versionName}\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"DeletePackageVersionRequest\"},\
+      \"output\":{\"shape\":\"DeletePackageVersionResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ValidationException\"}\
+      ],\
+      \"documentation\":\"<p>Deletes a specific version from a software package.</p> <p> <b>Note:</b> If a package version is designated as default, you must remove the designation from the software package using the <a>UpdatePackage</a> action.</p>\",\
+      \"idempotent\":true\
     },\
     \"DeletePolicy\":{\
       \"name\":\"DeletePolicy\",\
@@ -1546,6 +1656,24 @@
       ],\
       \"documentation\":\"<p>Gets information about the specified certificate.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">DescribeCertificate</a> action.</p>\"\
     },\
+    \"DescribeCertificateProvider\":{\
+      \"name\":\"DescribeCertificateProvider\",\
+      \"http\":{\
+        \"method\":\"GET\",\
+        \"requestUri\":\"/certificate-providers/{certificateProviderName}\"\
+      },\
+      \"input\":{\"shape\":\"DescribeCertificateProviderRequest\"},\
+      \"output\":{\"shape\":\"DescribeCertificateProviderResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"InvalidRequestException\"},\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"UnauthorizedException\"},\
+        {\"shape\":\"ServiceUnavailableException\"},\
+        {\"shape\":\"InternalFailureException\"}\
+      ],\
+      \"documentation\":\"<p>Describes a certificate provider.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">DescribeCertificateProvider</a> action. </p>\"\
+    },\
     \"DescribeCustomMetric\":{\
       \"name\":\"DescribeCustomMetric\",\
       \"http\":{\
@@ -1644,7 +1772,7 @@
         {\"shape\":\"UnauthorizedException\"},\
         {\"shape\":\"ThrottlingException\"}\
       ],\
-      \"documentation\":\"<p>Returns a unique endpoint specific to the Amazon Web Services account making the call.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">DescribeEndpoint</a> action.</p>\"\
+      \"documentation\":\"<p>Returns or creates a unique endpoint specific to the Amazon Web Services account making the call.</p> <note> <p>The first time <code>DescribeEndpoint</code> is called, an endpoint is created. All subsequent calls to <code>DescribeEndpoint</code> return the same endpoint.</p> </note> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">DescribeEndpoint</a> action.</p>\"\
     },\
     \"DescribeEventConfigurations\":{\
       \"name\":\"DescribeEventConfigurations\",\
@@ -2191,6 +2319,55 @@
       ],\
       \"documentation\":\"<p>Gets an OTA update.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">GetOTAUpdate</a> action.</p>\"\
     },\
+    \"GetPackage\":{\
+      \"name\":\"GetPackage\",\
+      \"http\":{\
+        \"method\":\"GET\",\
+        \"requestUri\":\"/packages/{packageName}\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"GetPackageRequest\"},\
+      \"output\":{\"shape\":\"GetPackageResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ValidationException\"},\
+        {\"shape\":\"ResourceNotFoundException\"}\
+      ],\
+      \"documentation\":\"<p>Gets information about the specified software package.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">GetPackage</a> action.</p>\"\
+    },\
+    \"GetPackageConfiguration\":{\
+      \"name\":\"GetPackageConfiguration\",\
+      \"http\":{\
+        \"method\":\"GET\",\
+        \"requestUri\":\"/package-configuration\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"GetPackageConfigurationRequest\"},\
+      \"output\":{\"shape\":\"GetPackageConfigurationResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"InternalServerException\"}\
+      ],\
+      \"documentation\":\"<p>Gets information about the specified software package's configuration.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">GetPackageConfiguration</a> action.</p>\"\
+    },\
+    \"GetPackageVersion\":{\
+      \"name\":\"GetPackageVersion\",\
+      \"http\":{\
+        \"method\":\"GET\",\
+        \"requestUri\":\"/packages/{packageName}/versions/{versionName}\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"GetPackageVersionRequest\"},\
+      \"output\":{\"shape\":\"GetPackageVersionResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ValidationException\"},\
+        {\"shape\":\"ResourceNotFoundException\"}\
+      ],\
+      \"documentation\":\"<p>Gets information about the specified package version. </p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">GetPackageVersion</a> action.</p>\"\
+    },\
     \"GetPercentiles\":{\
       \"name\":\"GetPercentiles\",\
       \"http\":{\
@@ -2263,7 +2440,7 @@
         {\"shape\":\"InternalFailureException\"},\
         {\"shape\":\"InvalidRequestException\"}\
       ],\
-      \"documentation\":\"<p>Gets a registration code used to register a CA certificate with IoT.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">GetRegistrationCode</a> action.</p>\"\
+      \"documentation\":\"<p>Gets a registration code used to register a CA certificate with IoT.</p> <p>IoT will create a registration code as part of this API call if the registration code doesn't exist or has been deleted. If you already have a registration code, this API call will return the same registration code.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">GetRegistrationCode</a> action.</p>\"\
     },\
     \"GetStatistics\":{\
       \"name\":\"GetStatistics\",\
@@ -2492,6 +2669,23 @@
         {\"shape\":\"InternalFailureException\"}\
       ],\
       \"documentation\":\"<p>Lists the CA certificates registered for your Amazon Web Services account.</p> <p>The results are paginated with a default page size of 25. You can use the returned marker to retrieve additional results.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">ListCACertificates</a> action.</p>\"\
+    },\
+    \"ListCertificateProviders\":{\
+      \"name\":\"ListCertificateProviders\",\
+      \"http\":{\
+        \"method\":\"GET\",\
+        \"requestUri\":\"/certificate-providers/\"\
+      },\
+      \"input\":{\"shape\":\"ListCertificateProvidersRequest\"},\
+      \"output\":{\"shape\":\"ListCertificateProvidersResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"InvalidRequestException\"},\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"UnauthorizedException\"},\
+        {\"shape\":\"ServiceUnavailableException\"},\
+        {\"shape\":\"InternalFailureException\"}\
+      ],\
+      \"documentation\":\"<p>Lists all your certificate providers in your Amazon Web Services account.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">ListCertificateProviders</a> action. </p>\"\
     },\
     \"ListCertificates\":{\
       \"name\":\"ListCertificates\",\
@@ -2782,6 +2976,38 @@
       ],\
       \"documentation\":\"<p>Lists certificates that are being transferred but not yet accepted.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">ListOutgoingCertificates</a> action.</p>\"\
     },\
+    \"ListPackageVersions\":{\
+      \"name\":\"ListPackageVersions\",\
+      \"http\":{\
+        \"method\":\"GET\",\
+        \"requestUri\":\"/packages/{packageName}/versions\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"ListPackageVersionsRequest\"},\
+      \"output\":{\"shape\":\"ListPackageVersionsResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ValidationException\"}\
+      ],\
+      \"documentation\":\"<p>Lists the software package versions associated to the account.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">ListPackageVersions</a> action.</p>\"\
+    },\
+    \"ListPackages\":{\
+      \"name\":\"ListPackages\",\
+      \"http\":{\
+        \"method\":\"GET\",\
+        \"requestUri\":\"/packages\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"ListPackagesRequest\"},\
+      \"output\":{\"shape\":\"ListPackagesResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ValidationException\"}\
+      ],\
+      \"documentation\":\"<p>Lists the software packages associated to the account.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">ListPackages</a> action.</p>\"\
+    },\
     \"ListPolicies\":{\
       \"name\":\"ListPolicies\",\
       \"http\":{\
@@ -2905,6 +3131,22 @@
         {\"shape\":\"UnauthorizedException\"}\
       ],\
       \"documentation\":\"<p>Lists the provisioning templates in your Amazon Web Services account.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">ListProvisioningTemplates</a> action.</p>\"\
+    },\
+    \"ListRelatedResourcesForAuditFinding\":{\
+      \"name\":\"ListRelatedResourcesForAuditFinding\",\
+      \"http\":{\
+        \"method\":\"GET\",\
+        \"requestUri\":\"/audit/relatedResources\"\
+      },\
+      \"input\":{\"shape\":\"ListRelatedResourcesForAuditFindingRequest\"},\
+      \"output\":{\"shape\":\"ListRelatedResourcesForAuditFindingResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"InvalidRequestException\"},\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"InternalFailureException\"}\
+      ],\
+      \"documentation\":\"<p>The related resources of an Audit finding. The following resources can be returned from calling this API:</p> <ul> <li> <p>DEVICE_CERTIFICATE</p> </li> <li> <p>CA_CERTIFICATE</p> </li> <li> <p>IOT_POLICY</p> </li> <li> <p>COGNITO_IDENTITY_POOL</p> </li> <li> <p>CLIENT_ID</p> </li> <li> <p>ACCOUNT_SETTINGS</p> </li> <li> <p>ROLE_ALIAS</p> </li> <li> <p>IAM_ROLE</p> </li> <li> <p>ISSUER_CERTIFICATE</p> </li> </ul> <note> <p>This API is similar to DescribeAuditFinding's <a href=\\\"https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html\\\">RelatedResources</a> but provides pagination and is not limited to 10 resources. When calling <a href=\\\"https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html\\\">DescribeAuditFinding</a> for the intermediate CA revoked for active device certificates check, RelatedResources will not be populated. You must use this API, ListRelatedResourcesForAuditFinding, to list the certificates.</p> </note>\"\
     },\
     \"ListRoleAliases\":{\
       \"name\":\"ListRoleAliases\",\
@@ -3152,7 +3394,7 @@
         {\"shape\":\"ServiceUnavailableException\"},\
         {\"shape\":\"InternalFailureException\"}\
       ],\
-      \"documentation\":\"<p>Lists your things. Use the <b>attributeName</b> and <b>attributeValue</b> parameters to filter your things. For example, calling <code>ListThings</code> with attributeName=Color and attributeValue=Red retrieves all things in the registry that contain an attribute <b>Color</b> with the value <b>Red</b>. </p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">ListThings</a> action.</p> <note> <p>You will not be charged for calling this API if an <code>Access denied</code> error is returned. You will also not be charged if no attributes or pagination token was provided in request and no pagination token and no results were returned.</p> </note>\"\
+      \"documentation\":\"<p>Lists your things. Use the <b>attributeName</b> and <b>attributeValue</b> parameters to filter your things. For example, calling <code>ListThings</code> with attributeName=Color and attributeValue=Red retrieves all things in the registry that contain an attribute <b>Color</b> with the value <b>Red</b>. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/thing-registry.html#list-things\\\">List Things</a> from the <i>Amazon Web Services IoT Core Developer Guide</i>.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">ListThings</a> action.</p> <note> <p>You will not be charged for calling this API if an <code>Access denied</code> error is returned. You will also not be charged if no attributes or pagination token was provided in request and no pagination token and no results were returned.</p> </note>\"\
     },\
     \"ListThingsInBillingGroup\":{\
       \"name\":\"ListThingsInBillingGroup\",\
@@ -3788,6 +4030,24 @@
       ],\
       \"documentation\":\"<p>Updates the status of the specified certificate. This operation is idempotent.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">UpdateCertificate</a> action.</p> <p>Certificates must be in the ACTIVE state to authenticate devices that use a certificate to connect to IoT.</p> <p>Within a few minutes of updating a certificate from the ACTIVE state to any other state, IoT disconnects all devices that used that certificate to connect. Devices cannot use a certificate that is not in the ACTIVE state to reconnect.</p>\"\
     },\
+    \"UpdateCertificateProvider\":{\
+      \"name\":\"UpdateCertificateProvider\",\
+      \"http\":{\
+        \"method\":\"PUT\",\
+        \"requestUri\":\"/certificate-providers/{certificateProviderName}\"\
+      },\
+      \"input\":{\"shape\":\"UpdateCertificateProviderRequest\"},\
+      \"output\":{\"shape\":\"UpdateCertificateProviderResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"InvalidRequestException\"},\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"UnauthorizedException\"},\
+        {\"shape\":\"ServiceUnavailableException\"},\
+        {\"shape\":\"InternalFailureException\"}\
+      ],\
+      \"documentation\":\"<p>Updates a certificate provider.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">UpdateCertificateProvider</a> action. </p>\"\
+    },\
     \"UpdateCustomMetric\":{\
       \"name\":\"UpdateCustomMetric\",\
       \"http\":{\
@@ -3940,6 +4200,62 @@
         {\"shape\":\"InternalFailureException\"}\
       ],\
       \"documentation\":\"<p>Updates the definition for the specified mitigation action.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">UpdateMitigationAction</a> action.</p>\"\
+    },\
+    \"UpdatePackage\":{\
+      \"name\":\"UpdatePackage\",\
+      \"http\":{\
+        \"method\":\"PATCH\",\
+        \"requestUri\":\"/packages/{packageName}\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"UpdatePackageRequest\"},\
+      \"output\":{\"shape\":\"UpdatePackageResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"ConflictException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ValidationException\"},\
+        {\"shape\":\"ResourceNotFoundException\"}\
+      ],\
+      \"documentation\":\"<p>Updates the supported fields for a specific software package.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">UpdatePackage</a> and <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">GetIndexingConfiguration</a> actions.</p>\",\
+      \"idempotent\":true\
+    },\
+    \"UpdatePackageConfiguration\":{\
+      \"name\":\"UpdatePackageConfiguration\",\
+      \"http\":{\
+        \"method\":\"PATCH\",\
+        \"requestUri\":\"/package-configuration\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"UpdatePackageConfigurationRequest\"},\
+      \"output\":{\"shape\":\"UpdatePackageConfigurationResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"ConflictException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ValidationException\"}\
+      ],\
+      \"documentation\":\"<p>Updates the software package configuration.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">UpdatePackageConfiguration</a> and <a href=\\\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html\\\">iam:PassRole</a> actions.</p>\",\
+      \"idempotent\":true\
+    },\
+    \"UpdatePackageVersion\":{\
+      \"name\":\"UpdatePackageVersion\",\
+      \"http\":{\
+        \"method\":\"PATCH\",\
+        \"requestUri\":\"/packages/{packageName}/versions/{versionName}\",\
+        \"responseCode\":200\
+      },\
+      \"input\":{\"shape\":\"UpdatePackageVersionRequest\"},\
+      \"output\":{\"shape\":\"UpdatePackageVersionResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"ConflictException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ValidationException\"},\
+        {\"shape\":\"ResourceNotFoundException\"}\
+      ],\
+      \"documentation\":\"<p>Updates the supported fields for a specific package version.</p> <p>Requires permission to access the <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">UpdatePackageVersion</a> and <a href=\\\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\\\">GetIndexingConfiguration</a> actions.</p>\",\
+      \"idempotent\":true\
     },\
     \"UpdateProvisioningTemplate\":{\
       \"name\":\"UpdateProvisioningTemplate\",\
@@ -4280,6 +4596,10 @@
         \"openSearch\":{\
           \"shape\":\"OpenSearchAction\",\
           \"documentation\":\"<p>Write data to an Amazon OpenSearch Service domain.</p>\"\
+        },\
+        \"location\":{\
+          \"shape\":\"LocationAction\",\
+          \"documentation\":\"<p>The Amazon Location Service rule action sends device location updates from an MQTT message to an Amazon Location tracker resource.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes the actions associated with a rule.</p>\"\
@@ -4619,7 +4939,7 @@
         },\
         \"namespaceId\":{\
           \"shape\":\"NamespaceId\",\
-          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is in public preview.</p> </note>\",\
+          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is only supported by IoT Greengrass at this time. For more information, see <a href=\\\"https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html\\\">Setting up IoT Greengrass core devices.</a> </p> </note>\",\
           \"location\":\"querystring\",\
           \"locationName\":\"namespaceId\"\
         }\
@@ -5482,11 +5802,15 @@
         },\
         \"criteria\":{\
           \"shape\":\"BehaviorCriteria\",\
-          \"documentation\":\"<p>The criteria that determine if a device is behaving normally in regard to the <code>metric</code>.</p>\"\
+          \"documentation\":\"<p>The criteria that determine if a device is behaving normally in regard to the <code>metric</code>.</p> <note> <p>In the IoT console, you can choose to be sent an alert through Amazon SNS when IoT Device Defender detects that a device is behaving anomalously.</p> </note>\"\
         },\
         \"suppressAlerts\":{\
           \"shape\":\"SuppressAlerts\",\
           \"documentation\":\"<p> Suppresses alerts. </p>\"\
+        },\
+        \"exportMetric\":{\
+          \"shape\":\"ExportMetric\",\
+          \"documentation\":\"<p>Value indicates exporting metrics related to the behavior when it is true.</p>\"\
         }\
       },\
       \"documentation\":\"<p>A Device Defender security profile behavior.</p>\"\
@@ -6026,6 +6350,49 @@
       \"min\":1,\
       \"pattern\":\"[\\\\s\\\\S]*\"\
     },\
+    \"CertificateProviderAccountDefaultForOperations\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"CertificateProviderOperation\"},\
+      \"max\":1,\
+      \"min\":1\
+    },\
+    \"CertificateProviderArn\":{\
+      \"type\":\"string\",\
+      \"max\":2048\
+    },\
+    \"CertificateProviderFunctionArn\":{\
+      \"type\":\"string\",\
+      \"max\":2048,\
+      \"pattern\":\"[\\\\s\\\\S]*\"\
+    },\
+    \"CertificateProviderName\":{\
+      \"type\":\"string\",\
+      \"max\":128,\
+      \"min\":1,\
+      \"pattern\":\"[\\\\w=,@-]+\"\
+    },\
+    \"CertificateProviderOperation\":{\
+      \"type\":\"string\",\
+      \"enum\":[\"CreateCertificateFromCsr\"]\
+    },\
+    \"CertificateProviderSummary\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"certificateProviderName\":{\
+          \"shape\":\"CertificateProviderName\",\
+          \"documentation\":\"<p>The name of the certificate provider.</p>\"\
+        },\
+        \"certificateProviderArn\":{\
+          \"shape\":\"CertificateProviderArn\",\
+          \"documentation\":\"<p>The ARN of the certificate provider.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The certificate provider summary.</p>\"\
+    },\
+    \"CertificateProviders\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"CertificateProviderSummary\"}\
+    },\
     \"CertificateSigningRequest\":{\
       \"type\":\"string\",\
       \"max\":4096,\
@@ -6119,6 +6486,12 @@
       \"min\":1,\
       \"pattern\":\"^[a-zA-Z0-9-_]+$\"\
     },\
+    \"ClientToken\":{\
+      \"type\":\"string\",\
+      \"max\":64,\
+      \"min\":36,\
+      \"pattern\":\"\\\\S{36,64}\"\
+    },\
     \"CloudwatchAlarmAction\":{\
       \"type\":\"structure\",\
       \"required\":[\
@@ -6161,6 +6534,10 @@
         \"logGroupName\":{\
           \"shape\":\"LogGroupName\",\
           \"documentation\":\"<p>The CloudWatch log group to which the action sends data.</p>\"\
+        },\
+        \"batchMode\":{\
+          \"shape\":\"BatchMode\",\
+          \"documentation\":\"<p>Indicates whether batches of log records will be extracted and uploaded into CloudWatch. Values include <code>true</code> or <code>false</code> <i>(default)</i>.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes an action that sends data to CloudWatch Logs.</p>\"\
@@ -6310,7 +6687,11 @@
     \"ConflictException\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"message\":{\"shape\":\"errorMessage\"}\
+        \"message\":{\"shape\":\"errorMessage\"},\
+        \"resourceId\":{\
+          \"shape\":\"resourceId\",\
+          \"documentation\":\"<p>A resource with the same name already exists.</p>\"\
+        }\
       },\
       \"documentation\":\"<p>A resource with the same name already exists.</p>\",\
       \"error\":{\"httpStatusCode\":409},\
@@ -6338,6 +6719,16 @@
       \"type\":\"integer\",\
       \"max\":10,\
       \"min\":1\
+    },\
+    \"ContentType\":{\
+      \"type\":\"string\",\
+      \"max\":1024,\
+      \"min\":0\
+    },\
+    \"CorrelationData\":{\
+      \"type\":\"string\",\
+      \"max\":1024,\
+      \"min\":0\
     },\
     \"Count\":{\"type\":\"integer\"},\
     \"CreateAuditSuppressionRequest\":{\
@@ -6502,6 +6893,52 @@
       },\
       \"documentation\":\"<p>The output from the CreateCertificateFromCsr operation.</p>\"\
     },\
+    \"CreateCertificateProviderRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"certificateProviderName\",\
+        \"lambdaFunctionArn\",\
+        \"accountDefaultForOperations\"\
+      ],\
+      \"members\":{\
+        \"certificateProviderName\":{\
+          \"shape\":\"CertificateProviderName\",\
+          \"documentation\":\"<p>The name of the certificate provider.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"certificateProviderName\"\
+        },\
+        \"lambdaFunctionArn\":{\
+          \"shape\":\"CertificateProviderFunctionArn\",\
+          \"documentation\":\"<p>The ARN of the Lambda function that defines the authentication logic.</p>\"\
+        },\
+        \"accountDefaultForOperations\":{\
+          \"shape\":\"CertificateProviderAccountDefaultForOperations\",\
+          \"documentation\":\"<p>A list of the operations that the certificate provider will use to generate certificates. Valid value: <code>CreateCertificateFromCsr</code>.</p>\"\
+        },\
+        \"clientToken\":{\
+          \"shape\":\"ClientToken\",\
+          \"documentation\":\"<p>A string that you can optionally pass in the <code>CreateCertificateProvider</code> request to make sure the request is idempotent.</p>\",\
+          \"idempotencyToken\":true\
+        },\
+        \"tags\":{\
+          \"shape\":\"TagList\",\
+          \"documentation\":\"<p>Metadata which can be used to manage the certificate provider.</p>\"\
+        }\
+      }\
+    },\
+    \"CreateCertificateProviderResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"certificateProviderName\":{\
+          \"shape\":\"CertificateProviderName\",\
+          \"documentation\":\"<p>The name of the certificate provider.</p>\"\
+        },\
+        \"certificateProviderArn\":{\
+          \"shape\":\"CertificateProviderArn\",\
+          \"documentation\":\"<p>The ARN of the certificate provider.</p>\"\
+        }\
+      }\
+    },\
     \"CreateCustomMetricRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\
@@ -6628,6 +7065,14 @@
         \"tags\":{\
           \"shape\":\"TagList\",\
           \"documentation\":\"<p>Metadata which can be used to manage the domain configuration.</p> <note> <p>For URI Request parameters use format: ...key1=value1&amp;key2=value2...</p> <p>For the CLI command-line parameter use format: &amp;&amp;tags \\\"key1=value1&amp;key2=value2...\\\"</p> <p>For the cli-input-json file use format: \\\"tags\\\": \\\"key1=value1&amp;key2=value2...\\\"</p> </note>\"\
+        },\
+        \"tlsConfig\":{\
+          \"shape\":\"TlsConfig\",\
+          \"documentation\":\"<p>An object that specifies the TLS configuration for a domain.</p>\"\
+        },\
+        \"serverCertificateConfig\":{\
+          \"shape\":\"ServerCertificateConfig\",\
+          \"documentation\":\"<p>The server certificate configuration.</p>\"\
         }\
       }\
     },\
@@ -6754,7 +7199,7 @@
         },\
         \"unit\":{\
           \"shape\":\"FleetMetricUnit\",\
-          \"documentation\":\"<p>Used to support unit transformation such as milliseconds to seconds. The unit must be supported by <a href=\\\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html\\\">CW metric</a>. Default to null.</p>\"\
+          \"documentation\":\"<p>Used to support unit transformation such as milliseconds to seconds. The unit must be supported by <a href=\\\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html\\\">CW metric</a>. Default to null.</p>\"\
         },\
         \"tags\":{\
           \"shape\":\"TagList\",\
@@ -6794,7 +7239,7 @@
         },\
         \"documentSource\":{\
           \"shape\":\"JobDocumentSource\",\
-          \"documentation\":\"<p>An S3 link to the job document. Required if you don't specify a value for <code>document</code>.</p> <note> <p>If the job document resides in an S3 bucket, you must use a placeholder link when specifying the document.</p> <p>The placeholder link is of the following form:</p> <p> <code>${aws:iot:s3-presigned-url:https://s3.amazonaws.com/<i>bucket</i>/<i>key</i>}</code> </p> <p>where <i>bucket</i> is your bucket name and <i>key</i> is the object in the bucket to which you are linking.</p> </note>\"\
+          \"documentation\":\"<p>An S3 link, or S3 object URL, to the job document. The link is an Amazon S3 object URL and is required if you don't specify a value for <code>document</code>.</p> <p>For example, <code>--document-source https://s3.<i>region-code</i>.amazonaws.com/example-firmware/device-firmware.1.0</code> </p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html\\\">Methods for accessing a bucket</a>.</p>\"\
         },\
         \"document\":{\
           \"shape\":\"JobDocument\",\
@@ -6830,7 +7275,7 @@
         },\
         \"namespaceId\":{\
           \"shape\":\"NamespaceId\",\
-          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is in public preview.</p> </note>\"\
+          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is only supported by IoT Greengrass at this time. For more information, see <a href=\\\"https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html\\\">Setting up IoT Greengrass core devices.</a> </p> </note>\"\
         },\
         \"jobTemplateArn\":{\
           \"shape\":\"JobTemplateArn\",\
@@ -6843,6 +7288,14 @@
         \"documentParameters\":{\
           \"shape\":\"ParameterMap\",\
           \"documentation\":\"<p>Parameters of an Amazon Web Services managed template that you can specify to create the job document.</p> <note> <p> <code>documentParameters</code> can only be used when creating jobs from Amazon Web Services managed templates. This parameter can't be used with custom job templates or to create jobs from them.</p> </note>\"\
+        },\
+        \"schedulingConfig\":{\
+          \"shape\":\"SchedulingConfig\",\
+          \"documentation\":\"<p>The configuration that allows you to schedule a job for a future date and time in addition to specifying the end behavior for each job execution.</p>\"\
+        },\
+        \"destinationPackageVersions\":{\
+          \"shape\":\"DestinationPackageVersions\",\
+          \"documentation\":\"<p>The package version Amazon Resource Names (ARNs) that are installed on the device when the job successfully completes. The package version must be in either the Published or Deprecated state when the job deploys. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle\\\">Package version lifecycle</a>. </p> <p> <b>Note:</b>The following Length Constraints relates to a single ARN. Up to 25 package version ARNs are allowed.</p>\"\
         }\
       }\
     },\
@@ -6882,7 +7335,7 @@
         },\
         \"documentSource\":{\
           \"shape\":\"JobDocumentSource\",\
-          \"documentation\":\"<p>An S3 link to the job document to use in the template. Required if you don't specify a value for <code>document</code>.</p> <note> <p>If the job document resides in an S3 bucket, you must use a placeholder link when specifying the document.</p> <p>The placeholder link is of the following form:</p> <p> <code>${aws:iot:s3-presigned-url:https://s3.amazonaws.com/<i>bucket</i>/<i>key</i>}</code> </p> <p>where <i>bucket</i> is your bucket name and <i>key</i> is the object in the bucket to which you are linking.</p> </note>\"\
+          \"documentation\":\"<p>An S3 link, or S3 object URL, to the job document. The link is an Amazon S3 object URL and is required if you don't specify a value for <code>document</code>.</p> <p>For example, <code>--document-source https://s3.<i>region-code</i>.amazonaws.com/example-firmware/device-firmware.1.0</code> </p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html\\\">Methods for accessing a bucket</a>.</p>\"\
         },\
         \"document\":{\
           \"shape\":\"JobDocument\",\
@@ -6903,6 +7356,14 @@
         \"jobExecutionsRetryConfig\":{\
           \"shape\":\"JobExecutionsRetryConfig\",\
           \"documentation\":\"<p>Allows you to create the criteria to retry a job.</p>\"\
+        },\
+        \"maintenanceWindows\":{\
+          \"shape\":\"MaintenanceWindows\",\
+          \"documentation\":\"<p>Allows you to configure an optional maintenance window for the rollout of a job document to all devices in the target group for a job.</p>\"\
+        },\
+        \"destinationPackageVersions\":{\
+          \"shape\":\"DestinationPackageVersions\",\
+          \"documentation\":\"<p>The package version Amazon Resource Names (ARNs) that are installed on the device when the job successfully completes. The package version must be in either the Published or Deprecated state when the job deploys. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle\\\">Package version lifecycle</a>.</p> <p> <b>Note:</b>The following Length Constraints relates to a single ARN. Up to 25 package version ARNs are allowed.</p>\"\
         }\
       }\
     },\
@@ -7051,7 +7512,7 @@
         },\
         \"additionalParameters\":{\
           \"shape\":\"AdditionalParameterMap\",\
-          \"documentation\":\"<p>A list of additional OTA update parameters which are name-value pairs.</p>\"\
+          \"documentation\":\"<p>A list of additional OTA update parameters, which are name-value pairs. They won't be sent to devices as a part of the Job document.</p>\"\
         },\
         \"tags\":{\
           \"shape\":\"TagList\",\
@@ -7081,6 +7542,123 @@
         \"otaUpdateStatus\":{\
           \"shape\":\"OTAUpdateStatus\",\
           \"documentation\":\"<p>The OTA update status.</p>\"\
+        }\
+      }\
+    },\
+    \"CreatePackageRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"packageName\"],\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the new software package.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"packageName\"\
+        },\
+        \"description\":{\
+          \"shape\":\"ResourceDescription\",\
+          \"documentation\":\"<p>A summary of the package being created. This can be used to outline the package's contents or purpose.</p>\"\
+        },\
+        \"tags\":{\
+          \"shape\":\"TagMap\",\
+          \"documentation\":\"<p>Metadata that can be used to manage the package.</p>\"\
+        },\
+        \"clientToken\":{\
+          \"shape\":\"ClientToken\",\
+          \"documentation\":\"<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>\",\
+          \"idempotencyToken\":true,\
+          \"location\":\"querystring\",\
+          \"locationName\":\"clientToken\"\
+        }\
+      }\
+    },\
+    \"CreatePackageResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the software package.</p>\"\
+        },\
+        \"packageArn\":{\
+          \"shape\":\"PackageArn\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) for the package.</p>\"\
+        },\
+        \"description\":{\
+          \"shape\":\"ResourceDescription\",\
+          \"documentation\":\"<p>The package description.</p>\"\
+        }\
+      }\
+    },\
+    \"CreatePackageVersionRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"packageName\",\
+        \"versionName\"\
+      ],\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the associated software package.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"packageName\"\
+        },\
+        \"versionName\":{\
+          \"shape\":\"VersionName\",\
+          \"documentation\":\"<p>The name of the new package version.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"versionName\"\
+        },\
+        \"description\":{\
+          \"shape\":\"ResourceDescription\",\
+          \"documentation\":\"<p>A summary of the package version being created. This can be used to outline the package's contents or purpose.</p>\"\
+        },\
+        \"attributes\":{\
+          \"shape\":\"ResourceAttributes\",\
+          \"documentation\":\"<p>Metadata that can be used to define a package versionâs configuration. For example, the S3 file location, configuration options that are being sent to the device or fleet.</p> <p>The combined size of all the attributes on a package version is limited to 3KB.</p>\"\
+        },\
+        \"tags\":{\
+          \"shape\":\"TagMap\",\
+          \"documentation\":\"<p>Metadata that can be used to manage the package version.</p>\"\
+        },\
+        \"clientToken\":{\
+          \"shape\":\"ClientToken\",\
+          \"documentation\":\"<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>\",\
+          \"idempotencyToken\":true,\
+          \"location\":\"querystring\",\
+          \"locationName\":\"clientToken\"\
+        }\
+      }\
+    },\
+    \"CreatePackageVersionResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"packageVersionArn\":{\
+          \"shape\":\"PackageVersionArn\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) for the package.</p>\"\
+        },\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the associated software package.</p>\"\
+        },\
+        \"versionName\":{\
+          \"shape\":\"VersionName\",\
+          \"documentation\":\"<p>The name of the new package version.</p>\"\
+        },\
+        \"description\":{\
+          \"shape\":\"ResourceDescription\",\
+          \"documentation\":\"<p>The package version description.</p>\"\
+        },\
+        \"attributes\":{\
+          \"shape\":\"ResourceAttributes\",\
+          \"documentation\":\"<p>Metadata that were added to the package version that can be used to define a package versionâs configuration.</p>\"\
+        },\
+        \"status\":{\
+          \"shape\":\"PackageVersionStatus\",\
+          \"documentation\":\"<p>The status of the package version. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle\\\">Package version lifecycle</a>.</p>\"\
+        },\
+        \"errorReason\":{\
+          \"shape\":\"PackageVersionErrorReason\",\
+          \"documentation\":\"<p>Error reason for a package version failure during creation or update.</p>\"\
         }\
       }\
     },\
@@ -7241,7 +7819,7 @@
         },\
         \"preProvisioningHook\":{\
           \"shape\":\"ProvisioningHook\",\
-          \"documentation\":\"<p>Creates a pre-provisioning hook template.</p>\"\
+          \"documentation\":\"<p>Creates a pre-provisioning hook template. Only supports template of type <code>FLEET_PROVISIONING</code>. For more information about provisioning template types, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/apireference/API_CreateProvisioningTemplate.html#iot-CreateProvisioningTemplate-request-type\\\">type</a>.</p>\"\
         },\
         \"tags\":{\
           \"shape\":\"TagList\",\
@@ -7436,6 +8014,10 @@
         \"tags\":{\
           \"shape\":\"TagList\",\
           \"documentation\":\"<p>Metadata that can be used to manage the security profile.</p>\"\
+        },\
+        \"metricsExportConfig\":{\
+          \"shape\":\"MetricsExportConfig\",\
+          \"documentation\":\"<p>Specifies the MQTT topic and role ARN required for metric export.</p>\"\
         }\
       }\
     },\
@@ -7681,6 +8263,11 @@
       \"max\":43200,\
       \"min\":900\
     },\
+    \"CronExpression\":{\
+      \"type\":\"string\",\
+      \"max\":256,\
+      \"min\":1\
+    },\
     \"CustomCodeSigning\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -7837,6 +8424,23 @@
       \"members\":{\
       },\
       \"documentation\":\"<p>The output for the DeleteCACertificate operation.</p>\"\
+    },\
+    \"DeleteCertificateProviderRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"certificateProviderName\"],\
+      \"members\":{\
+        \"certificateProviderName\":{\
+          \"shape\":\"CertificateProviderName\",\
+          \"documentation\":\"<p>The name of the certificate provider.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"certificateProviderName\"\
+        }\
+      }\
+    },\
+    \"DeleteCertificateProviderResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+      }\
     },\
     \"DeleteCertificateRequest\":{\
       \"type\":\"structure\",\
@@ -7995,7 +8599,7 @@
         },\
         \"namespaceId\":{\
           \"shape\":\"NamespaceId\",\
-          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is in public preview.</p> </note>\",\
+          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is only supported by IoT Greengrass at this time. For more information, see <a href=\\\"https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html\\\">Setting up IoT Greengrass core devices.</a> </p> </note>\",\
           \"location\":\"querystring\",\
           \"locationName\":\"namespaceId\"\
         }\
@@ -8019,7 +8623,7 @@
         },\
         \"namespaceId\":{\
           \"shape\":\"NamespaceId\",\
-          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is in public preview.</p> </note>\",\
+          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is only supported by IoT Greengrass at this time. For more information, see <a href=\\\"https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html\\\">Setting up IoT Greengrass core devices.</a> </p> </note>\",\
           \"location\":\"querystring\",\
           \"locationName\":\"namespaceId\"\
         }\
@@ -8037,6 +8641,7 @@
         }\
       }\
     },\
+    \"DeleteMetricsExportConfig\":{\"type\":\"boolean\"},\
     \"DeleteMitigationActionRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\"actionName\"],\
@@ -8079,6 +8684,63 @@
       }\
     },\
     \"DeleteOTAUpdateResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+      }\
+    },\
+    \"DeletePackageRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"packageName\"],\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the target software package.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"packageName\"\
+        },\
+        \"clientToken\":{\
+          \"shape\":\"ClientToken\",\
+          \"documentation\":\"<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>\",\
+          \"idempotencyToken\":true,\
+          \"location\":\"querystring\",\
+          \"locationName\":\"clientToken\"\
+        }\
+      }\
+    },\
+    \"DeletePackageResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+      }\
+    },\
+    \"DeletePackageVersionRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"packageName\",\
+        \"versionName\"\
+      ],\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the associated software package.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"packageName\"\
+        },\
+        \"versionName\":{\
+          \"shape\":\"VersionName\",\
+          \"documentation\":\"<p>The name of the target package version.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"versionName\"\
+        },\
+        \"clientToken\":{\
+          \"shape\":\"ClientToken\",\
+          \"documentation\":\"<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>\",\
+          \"idempotencyToken\":true,\
+          \"location\":\"querystring\",\
+          \"locationName\":\"clientToken\"\
+        }\
+      }\
+    },\
+    \"DeletePackageVersionResponse\":{\
       \"type\":\"structure\",\
       \"members\":{\
       }\
@@ -8651,6 +9313,47 @@
       },\
       \"documentation\":\"<p>The output from the DescribeCACertificate operation.</p>\"\
     },\
+    \"DescribeCertificateProviderRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"certificateProviderName\"],\
+      \"members\":{\
+        \"certificateProviderName\":{\
+          \"shape\":\"CertificateProviderName\",\
+          \"documentation\":\"<p>The name of the certificate provider.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"certificateProviderName\"\
+        }\
+      }\
+    },\
+    \"DescribeCertificateProviderResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"certificateProviderName\":{\
+          \"shape\":\"CertificateProviderName\",\
+          \"documentation\":\"<p>The name of the certificate provider.</p>\"\
+        },\
+        \"certificateProviderArn\":{\
+          \"shape\":\"CertificateProviderArn\",\
+          \"documentation\":\"<p>The ARN of the certificate provider.</p>\"\
+        },\
+        \"lambdaFunctionArn\":{\
+          \"shape\":\"CertificateProviderFunctionArn\",\
+          \"documentation\":\"<p>The Lambda function ARN that's associated with the certificate provider.</p>\"\
+        },\
+        \"accountDefaultForOperations\":{\
+          \"shape\":\"CertificateProviderAccountDefaultForOperations\",\
+          \"documentation\":\"<p>A list of the operations that the certificate provider will use to generate certificates. Valid value: <code>CreateCertificateFromCsr</code>.</p>\"\
+        },\
+        \"creationDate\":{\
+          \"shape\":\"DateType\",\
+          \"documentation\":\"<p>The date-time string that indicates when the certificate provider was created.</p>\"\
+        },\
+        \"lastModifiedDate\":{\
+          \"shape\":\"DateType\",\
+          \"documentation\":\"<p>The date-time string that indicates when the certificate provider was last updated.</p>\"\
+        }\
+      }\
+    },\
     \"DescribeCertificateRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\"certificateId\"],\
@@ -8841,6 +9544,14 @@
         \"lastStatusChangeDate\":{\
           \"shape\":\"DateType\",\
           \"documentation\":\"<p>The date and time the domain configuration's status was last changed.</p>\"\
+        },\
+        \"tlsConfig\":{\
+          \"shape\":\"TlsConfig\",\
+          \"documentation\":\"<p>An object that specifies the TLS configuration for a domain.</p>\"\
+        },\
+        \"serverCertificateConfig\":{\
+          \"shape\":\"ServerCertificateConfig\",\
+          \"documentation\":\"<p>The server certificate configuration.</p>\"\
         }\
       }\
     },\
@@ -8849,7 +9560,7 @@
       \"members\":{\
         \"endpointType\":{\
           \"shape\":\"EndpointType\",\
-          \"documentation\":\"<p>The endpoint type. Valid endpoint types include:</p> <ul> <li> <p> <code>iot:Data</code> - Returns a VeriSign signed data endpoint.</p> </li> </ul> <ul> <li> <p> <code>iot:Data-ATS</code> - Returns an ATS signed data endpoint.</p> </li> </ul> <ul> <li> <p> <code>iot:CredentialProvider</code> - Returns an IoT credentials provider API endpoint.</p> </li> </ul> <ul> <li> <p> <code>iot:Jobs</code> - Returns an IoT device management Jobs API endpoint.</p> </li> </ul> <p>We strongly recommend that customers use the newer <code>iot:Data-ATS</code> endpoint type to avoid issues related to the widespread distrust of Symantec certificate authorities.</p>\",\
+          \"documentation\":\"<p>The endpoint type. Valid endpoint types include:</p> <ul> <li> <p> <code>iot:Data</code> - Returns a VeriSign signed data endpoint.</p> </li> </ul> <ul> <li> <p> <code>iot:Data-ATS</code> - Returns an ATS signed data endpoint.</p> </li> </ul> <ul> <li> <p> <code>iot:CredentialProvider</code> - Returns an IoT credentials provider API endpoint.</p> </li> </ul> <ul> <li> <p> <code>iot:Jobs</code> - Returns an IoT device management Jobs API endpoint.</p> </li> </ul> <p>We strongly recommend that customers use the newer <code>iot:Data-ATS</code> endpoint type to avoid issues related to the widespread distrust of Symantec certificate authorities. ATS Signed Certificates are more secure and are trusted by most popular browsers.</p>\",\
           \"location\":\"querystring\",\
           \"locationName\":\"endpointType\"\
         }\
@@ -8945,7 +9656,7 @@
         },\
         \"unit\":{\
           \"shape\":\"FleetMetricUnit\",\
-          \"documentation\":\"<p>Used to support unit transformation such as milliseconds to seconds. The unit must be supported by <a href=\\\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html\\\">CW metric</a>.</p>\"\
+          \"documentation\":\"<p>Used to support unit transformation such as milliseconds to seconds. The unit must be supported by <a href=\\\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html\\\">CW metric</a>.</p>\"\
         },\
         \"version\":{\
           \"shape\":\"Version\",\
@@ -9093,6 +9804,14 @@
         \"jobExecutionsRetryConfig\":{\
           \"shape\":\"JobExecutionsRetryConfig\",\
           \"documentation\":\"<p>The configuration that determines how many retries are allowed for each failure type for a job.</p>\"\
+        },\
+        \"maintenanceWindows\":{\
+          \"shape\":\"MaintenanceWindows\",\
+          \"documentation\":\"<p>Allows you to configure an optional maintenance window for the rollout of a job document to all devices in the target group for a job.</p>\"\
+        },\
+        \"destinationPackageVersions\":{\
+          \"shape\":\"DestinationPackageVersions\",\
+          \"documentation\":\"<p>The package version Amazon Resource Names (ARNs) that are installed on the device when the job successfully completes. The package version must be in either the Published or Deprecated state when the job deploys. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle\\\">Package version lifecycle</a>.</p> <p> <b>Note:</b>The following Length Constraints relates to a single ARN. Up to 25 package version ARNs are allowed.</p>\"\
         }\
       }\
     },\
@@ -9417,6 +10136,10 @@
         \"lastModifiedDate\":{\
           \"shape\":\"Timestamp\",\
           \"documentation\":\"<p>The time the security profile was last modified.</p>\"\
+        },\
+        \"metricsExportConfig\":{\
+          \"shape\":\"MetricsExportConfig\",\
+          \"documentation\":\"<p>Specifies the MQTT topic and role ARN required for metric export.</p>\"\
         }\
       }\
     },\
@@ -9663,6 +10386,10 @@
         }\
       },\
       \"documentation\":\"<p>Describes the location of the updated firmware.</p>\"\
+    },\
+    \"DestinationPackageVersions\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"PackageVersionArn\"}\
     },\
     \"DetachPolicyRequest\":{\
       \"type\":\"structure\",\
@@ -10076,6 +10803,11 @@
         \"CUSTOMER_MANAGED\"\
       ]\
     },\
+    \"DurationInMinutes\":{\
+      \"type\":\"integer\",\
+      \"max\":1430,\
+      \"min\":1\
+    },\
     \"DurationSeconds\":{\"type\":\"integer\"},\
     \"DynamicGroupStatus\":{\
       \"type\":\"string\",\
@@ -10244,6 +10976,7 @@
       },\
       \"documentation\":\"<p>Parameters used when defining a mitigation action that enable Amazon Web Services IoT Core logging.</p>\"\
     },\
+    \"EnableOCSPCheck\":{\"type\":\"boolean\"},\
     \"EnableTopicRuleRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\"ruleName\"],\
@@ -10258,6 +10991,10 @@
       \"documentation\":\"<p>The input for the EnableTopicRuleRequest operation.</p>\"\
     },\
     \"Enabled\":{\"type\":\"boolean\"},\
+    \"EnabledBoolean\":{\
+      \"type\":\"boolean\",\
+      \"box\":true\
+    },\
     \"EndpointAddress\":{\"type\":\"string\"},\
     \"EndpointType\":{\
       \"type\":\"string\",\
@@ -10362,6 +11099,7 @@
       },\
       \"documentation\":\"<p>Allows you to create an exponential rate of rollout for a job.</p>\"\
     },\
+    \"ExportMetric\":{\"type\":\"boolean\"},\
     \"FailedChecksCount\":{\"type\":\"integer\"},\
     \"FailedFindingsCount\":{\"type\":\"long\"},\
     \"FailedThings\":{\"type\":\"integer\"},\
@@ -10534,6 +11272,24 @@
     \"FunctionArn\":{\"type\":\"string\"},\
     \"GenerationId\":{\"type\":\"string\"},\
     \"GenericLongValue\":{\"type\":\"long\"},\
+    \"GeoLocationTarget\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"name\":{\
+          \"shape\":\"TargetFieldName\",\
+          \"documentation\":\"<p>The <code>name</code> of the geolocation target field. If the target field is part of a named shadow, you must select the named shadow using the <code>namedShadow</code> filter.</p>\"\
+        },\
+        \"order\":{\
+          \"shape\":\"TargetFieldOrder\",\
+          \"documentation\":\"<p>The <code>order</code> of the geolocation target field. This field is optional. The default value is <code>LatLon</code>.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>A geolocation target that you select to index. Each geolocation target contains a <code>name</code> and <code>order</code> key-value pair that specifies the geolocation target fields.</p>\"\
+    },\
+    \"GeoLocationsFilter\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"GeoLocationTarget\"}\
+    },\
     \"GetBehaviorModelTrainingSummariesRequest\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -10545,7 +11301,7 @@
         },\
         \"maxResults\":{\
           \"shape\":\"TinyMaxResults\",\
-          \"documentation\":\"<p> The maximum number of results to return at one time. The default is 25. </p>\",\
+          \"documentation\":\"<p> The maximum number of results to return at one time. The default is 10. </p>\",\
           \"location\":\"querystring\",\
           \"locationName\":\"maxResults\"\
         },\
@@ -10749,6 +11505,123 @@
         \"otaUpdateInfo\":{\
           \"shape\":\"OTAUpdateInfo\",\
           \"documentation\":\"<p>The OTA update info.</p>\"\
+        }\
+      }\
+    },\
+    \"GetPackageConfigurationRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+      }\
+    },\
+    \"GetPackageConfigurationResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"versionUpdateByJobsConfig\":{\
+          \"shape\":\"VersionUpdateByJobsConfig\",\
+          \"documentation\":\"<p>The version that is associated to a specific job.</p>\"\
+        }\
+      }\
+    },\
+    \"GetPackageRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"packageName\"],\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the target software package.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"packageName\"\
+        }\
+      }\
+    },\
+    \"GetPackageResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the software package.</p>\"\
+        },\
+        \"packageArn\":{\
+          \"shape\":\"PackageArn\",\
+          \"documentation\":\"<p>The ARN for the package.</p>\"\
+        },\
+        \"description\":{\
+          \"shape\":\"ResourceDescription\",\
+          \"documentation\":\"<p>The package description.</p>\"\
+        },\
+        \"defaultVersionName\":{\
+          \"shape\":\"VersionName\",\
+          \"documentation\":\"<p>The name of the default package version.</p>\"\
+        },\
+        \"creationDate\":{\
+          \"shape\":\"CreationDate\",\
+          \"documentation\":\"<p>The date the package was created.</p>\"\
+        },\
+        \"lastModifiedDate\":{\
+          \"shape\":\"LastModifiedDate\",\
+          \"documentation\":\"<p>The date when the package was last updated.</p>\"\
+        }\
+      }\
+    },\
+    \"GetPackageVersionRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"packageName\",\
+        \"versionName\"\
+      ],\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the associated package.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"packageName\"\
+        },\
+        \"versionName\":{\
+          \"shape\":\"VersionName\",\
+          \"documentation\":\"<p>The name of the target package version.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"versionName\"\
+        }\
+      }\
+    },\
+    \"GetPackageVersionResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"packageVersionArn\":{\
+          \"shape\":\"PackageVersionArn\",\
+          \"documentation\":\"<p>The ARN for the package version.</p>\"\
+        },\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the software package.</p>\"\
+        },\
+        \"versionName\":{\
+          \"shape\":\"VersionName\",\
+          \"documentation\":\"<p>The name of the package version.</p>\"\
+        },\
+        \"description\":{\
+          \"shape\":\"ResourceDescription\",\
+          \"documentation\":\"<p>The package version description.</p>\"\
+        },\
+        \"attributes\":{\
+          \"shape\":\"ResourceAttributes\",\
+          \"documentation\":\"<p>Metadata that were added to the package version that can be used to define a package versionâs configuration.</p>\"\
+        },\
+        \"status\":{\
+          \"shape\":\"PackageVersionStatus\",\
+          \"documentation\":\"<p>The status associated to the package version. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle\\\">Package version lifecycle</a>.</p>\"\
+        },\
+        \"errorReason\":{\
+          \"shape\":\"PackageVersionErrorReason\",\
+          \"documentation\":\"<p>Error reason for a package version failure during creation or update.</p>\"\
+        },\
+        \"creationDate\":{\
+          \"shape\":\"CreationDate\",\
+          \"documentation\":\"<p>The date when the package version was created.</p>\"\
+        },\
+        \"lastModifiedDate\":{\
+          \"shape\":\"LastModifiedDate\",\
+          \"documentation\":\"<p>The date when the package version was last updated.</p>\"\
         }\
       }\
     },\
@@ -11214,9 +12087,13 @@
         \"namedShadowNames\":{\
           \"shape\":\"NamedShadowNamesFilter\",\
           \"documentation\":\"<p>The shadow names that you select to index. The default maximum number of shadow names for indexing is 10. To increase the limit, see <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/iot_device_management.html#fleet-indexing-limits\\\">Amazon Web Services IoT Device Management Quotas</a> in the <i>Amazon Web Services General Reference</i>. </p>\"\
+        },\
+        \"geoLocations\":{\
+          \"shape\":\"GeoLocationsFilter\",\
+          \"documentation\":\"<p>The list of geolocation targets that you select to index. The default maximum number of geolocation targets for indexing is <code>1</code>. To increase the limit, see <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/iot_device_management.html#fleet-indexing-limits\\\">Amazon Web Services IoT Device Management Quotas</a> in the <i>Amazon Web Services General Reference</i>.</p>\"\
         }\
       },\
-      \"documentation\":\"<p>Provides additional filters for specific data sources. Named shadow is the only data source that currently supports and requires a filter. To add named shadows to your fleet indexing configuration, set <code>namedShadowIndexingMode</code> to be <code>ON</code> and specify your shadow names in <code>filter</code>.</p>\"\
+      \"documentation\":\"<p>Provides additional selections for named shadows and geolocation data. </p> <p>To add named shadows to your fleet indexing configuration, set <code>namedShadowIndexingMode</code> to be ON and specify your shadow names in <code>namedShadowNames</code> filter.</p> <p>To add geolocation data to your fleet indexing configuration: </p> <ul> <li> <p>If you store geolocation data in a class/unnamed shadow, set <code>thingIndexingMode</code> to be <code>REGISTRY_AND_SHADOW</code> and specify your geolocation data in <code>geoLocations</code> filter. </p> </li> <li> <p>If you store geolocation data in a named shadow, set <code>namedShadowIndexingMode</code> to be <code>ON</code>, add the shadow name in <code>namedShadowNames</code> filter, and specify your geolocation data in <code>geoLocations</code> filter. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/managing-fleet-index.html\\\">Managing fleet indexing</a>.</p> </li> </ul>\"\
     },\
     \"InlineDocument\":{\"type\":\"string\"},\
     \"InputName\":{\
@@ -11387,6 +12264,39 @@
     \"IsDefaultVersion\":{\"type\":\"boolean\"},\
     \"IsDisabled\":{\"type\":\"boolean\"},\
     \"IsSuppressed\":{\"type\":\"boolean\"},\
+    \"IssuerCertificateIdentifier\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"issuerCertificateSubject\":{\
+          \"shape\":\"IssuerCertificateSubject\",\
+          \"documentation\":\"<p>The subject of the issuer certificate.</p>\"\
+        },\
+        \"issuerId\":{\
+          \"shape\":\"IssuerId\",\
+          \"documentation\":\"<p>The issuer ID.</p>\"\
+        },\
+        \"issuerCertificateSerialNumber\":{\
+          \"shape\":\"IssuerCertificateSerialNumber\",\
+          \"documentation\":\"<p>The issuer certificate serial number.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The certificate issuer indentifier.</p>\"\
+    },\
+    \"IssuerCertificateSerialNumber\":{\
+      \"type\":\"string\",\
+      \"max\":20,\
+      \"pattern\":\"[a-fA-F0-9:]+\"\
+    },\
+    \"IssuerCertificateSubject\":{\
+      \"type\":\"string\",\
+      \"max\":1000,\
+      \"pattern\":\"[\\\\p{Graph}\\\\x20]*\"\
+    },\
+    \"IssuerId\":{\
+      \"type\":\"string\",\
+      \"max\":64,\
+      \"pattern\":\"(0x)?[a-fA-F0-9]+\"\
+    },\
     \"Job\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -11460,7 +12370,7 @@
         },\
         \"namespaceId\":{\
           \"shape\":\"NamespaceId\",\
-          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is in public preview.</p> </note>\"\
+          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is only supported by IoT Greengrass at this time. For more information, see <a href=\\\"https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html\\\">Setting up IoT Greengrass core devices.</a> </p> </note>\"\
         },\
         \"jobTemplateArn\":{\
           \"shape\":\"JobTemplateArn\",\
@@ -11477,6 +12387,18 @@
         \"isConcurrent\":{\
           \"shape\":\"BooleanWrapperObject\",\
           \"documentation\":\"<p>Indicates whether a job is concurrent. Will be true when a job is rolling out new job executions or canceling previously created executions, otherwise false.</p>\"\
+        },\
+        \"schedulingConfig\":{\
+          \"shape\":\"SchedulingConfig\",\
+          \"documentation\":\"<p>The configuration that allows you to schedule a job for a future date and time in addition to specifying the end behavior for each job execution.</p>\"\
+        },\
+        \"scheduledJobRollouts\":{\
+          \"shape\":\"ScheduledJobRolloutList\",\
+          \"documentation\":\"<p>Displays the next seven maintenance window occurrences and their start times.</p>\"\
+        },\
+        \"destinationPackageVersions\":{\
+          \"shape\":\"DestinationPackageVersions\",\
+          \"documentation\":\"<p>The package version Amazon Resource Names (ARNs) that are installed on the device when the job successfully completes. The package version must be in either the Published or Deprecated state when the job deploys. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle\\\">Package version lifecycle</a>.The package version must be in either the Published or Deprecated state when the job deploys. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle\\\">Package version lifecycle</a>.</p> <p> <b>Note:</b>The following Length Constraints relates to a single ARN. Up to 25 package version ARNs are allowed.</p>\"\
         }\
       },\
       \"documentation\":\"<p>The <code>Job</code> object contains details about a job.</p>\"\
@@ -11495,6 +12417,14 @@
       \"type\":\"string\",\
       \"max\":1350,\
       \"min\":1\
+    },\
+    \"JobEndBehavior\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"STOP_ROLLOUT\",\
+        \"CANCEL\",\
+        \"FORCE_CANCEL\"\
+      ]\
     },\
     \"JobExecution\":{\
       \"type\":\"structure\",\
@@ -11723,7 +12653,8 @@
         \"IN_PROGRESS\",\
         \"CANCELED\",\
         \"COMPLETED\",\
-        \"DELETION_IN_PROGRESS\"\
+        \"DELETION_IN_PROGRESS\",\
+        \"SCHEDULED\"\
       ]\
     },\
     \"JobSummary\":{\
@@ -11843,9 +12774,47 @@
         \"clientProperties\":{\
           \"shape\":\"ClientProperties\",\
           \"documentation\":\"<p>Properties of the Apache Kafka producer client.</p>\"\
+        },\
+        \"headers\":{\
+          \"shape\":\"KafkaHeaders\",\
+          \"documentation\":\"<p>The list of Kafka headers that you specify.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Send messages to an Amazon Managed Streaming for Apache Kafka (Amazon MSK) or self-managed Apache Kafka cluster.</p>\"\
+    },\
+    \"KafkaActionHeader\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"key\",\
+        \"value\"\
+      ],\
+      \"members\":{\
+        \"key\":{\
+          \"shape\":\"KafkaHeaderKey\",\
+          \"documentation\":\"<p>The key of the Kafka header.</p>\"\
+        },\
+        \"value\":{\
+          \"shape\":\"KafkaHeaderValue\",\
+          \"documentation\":\"<p>The value of the Kafka header.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Specifies a Kafka header using key-value pairs when you create a Ruleâs Kafka Action. You can use these headers to route data from IoT clients to downstream Kafka clusters without modifying your message payload.</p> <p>For more information about Rule's Kafka action, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/apache-kafka-rule-action.html\\\">Apache Kafka</a>. </p>\"\
+    },\
+    \"KafkaHeaderKey\":{\
+      \"type\":\"string\",\
+      \"max\":16384,\
+      \"min\":0\
+    },\
+    \"KafkaHeaderValue\":{\
+      \"type\":\"string\",\
+      \"max\":16384,\
+      \"min\":0\
+    },\
+    \"KafkaHeaders\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"KafkaActionHeader\"},\
+      \"max\":100,\
+      \"min\":1\
     },\
     \"Key\":{\"type\":\"string\"},\
     \"KeyName\":{\
@@ -12406,6 +13375,36 @@
       },\
       \"documentation\":\"<p>The output from the ListCACertificates operation.</p>\"\
     },\
+    \"ListCertificateProvidersRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"nextToken\":{\
+          \"shape\":\"Marker\",\
+          \"documentation\":\"<p>The token for the next set of results, or <code>null</code> if there are no more results.</p>\",\
+          \"location\":\"querystring\",\
+          \"locationName\":\"nextToken\"\
+        },\
+        \"ascendingOrder\":{\
+          \"shape\":\"AscendingOrder\",\
+          \"documentation\":\"<p>Returns the list of certificate providers in ascending alphabetical order.</p>\",\
+          \"location\":\"querystring\",\
+          \"locationName\":\"isAscendingOrder\"\
+        }\
+      }\
+    },\
+    \"ListCertificateProvidersResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"certificateProviders\":{\
+          \"shape\":\"CertificateProviders\",\
+          \"documentation\":\"<p>The list of certificate providers in your Amazon Web Services account.</p>\"\
+        },\
+        \"nextToken\":{\
+          \"shape\":\"Marker\",\
+          \"documentation\":\"<p>The token for the next set of results, or <code>null</code> if there are no more results.</p>\"\
+        }\
+      }\
+    },\
     \"ListCertificatesByCARequest\":{\
       \"type\":\"structure\",\
       \"required\":[\"caCertificateId\"],\
@@ -12812,7 +13811,7 @@
         },\
         \"namespaceId\":{\
           \"shape\":\"NamespaceId\",\
-          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is in public preview.</p> </note>\",\
+          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is only supported by IoT Greengrass at this time. For more information, see <a href=\\\"https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html\\\">Setting up IoT Greengrass core devices.</a> </p> </note>\",\
           \"location\":\"querystring\",\
           \"locationName\":\"namespaceId\"\
         },\
@@ -12920,7 +13919,7 @@
         },\
         \"namespaceId\":{\
           \"shape\":\"NamespaceId\",\
-          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is in public preview.</p> </note>\",\
+          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is only supported by IoT Greengrass at this time. For more information, see <a href=\\\"https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html\\\">Setting up IoT Greengrass core devices.</a> </p> </note>\",\
           \"location\":\"querystring\",\
           \"locationName\":\"namespaceId\"\
         }\
@@ -13156,6 +14155,79 @@
         }\
       },\
       \"documentation\":\"<p>The output from the ListOutgoingCertificates operation.</p>\"\
+    },\
+    \"ListPackageVersionsRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"packageName\"],\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the target software package.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"packageName\"\
+        },\
+        \"status\":{\
+          \"shape\":\"PackageVersionStatus\",\
+          \"documentation\":\"<p>The status of the package version. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle\\\">Package version lifecycle</a>.</p>\",\
+          \"location\":\"querystring\",\
+          \"locationName\":\"status\"\
+        },\
+        \"maxResults\":{\
+          \"shape\":\"PackageCatalogMaxResults\",\
+          \"documentation\":\"<p>The maximum number of results to return at one time.</p>\",\
+          \"location\":\"querystring\",\
+          \"locationName\":\"maxResults\"\
+        },\
+        \"nextToken\":{\
+          \"shape\":\"NextToken\",\
+          \"documentation\":\"<p>The token for the next set of results.</p>\",\
+          \"location\":\"querystring\",\
+          \"locationName\":\"nextToken\"\
+        }\
+      }\
+    },\
+    \"ListPackageVersionsResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"packageVersionSummaries\":{\
+          \"shape\":\"PackageVersionSummaryList\",\
+          \"documentation\":\"<p>Lists the package versions associated to the package.</p>\"\
+        },\
+        \"nextToken\":{\
+          \"shape\":\"NextToken\",\
+          \"documentation\":\"<p>The token for the next set of results.</p>\"\
+        }\
+      }\
+    },\
+    \"ListPackagesRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"maxResults\":{\
+          \"shape\":\"PackageCatalogMaxResults\",\
+          \"documentation\":\"<p>The maximum number of results returned at one time.</p>\",\
+          \"location\":\"querystring\",\
+          \"locationName\":\"maxResults\"\
+        },\
+        \"nextToken\":{\
+          \"shape\":\"NextToken\",\
+          \"documentation\":\"<p>The token for the next set of results.</p>\",\
+          \"location\":\"querystring\",\
+          \"locationName\":\"nextToken\"\
+        }\
+      }\
+    },\
+    \"ListPackagesResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"packageSummaries\":{\
+          \"shape\":\"PackageSummaryList\",\
+          \"documentation\":\"<p>The software package summary.</p>\"\
+        },\
+        \"nextToken\":{\
+          \"shape\":\"NextToken\",\
+          \"documentation\":\"<p>The token for the next set of results.</p>\"\
+        }\
+      }\
     },\
     \"ListPoliciesRequest\":{\
       \"type\":\"structure\",\
@@ -13411,6 +14483,43 @@
         \"nextToken\":{\
           \"shape\":\"NextToken\",\
           \"documentation\":\"<p>A token to retrieve the next set of results.</p>\"\
+        }\
+      }\
+    },\
+    \"ListRelatedResourcesForAuditFindingRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"findingId\"],\
+      \"members\":{\
+        \"findingId\":{\
+          \"shape\":\"FindingId\",\
+          \"documentation\":\"<p>The finding Id.</p>\",\
+          \"location\":\"querystring\",\
+          \"locationName\":\"findingId\"\
+        },\
+        \"nextToken\":{\
+          \"shape\":\"NextToken\",\
+          \"documentation\":\"<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>\",\
+          \"location\":\"querystring\",\
+          \"locationName\":\"nextToken\"\
+        },\
+        \"maxResults\":{\
+          \"shape\":\"MaxResults\",\
+          \"documentation\":\"<p>The maximum number of results to return at one time.</p>\",\
+          \"location\":\"querystring\",\
+          \"locationName\":\"maxResults\"\
+        }\
+      }\
+    },\
+    \"ListRelatedResourcesForAuditFindingResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"relatedResources\":{\
+          \"shape\":\"RelatedResources\",\
+          \"documentation\":\"<p>The related resources.</p>\"\
+        },\
+        \"nextToken\":{\
+          \"shape\":\"NextToken\",\
+          \"documentation\":\"<p>A token that can be used to retrieve the next set of results, or <code>null</code> for the first API call.</p>\"\
         }\
       }\
     },\
@@ -14278,6 +15387,58 @@
         }\
       }\
     },\
+    \"LocationAction\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"roleArn\",\
+        \"trackerName\",\
+        \"deviceId\",\
+        \"latitude\",\
+        \"longitude\"\
+      ],\
+      \"members\":{\
+        \"roleArn\":{\
+          \"shape\":\"AwsArn\",\
+          \"documentation\":\"<p>The IAM role that grants permission to write to the Amazon Location resource.</p>\"\
+        },\
+        \"trackerName\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The name of the tracker resource in Amazon Location in which the location is updated.</p>\"\
+        },\
+        \"deviceId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The unique ID of the device providing the location data.</p>\"\
+        },\
+        \"timestamp\":{\
+          \"shape\":\"LocationTimestamp\",\
+          \"documentation\":\"<p>The time that the location data was sampled. The default value is the time the MQTT message was processed.</p>\"\
+        },\
+        \"latitude\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>A string that evaluates to a double value that represents the latitude of the device's location.</p>\"\
+        },\
+        \"longitude\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>A string that evaluates to a double value that represents the longitude of the device's location.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The Amazon Location rule action sends device location updates from an MQTT message to an Amazon Location tracker resource.</p>\"\
+    },\
+    \"LocationTimestamp\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"value\"],\
+      \"members\":{\
+        \"value\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>An expression that returns a long epoch time value.</p>\"\
+        },\
+        \"unit\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The precision of the timestamp value that results from the expression described in <code>value</code>.</p> <p>Valid values: <code>SECONDS</code> | <code>MILLISECONDS</code> | <code>MICROSECONDS</code> | <code>NANOSECONDS</code>. The default is <code>MILLISECONDS</code>.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes how to interpret an application-defined timestamp value from an MQTT message payload and the precision of that value.</p>\"\
+    },\
     \"LogGroupName\":{\"type\":\"string\"},\
     \"LogLevel\":{\
       \"type\":\"string\",\
@@ -14358,6 +15519,28 @@
         }\
       },\
       \"documentation\":\"<p> The configuration of an ML Detect Security Profile. </p>\"\
+    },\
+    \"MaintenanceWindow\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"startTime\",\
+        \"durationInMinutes\"\
+      ],\
+      \"members\":{\
+        \"startTime\":{\
+          \"shape\":\"CronExpression\",\
+          \"documentation\":\"<p>Displays the start time of the next maintenance window.</p>\"\
+        },\
+        \"durationInMinutes\":{\
+          \"shape\":\"DurationInMinutes\",\
+          \"documentation\":\"<p>Displays the duration of the next maintenance window.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>An optional configuration within the <code>SchedulingConfig</code> to setup a recurring maintenance window with a predetermined start time and duration for the rollout of a job document to all devices in a target group for a job.</p>\"\
+    },\
+    \"MaintenanceWindows\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"MaintenanceWindow\"}\
     },\
     \"MalformedPolicyException\":{\
       \"type\":\"structure\",\
@@ -14440,6 +15623,11 @@
       \"max\":128,\
       \"pattern\":\"[\\\\s\\\\S]*\"\
     },\
+    \"MessageExpiry\":{\
+      \"type\":\"string\",\
+      \"max\":1024,\
+      \"min\":0\
+    },\
     \"MessageFormat\":{\
       \"type\":\"string\",\
       \"enum\":[\
@@ -14505,6 +15693,10 @@
         \"metricDimension\":{\
           \"shape\":\"MetricDimension\",\
           \"documentation\":\"<p>The dimension of a metric. This can't be used with custom metrics.</p>\"\
+        },\
+        \"exportMetric\":{\
+          \"shape\":\"ExportMetric\",\
+          \"documentation\":\"<p>The value indicates exporting metrics related to the <code>MetricToRetain </code> when it's true.</p>\"\
         }\
       },\
       \"documentation\":\"<p>The metric you want to retain. Dimensions are optional.</p>\"\
@@ -14538,6 +15730,24 @@
         }\
       },\
       \"documentation\":\"<p>The value to be compared with the <code>metric</code>.</p>\"\
+    },\
+    \"MetricsExportConfig\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"mqttTopic\",\
+        \"roleArn\"\
+      ],\
+      \"members\":{\
+        \"mqttTopic\":{\
+          \"shape\":\"MqttTopic\",\
+          \"documentation\":\"<p>The MQTT topic that Device Defender Detect should publish messages to for metrics export.</p>\"\
+        },\
+        \"roleArn\":{\
+          \"shape\":\"RoleArn\",\
+          \"documentation\":\"<p>This role ARN has permission to publish MQTT messages, after which Device Defender Detect can assume the role and publish messages on your behalf.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Set configurations for metrics export.</p>\"\
     },\
     \"Minimum\":{\"type\":\"double\"},\
     \"MinimumNumberOfExecutedThings\":{\
@@ -14689,9 +15899,44 @@
       },\
       \"documentation\":\"<p>Specifies the MQTT context to use for the test authorizer request</p>\"\
     },\
+    \"MqttHeaders\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"payloadFormatIndicator\":{\
+          \"shape\":\"PayloadFormatIndicator\",\
+          \"documentation\":\"<p>An <code>Enum</code> string value that indicates whether the payload is formatted as UTF-8.</p> <p>Valid values are <code>UNSPECIFIED_BYTES</code> and <code>UTF8_DATA</code>.</p> <p>For more information, see <a href=\\\"https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901111\\\"> Payload Format Indicator</a> from the MQTT Version 5.0 specification.</p> <p>Supports <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-substitution-templates.html\\\">substitution templates</a>.</p>\"\
+        },\
+        \"contentType\":{\
+          \"shape\":\"ContentType\",\
+          \"documentation\":\"<p>A UTF-8 encoded string that describes the content of the publishing message.</p> <p>For more information, see <a href=\\\"https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901118\\\"> Content Type</a> from the MQTT Version 5.0 specification.</p> <p>Supports <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-substitution-templates.html\\\">substitution templates</a>.</p>\"\
+        },\
+        \"responseTopic\":{\
+          \"shape\":\"ResponseTopic\",\
+          \"documentation\":\"<p>A UTF-8 encoded string that's used as the topic name for a response message. The response topic is used to describe the topic which the receiver should publish to as part of the request-response flow. The topic must not contain wildcard characters.</p> <p>For more information, see <a href=\\\"https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901114\\\"> Response Topic</a> from the MQTT Version 5.0 specification.</p> <p>Supports <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-substitution-templates.html\\\">substitution templates</a>.</p>\"\
+        },\
+        \"correlationData\":{\
+          \"shape\":\"CorrelationData\",\
+          \"documentation\":\"<p>The base64-encoded binary data used by the sender of the request message to identify which request the response message is for when it's received.</p> <p>For more information, see <a href=\\\"https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901115\\\"> Correlation Data</a> from the MQTT Version 5.0 specification.</p> <note> <p> This binary data must be based64-encoded. </p> </note> <p>Supports <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-substitution-templates.html\\\">substitution templates</a>.</p>\"\
+        },\
+        \"messageExpiry\":{\
+          \"shape\":\"MessageExpiry\",\
+          \"documentation\":\"<p>A user-defined integer value that will persist a message at the message broker for a specified amount of time to ensure that the message will expire if it's no longer relevant to the subscriber. The value of <code>messageExpiry</code> represents the number of seconds before it expires. For more information about the limits of <code>messageExpiry</code>, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/mqtt.html\\\">Amazon Web Services IoT Core message broker and protocol limits and quotas </a> from the Amazon Web Services Reference Guide.</p> <p>Supports <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-substitution-templates.html\\\">substitution templates</a>.</p>\"\
+        },\
+        \"userProperties\":{\
+          \"shape\":\"UserProperties\",\
+          \"documentation\":\"<p>An array of key-value pairs that you define in the MQTT5 header.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Specifies MQTT Version 5.0 headers information. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/mqtt.html\\\"> MQTT</a> from Amazon Web Services IoT Core Developer Guide.</p>\"\
+    },\
     \"MqttPassword\":{\
       \"type\":\"blob\",\
       \"max\":65535,\
+      \"min\":1\
+    },\
+    \"MqttTopic\":{\
+      \"type\":\"string\",\
+      \"max\":512,\
       \"min\":1\
     },\
     \"MqttUsername\":{\
@@ -14713,8 +15958,6 @@
     },\
     \"NamespaceId\":{\
       \"type\":\"string\",\
-      \"max\":64,\
-      \"min\":1,\
       \"pattern\":\"[a-zA-Z0-9_-]+\"\
     },\
     \"NextToken\":{\"type\":\"string\"},\
@@ -14797,7 +16040,7 @@
         },\
         \"attributes\":{\
           \"shape\":\"AttributesMap\",\
-          \"documentation\":\"<p>A list of name/attribute pairs.</p>\"\
+          \"documentation\":\"<p>A list of name-attribute pairs. They won't be sent to devices as a part of the Job document.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes a file to be associated with an OTA update.</p>\"\
@@ -14806,7 +16049,6 @@
     \"OTAUpdateFiles\":{\
       \"type\":\"list\",\
       \"member\":{\"shape\":\"OTAUpdateFile\"},\
-      \"max\":50,\
       \"min\":1\
     },\
     \"OTAUpdateId\":{\
@@ -14891,7 +16133,9 @@
         \"CREATE_PENDING\",\
         \"CREATE_IN_PROGRESS\",\
         \"CREATE_COMPLETE\",\
-        \"CREATE_FAILED\"\
+        \"CREATE_FAILED\",\
+        \"DELETE_IN_PROGRESS\",\
+        \"DELETE_FAILED\"\
       ]\
     },\
     \"OTAUpdateSummary\":{\
@@ -14986,6 +16230,97 @@
       \"member\":{\"shape\":\"OutgoingCertificate\"}\
     },\
     \"OverrideDynamicGroups\":{\"type\":\"boolean\"},\
+    \"PackageArn\":{\"type\":\"string\"},\
+    \"PackageCatalogMaxResults\":{\
+      \"type\":\"integer\",\
+      \"box\":true,\
+      \"max\":100,\
+      \"min\":1\
+    },\
+    \"PackageName\":{\
+      \"type\":\"string\",\
+      \"max\":128,\
+      \"min\":1,\
+      \"pattern\":\"[a-zA-Z0-9-_.]+\"\
+    },\
+    \"PackageSummary\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name for the target software package.</p>\"\
+        },\
+        \"defaultVersionName\":{\
+          \"shape\":\"VersionName\",\
+          \"documentation\":\"<p>The name of the default package version.</p>\"\
+        },\
+        \"creationDate\":{\
+          \"shape\":\"CreationDate\",\
+          \"documentation\":\"<p>The date that the package was created.</p>\"\
+        },\
+        \"lastModifiedDate\":{\
+          \"shape\":\"LastModifiedDate\",\
+          \"documentation\":\"<p>The date that the package was last updated.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>A summary of information about a software package.</p>\"\
+    },\
+    \"PackageSummaryList\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"PackageSummary\"}\
+    },\
+    \"PackageVersionAction\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"PUBLISH\",\
+        \"DEPRECATE\"\
+      ]\
+    },\
+    \"PackageVersionArn\":{\
+      \"type\":\"string\",\
+      \"max\":1600,\
+      \"min\":1,\
+      \"pattern\":\"^arn:[!-~]+$\"\
+    },\
+    \"PackageVersionErrorReason\":{\"type\":\"string\"},\
+    \"PackageVersionStatus\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"DRAFT\",\
+        \"PUBLISHED\",\
+        \"DEPRECATED\"\
+      ]\
+    },\
+    \"PackageVersionSummary\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the associated software package.</p>\"\
+        },\
+        \"versionName\":{\
+          \"shape\":\"VersionName\",\
+          \"documentation\":\"<p>The name of the target package version.</p>\"\
+        },\
+        \"status\":{\
+          \"shape\":\"PackageVersionStatus\",\
+          \"documentation\":\"<p>The status of the package version. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle\\\">Package version lifecycle</a>.</p>\"\
+        },\
+        \"creationDate\":{\
+          \"shape\":\"CreationDate\",\
+          \"documentation\":\"<p>The date that the package version was created.</p>\"\
+        },\
+        \"lastModifiedDate\":{\
+          \"shape\":\"LastModifiedDate\",\
+          \"documentation\":\"<p>The date that the package version was last updated.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>A summary of information about a package version.</p>\"\
+    },\
+    \"PackageVersionSummaryList\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"PackageVersionSummary\"}\
+    },\
     \"PageSize\":{\
       \"type\":\"integer\",\
       \"max\":250,\
@@ -15021,6 +16356,11 @@
     },\
     \"PartitionKey\":{\"type\":\"string\"},\
     \"PayloadField\":{\"type\":\"string\"},\
+    \"PayloadFormatIndicator\":{\
+      \"type\":\"string\",\
+      \"max\":1024,\
+      \"min\":0\
+    },\
     \"PayloadVersion\":{\
       \"type\":\"string\",\
       \"max\":32,\
@@ -15164,7 +16504,7 @@
       \"members\":{\
         \"roleArn\":{\
           \"shape\":\"RoleArn\",\
-          \"documentation\":\"<p>The ARN of an IAM role that grants grants permission to download files from the S3 bucket where the job data/updates are stored. The role must also grant permission for IoT to download the files.</p> <important> <p>For information about addressing the confused deputy problem, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/cross-service-confused-deputy-prevention.html\\\">cross-service confused deputy prevention</a> in the <i>Amazon Web Services IoT Core developer guide</i>.</p> </important>\"\
+          \"documentation\":\"<p>The ARN of an IAM role that grants permission to download files from the S3 bucket where the job data/updates are stored. The role must also grant permission for IoT to download the files.</p> <important> <p>For information about addressing the confused deputy problem, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/cross-service-confused-deputy-prevention.html\\\">cross-service confused deputy prevention</a> in the <i>Amazon Web Services IoT Core developer guide</i>.</p> </important>\"\
         },\
         \"expiresInSec\":{\
           \"shape\":\"ExpiresInSec\",\
@@ -15271,7 +16611,7 @@
       \"members\":{\
         \"versionId\":{\
           \"shape\":\"TemplateVersionId\",\
-          \"documentation\":\"<p>The ID of the fleet privisioning template version.</p>\"\
+          \"documentation\":\"<p>The ID of the fleet provisioning template version.</p>\"\
         },\
         \"creationDate\":{\
           \"shape\":\"DateType\",\
@@ -15778,6 +17118,10 @@
         \"qos\":{\
           \"shape\":\"Qos\",\
           \"documentation\":\"<p>The Quality of Service (QoS) level to use when republishing messages. The default value is 0.</p>\"\
+        },\
+        \"headers\":{\
+          \"shape\":\"MqttHeaders\",\
+          \"documentation\":\"<p>MQTT Version 5.0 headers information. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/mqtt.html\\\"> MQTT</a> from the Amazon Web Services IoT Core Developer Guide.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes an action to republish to another topic.</p>\"\
@@ -15819,6 +17163,29 @@
       \"key\":{\"shape\":\"ResourceLogicalId\"},\
       \"value\":{\"shape\":\"ResourceArn\"}\
     },\
+    \"ResourceAttributeKey\":{\
+      \"type\":\"string\",\
+      \"min\":1,\
+      \"pattern\":\"[a-zA-Z0-9:_-]+\"\
+    },\
+    \"ResourceAttributeValue\":{\
+      \"type\":\"string\",\
+      \"min\":1,\
+      \"pattern\":\"[^\\\\p{C}]+\"\
+    },\
+    \"ResourceAttributes\":{\
+      \"type\":\"map\",\
+      \"key\":{\"shape\":\"ResourceAttributeKey\"},\
+      \"value\":{\"shape\":\"ResourceAttributeValue\"},\
+      \"sensitive\":true\
+    },\
+    \"ResourceDescription\":{\
+      \"type\":\"string\",\
+      \"max\":1024,\
+      \"min\":0,\
+      \"pattern\":\"[^\\\\p{C}]+\",\
+      \"sensitive\":true\
+    },\
     \"ResourceIdentifier\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -15853,6 +17220,14 @@
         \"roleAliasArn\":{\
           \"shape\":\"RoleAliasArn\",\
           \"documentation\":\"<p>The ARN of the role alias that has overly permissive actions.</p>\"\
+        },\
+        \"issuerCertificateIdentifier\":{\
+          \"shape\":\"IssuerCertificateIdentifier\",\
+          \"documentation\":\"<p>The issuer certificate identifier.</p>\"\
+        },\
+        \"deviceCertificateArn\":{\
+          \"shape\":\"CertificateArn\",\
+          \"documentation\":\"<p>The ARN of the identified device certificate.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Information that identifies the noncompliant resource.</p>\"\
@@ -15892,12 +17267,18 @@
         \"CLIENT_ID\",\
         \"ACCOUNT_SETTINGS\",\
         \"ROLE_ALIAS\",\
-        \"IAM_ROLE\"\
+        \"IAM_ROLE\",\
+        \"ISSUER_CERTIFICATE\"\
       ]\
     },\
     \"Resources\":{\
       \"type\":\"list\",\
       \"member\":{\"shape\":\"Resource\"}\
+    },\
+    \"ResponseTopic\":{\
+      \"type\":\"string\",\
+      \"max\":1024,\
+      \"min\":0\
     },\
     \"RetryAttempt\":{\"type\":\"integer\"},\
     \"RetryCriteria\":{\
@@ -16139,6 +17520,42 @@
       \"min\":1,\
       \"pattern\":\"[a-zA-Z0-9_-]+\"\
     },\
+    \"ScheduledJobRollout\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"startTime\":{\
+          \"shape\":\"StringDateTime\",\
+          \"documentation\":\"<p>Displays the start times of the next seven maintenance window occurrences.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Displays the next seven maintenance window occurrences and their start times.</p>\"\
+    },\
+    \"ScheduledJobRolloutList\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"ScheduledJobRollout\"}\
+    },\
+    \"SchedulingConfig\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"startTime\":{\
+          \"shape\":\"StringDateTime\",\
+          \"documentation\":\"<p>The time a job will begin rollout of the job document to all devices in the target group for a job. The <code>startTime</code> can be scheduled up to a year in advance and must be scheduled a minimum of thirty minutes from the current time. The date and time format for the <code>startTime</code> is YYYY-MM-DD for the date and HH:MM for the time.</p> <p>For more information on the syntax for <code>startTime</code> when using an API command or the Command Line Interface, see <a href=\\\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-types.html#parameter-type-timestamp\\\">Timestamp</a>.</p>\"\
+        },\
+        \"endTime\":{\
+          \"shape\":\"StringDateTime\",\
+          \"documentation\":\"<p>The time a job will stop rollout of the job document to all devices in the target group for a job. The <code>endTime</code> must take place no later than two years from the current time and be scheduled a minimum of thirty minutes from the current time. The minimum duration between <code>startTime</code> and <code>endTime</code> is thirty minutes. The maximum duration between <code>startTime</code> and <code>endTime</code> is two years. The date and time format for the <code>endTime</code> is YYYY-MM-DD for the date and HH:MM for the time.</p> <p>For more information on the syntax for <code>endTime</code> when using an API command or the Command Line Interface, see <a href=\\\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-types.html#parameter-type-timestamp\\\">Timestamp</a>.</p>\"\
+        },\
+        \"endBehavior\":{\
+          \"shape\":\"JobEndBehavior\",\
+          \"documentation\":\"<p>Specifies the end behavior for all job executions after a job reaches the selected <code>endTime</code>. If <code>endTime</code> is not selected when creating the job, then <code>endBehavior</code> does not apply.</p>\"\
+        },\
+        \"maintenanceWindows\":{\
+          \"shape\":\"MaintenanceWindows\",\
+          \"documentation\":\"<p>An optional configuration within the <code>SchedulingConfig</code> to setup a recurring maintenance window with a predetermined start time and duration for the rollout of a job document to all devices in a target group for a job.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Specifies the date and time that a job will begin the rollout of the job document to all devices in the target group. Additionally, you can specify the end behavior for each job execution when it reaches the scheduled end time.</p>\"\
+    },\
     \"SearchIndexRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\"queryString\"],\
@@ -16156,8 +17573,8 @@
           \"documentation\":\"<p>The token used to get the next set of results, or <code>null</code> if there are no additional results.</p>\"\
         },\
         \"maxResults\":{\
-          \"shape\":\"QueryMaxResults\",\
-          \"documentation\":\"<p>The maximum number of results to return at one time.</p>\"\
+          \"shape\":\"SearchQueryMaxResults\",\
+          \"documentation\":\"<p>The maximum number of results to return per page at one time. This maximum number cannot exceed 100. The response might contain fewer results but will never contain more. You can use <a href=\\\"https://docs.aws.amazon.com/iot/latest/apireference/API_SearchIndex.html#iot-SearchIndex-request-nextToken\\\"> <code>nextToken</code> </a> to retrieve the next set of results until <code>nextToken</code> returns <code>NULL</code>.</p>\"\
         },\
         \"queryVersion\":{\
           \"shape\":\"QueryVersion\",\
@@ -16182,6 +17599,10 @@
         }\
       }\
     },\
+    \"SearchQueryMaxResults\":{\
+      \"type\":\"integer\",\
+      \"min\":1\
+    },\
     \"SearchableAttributes\":{\
       \"type\":\"list\",\
       \"member\":{\"shape\":\"AttributeName\"}\
@@ -16191,6 +17612,11 @@
     \"SecurityGroupList\":{\
       \"type\":\"list\",\
       \"member\":{\"shape\":\"SecurityGroupId\"}\
+    },\
+    \"SecurityPolicy\":{\
+      \"type\":\"string\",\
+      \"max\":128,\
+      \"pattern\":\"[\\\\s\\\\S]*\"\
     },\
     \"SecurityProfileArn\":{\"type\":\"string\"},\
     \"SecurityProfileDescription\":{\
@@ -16266,6 +17692,16 @@
       \"max\":1,\
       \"min\":0\
     },\
+    \"ServerCertificateConfig\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"enableOCSPCheck\":{\
+          \"shape\":\"EnableOCSPCheck\",\
+          \"documentation\":\"<p>A Boolean value that indicates whether Online Certificate Status Protocol (OCSP) server certificate check is enabled or not.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-domain-ocsp-config.html\\\">Configuring OCSP server-certificate stapling in domain configuration</a> from Amazon Web Services IoT Core Developer Guide.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The server certificate configuration.</p>\"\
+    },\
     \"ServerCertificateStatus\":{\
       \"type\":\"string\",\
       \"enum\":[\
@@ -16303,6 +17739,15 @@
       \"pattern\":\"[\\\\s\\\\S]*\"\
     },\
     \"ServiceName\":{\"type\":\"string\"},\
+    \"ServiceQuotaExceededException\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"message\":{\"shape\":\"errorMessage\"}\
+      },\
+      \"documentation\":\"<p>A limit has been exceeded.</p>\",\
+      \"error\":{\"httpStatusCode\":402},\
+      \"exception\":true\
+    },\
     \"ServiceType\":{\
       \"type\":\"string\",\
       \"enum\":[\
@@ -16422,7 +17867,7 @@
       \"type\":\"string\",\
       \"max\":64,\
       \"min\":1,\
-      \"pattern\":\"[a-zA-Z0-9:_-]+\"\
+      \"pattern\":\"[$a-zA-Z0-9:_-]+\"\
     },\
     \"SigV4Authorization\":{\
       \"type\":\"structure\",\
@@ -16924,6 +18369,11 @@
       \"member\":{\"shape\":\"StreamSummary\"}\
     },\
     \"String\":{\"type\":\"string\"},\
+    \"StringDateTime\":{\
+      \"type\":\"string\",\
+      \"max\":64,\
+      \"min\":1\
+    },\
     \"StringList\":{\
       \"type\":\"list\",\
       \"member\":{\"shape\":\"stringValue\"}\
@@ -16975,6 +18425,13 @@
       \"type\":\"list\",\
       \"member\":{\"shape\":\"Tag\"}\
     },\
+    \"TagMap\":{\
+      \"type\":\"map\",\
+      \"key\":{\"shape\":\"TagKey\"},\
+      \"value\":{\"shape\":\"TagValue\"},\
+      \"max\":50,\
+      \"min\":1\
+    },\
     \"TagResourceRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\
@@ -17010,6 +18467,14 @@
     \"TargetAuditCheckNames\":{\
       \"type\":\"list\",\
       \"member\":{\"shape\":\"AuditCheckName\"}\
+    },\
+    \"TargetFieldName\":{\"type\":\"string\"},\
+    \"TargetFieldOrder\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"LatLon\",\
+        \"LonLat\"\
+      ]\
     },\
     \"TargetSelection\":{\
       \"type\":\"string\",\
@@ -17391,7 +18856,7 @@
         },\
         \"managedFields\":{\
           \"shape\":\"Fields\",\
-          \"documentation\":\"<p>Contains fields that are indexed and whose types are already known by the Fleet Indexing service.</p>\"\
+          \"documentation\":\"<p>Contains fields that are indexed and whose types are already known by the Fleet Indexing service. This is an optional field. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/managing-fleet-index.html#managed-field\\\">Managed fields</a> in the <i>Amazon Web Services IoT Core Developer Guide</i>.</p> <note> <p>You can't modify managed fields by updating fleet indexing configuration.</p> </note>\"\
         },\
         \"customFields\":{\
           \"shape\":\"Fields\",\
@@ -17486,7 +18951,7 @@
         },\
         \"managedFields\":{\
           \"shape\":\"Fields\",\
-          \"documentation\":\"<p>Contains fields that are indexed and whose types are already known by the Fleet Indexing service.</p>\"\
+          \"documentation\":\"<p>Contains fields that are indexed and whose types are already known by the Fleet Indexing service. This is an optional field. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/managing-fleet-index.html#managed-field\\\">Managed fields</a> in the <i>Amazon Web Services IoT Core Developer Guide</i>.</p> <note> <p>You can't modify managed fields by updating fleet indexing configuration.</p> </note>\"\
         },\
         \"customFields\":{\
           \"shape\":\"Fields\",\
@@ -17494,7 +18959,7 @@
         },\
         \"filter\":{\
           \"shape\":\"IndexingFilter\",\
-          \"documentation\":\"<p>Provides additional filters for specific data sources. Named shadow is the only data source that currently supports and requires a filter. To add named shadows to your fleet indexing configuration, set <code>namedShadowIndexingMode</code> to be <code>ON</code> and specify your shadow names in <code>filter</code>.</p>\"\
+          \"documentation\":\"<p>Provides additional selections for named shadows and geolocation data. </p> <p>To add named shadows to your fleet indexing configuration, set <code>namedShadowIndexingMode</code> to be ON and specify your shadow names in <code>namedShadowNames</code> filter.</p> <p>To add geolocation data to your fleet indexing configuration: </p> <ul> <li> <p>If you store geolocation data in a class/unnamed shadow, set <code>thingIndexingMode</code> to be <code>REGISTRY_AND_SHADOW</code> and specify your geolocation data in <code>geoLocations</code> filter. </p> </li> <li> <p>If you store geolocation data in a named shadow, set <code>namedShadowIndexingMode</code> to be <code>ON</code>, add the shadow name in <code>namedShadowNames</code> filter, and specify your geolocation data in <code>geoLocations</code> filter. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/managing-fleet-index.html\\\">Managing fleet indexing</a>.</p> </li> </ul>\"\
         }\
       },\
       \"documentation\":\"<p>The thing indexing configuration. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/managing-index.html\\\">Managing Thing Indexing</a>.</p>\"\
@@ -17696,6 +19161,16 @@
       \"type\":\"integer\",\
       \"max\":10,\
       \"min\":1\
+    },\
+    \"TlsConfig\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"securityPolicy\":{\
+          \"shape\":\"SecurityPolicy\",\
+          \"documentation\":\"<p>The security policy for a domain configuration. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/transport-security.html#tls-policy-table\\\">Security policies </a> in the <i>Amazon Web Services IoT Core developer guide</i>.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>An object that specifies the TLS configuration for a domain.</p>\"\
     },\
     \"TlsContext\":{\
       \"type\":\"structure\",\
@@ -18037,6 +19512,10 @@
       \"exception\":true\
     },\
     \"UndoDeprecate\":{\"type\":\"boolean\"},\
+    \"UnsetDefaultVersion\":{\
+      \"type\":\"boolean\",\
+      \"box\":true\
+    },\
     \"UnsignedLong\":{\
       \"type\":\"long\",\
       \"min\":0\
@@ -18234,6 +19713,39 @@
       },\
       \"documentation\":\"<p>The input to the UpdateCACertificate operation.</p>\"\
     },\
+    \"UpdateCertificateProviderRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"certificateProviderName\"],\
+      \"members\":{\
+        \"certificateProviderName\":{\
+          \"shape\":\"CertificateProviderName\",\
+          \"documentation\":\"<p>The name of the certificate provider.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"certificateProviderName\"\
+        },\
+        \"lambdaFunctionArn\":{\
+          \"shape\":\"CertificateProviderFunctionArn\",\
+          \"documentation\":\"<p>The Lambda function ARN that's associated with the certificate provider.</p>\"\
+        },\
+        \"accountDefaultForOperations\":{\
+          \"shape\":\"CertificateProviderAccountDefaultForOperations\",\
+          \"documentation\":\"<p>A list of the operations that the certificate provider will use to generate certificates. Valid value: <code>CreateCertificateFromCsr</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"UpdateCertificateProviderResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"certificateProviderName\":{\
+          \"shape\":\"CertificateProviderName\",\
+          \"documentation\":\"<p>The name of the certificate provider.</p>\"\
+        },\
+        \"certificateProviderArn\":{\
+          \"shape\":\"CertificateProviderArn\",\
+          \"documentation\":\"<p>The ARN of the certificate provider.</p>\"\
+        }\
+      }\
+    },\
     \"UpdateCertificateRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\
@@ -18384,6 +19896,14 @@
         \"removeAuthorizerConfig\":{\
           \"shape\":\"RemoveAuthorizerConfig\",\
           \"documentation\":\"<p>Removes the authorization configuration from a domain.</p>\"\
+        },\
+        \"tlsConfig\":{\
+          \"shape\":\"TlsConfig\",\
+          \"documentation\":\"<p>An object that specifies the TLS configuration for a domain.</p>\"\
+        },\
+        \"serverCertificateConfig\":{\
+          \"shape\":\"ServerCertificateConfig\",\
+          \"documentation\":\"<p>The server certificate configuration.</p>\"\
         }\
       }\
     },\
@@ -18559,7 +20079,7 @@
         },\
         \"namespaceId\":{\
           \"shape\":\"NamespaceId\",\
-          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is in public preview.</p> </note>\",\
+          \"documentation\":\"<p>The namespace used to indicate that a job is a customer-managed job.</p> <p>When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format.</p> <p> <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code> </p> <note> <p>The <code>namespaceId</code> feature is only supported by IoT Greengrass at this time. For more information, see <a href=\\\"https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html\\\">Setting up IoT Greengrass core devices.</a> </p> </note>\",\
           \"location\":\"querystring\",\
           \"locationName\":\"namespaceId\"\
         },\
@@ -18602,6 +20122,108 @@
         }\
       }\
     },\
+    \"UpdatePackageConfigurationRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"versionUpdateByJobsConfig\":{\
+          \"shape\":\"VersionUpdateByJobsConfig\",\
+          \"documentation\":\"<p>Configuration to manage job's package version reporting. This updates the thing's reserved named shadow that the job targets.</p>\"\
+        },\
+        \"clientToken\":{\
+          \"shape\":\"ClientToken\",\
+          \"documentation\":\"<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>\",\
+          \"idempotencyToken\":true,\
+          \"location\":\"querystring\",\
+          \"locationName\":\"clientToken\"\
+        }\
+      }\
+    },\
+    \"UpdatePackageConfigurationResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+      }\
+    },\
+    \"UpdatePackageRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"packageName\"],\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the target software package.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"packageName\"\
+        },\
+        \"description\":{\
+          \"shape\":\"ResourceDescription\",\
+          \"documentation\":\"<p>The package description.</p>\"\
+        },\
+        \"defaultVersionName\":{\
+          \"shape\":\"VersionName\",\
+          \"documentation\":\"<p>The name of the default package version.</p> <p> <b>Note:</b> You cannot name a <code>defaultVersion</code> and set <code>unsetDefaultVersion</code> equal to <code>true</code> at the same time.</p>\"\
+        },\
+        \"unsetDefaultVersion\":{\
+          \"shape\":\"UnsetDefaultVersion\",\
+          \"documentation\":\"<p>Indicates whether you want to remove the named default package version from the software package. Set as <code>true</code> to remove the default package version. </p> <p> <b>Note:</b> You cannot name a <code>defaultVersion</code> and set <code>unsetDefaultVersion</code> equal to <code>true</code> at the same time.</p>\"\
+        },\
+        \"clientToken\":{\
+          \"shape\":\"ClientToken\",\
+          \"documentation\":\"<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>\",\
+          \"idempotencyToken\":true,\
+          \"location\":\"querystring\",\
+          \"locationName\":\"clientToken\"\
+        }\
+      }\
+    },\
+    \"UpdatePackageResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+      }\
+    },\
+    \"UpdatePackageVersionRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"packageName\",\
+        \"versionName\"\
+      ],\
+      \"members\":{\
+        \"packageName\":{\
+          \"shape\":\"PackageName\",\
+          \"documentation\":\"<p>The name of the associated software package.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"packageName\"\
+        },\
+        \"versionName\":{\
+          \"shape\":\"VersionName\",\
+          \"documentation\":\"<p>The name of the target package version.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"versionName\"\
+        },\
+        \"description\":{\
+          \"shape\":\"ResourceDescription\",\
+          \"documentation\":\"<p>The package version description.</p>\"\
+        },\
+        \"attributes\":{\
+          \"shape\":\"ResourceAttributes\",\
+          \"documentation\":\"<p>Metadata that can be used to define a package versionâs configuration. For example, the Amazon S3 file location, configuration options that are being sent to the device or fleet. </p> <p> <b>Note:</b> Attributes can be updated only when the package version is in a draft state.</p> <p>The combined size of all the attributes on a package version is limited to 3KB.</p>\"\
+        },\
+        \"action\":{\
+          \"shape\":\"PackageVersionAction\",\
+          \"documentation\":\"<p>The status that the package version should be assigned. For more information, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle\\\">Package version lifecycle</a>.</p>\"\
+        },\
+        \"clientToken\":{\
+          \"shape\":\"ClientToken\",\
+          \"documentation\":\"<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>\",\
+          \"idempotencyToken\":true,\
+          \"location\":\"querystring\",\
+          \"locationName\":\"clientToken\"\
+        }\
+      }\
+    },\
+    \"UpdatePackageVersionResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+      }\
+    },\
     \"UpdateProvisioningTemplateRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\"templateName\"],\
@@ -18630,7 +20252,7 @@
         },\
         \"preProvisioningHook\":{\
           \"shape\":\"ProvisioningHook\",\
-          \"documentation\":\"<p>Updates the pre-provisioning hook template.</p>\"\
+          \"documentation\":\"<p>Updates the pre-provisioning hook template. Only supports template of type <code>FLEET_PROVISIONING</code>. For more information about provisioning template types, see <a href=\\\"https://docs.aws.amazon.com/iot/latest/apireference/API_CreateProvisioningTemplate.html#iot-CreateProvisioningTemplate-request-type\\\">type</a>.</p>\"\
         },\
         \"removePreProvisioningHook\":{\
           \"shape\":\"RemoveHook\",\
@@ -18762,6 +20384,14 @@
           \"documentation\":\"<p>The expected version of the security profile. A new version is generated whenever the security profile is updated. If you specify a value that is different from the actual version, a <code>VersionConflictException</code> is thrown.</p>\",\
           \"location\":\"querystring\",\
           \"locationName\":\"expectedVersion\"\
+        },\
+        \"metricsExportConfig\":{\
+          \"shape\":\"MetricsExportConfig\",\
+          \"documentation\":\"<p>Specifies the MQTT topic and role ARN required for metric export.</p>\"\
+        },\
+        \"deleteMetricsExportConfig\":{\
+          \"shape\":\"DeleteMetricsExportConfig\",\
+          \"documentation\":\"<p>Set the value as true to delete metrics export related configurations.</p>\"\
         }\
       }\
     },\
@@ -18809,6 +20439,10 @@
         \"lastModifiedDate\":{\
           \"shape\":\"Timestamp\",\
           \"documentation\":\"<p>The time the security profile was last modified.</p>\"\
+        },\
+        \"metricsExportConfig\":{\
+          \"shape\":\"MetricsExportConfig\",\
+          \"documentation\":\"<p>Specifies the MQTT topic and role ARN required for metric export.</p>\"\
         }\
       }\
     },\
@@ -18977,6 +20611,40 @@
       \"max\":2000\
     },\
     \"UseBase64\":{\"type\":\"boolean\"},\
+    \"UserProperties\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"UserProperty\"},\
+      \"max\":100,\
+      \"min\":1\
+    },\
+    \"UserProperty\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"key\",\
+        \"value\"\
+      ],\
+      \"members\":{\
+        \"key\":{\
+          \"shape\":\"UserPropertyKey\",\
+          \"documentation\":\"<p>A key to be specified in <code>UserProperty</code>.</p>\"\
+        },\
+        \"value\":{\
+          \"shape\":\"UserPropertyValue\",\
+          \"documentation\":\"<p>A value to be specified in <code>UserProperty</code>.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>A key-value pair that you define in the header. Both the key and the value are either literal strings or valid <a href=\\\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-substitution-templates.html\\\">substitution templates</a>.</p>\"\
+    },\
+    \"UserPropertyKey\":{\
+      \"type\":\"string\",\
+      \"max\":1024,\
+      \"min\":0\
+    },\
+    \"UserPropertyValue\":{\
+      \"type\":\"string\",\
+      \"max\":1024,\
+      \"min\":0\
+    },\
     \"Valid\":{\"type\":\"boolean\"},\
     \"ValidateSecurityProfileBehaviorsRequest\":{\
       \"type\":\"structure\",\
@@ -19015,6 +20683,15 @@
       \"type\":\"list\",\
       \"member\":{\"shape\":\"ValidationError\"}\
     },\
+    \"ValidationException\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"message\":{\"shape\":\"errorMessage\"}\
+      },\
+      \"documentation\":\"<p>The request is not valid.</p>\",\
+      \"error\":{\"httpStatusCode\":400},\
+      \"exception\":true\
+    },\
     \"Value\":{\
       \"type\":\"string\",\
       \"max\":4096,\
@@ -19049,7 +20726,27 @@
       \"error\":{\"httpStatusCode\":409},\
       \"exception\":true\
     },\
+    \"VersionName\":{\
+      \"type\":\"string\",\
+      \"max\":64,\
+      \"min\":1,\
+      \"pattern\":\"[a-zA-Z0-9-_.]+\"\
+    },\
     \"VersionNumber\":{\"type\":\"long\"},\
+    \"VersionUpdateByJobsConfig\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"enabled\":{\
+          \"shape\":\"EnabledBoolean\",\
+          \"documentation\":\"<p>Indicates whether the Job is enabled or not.</p>\"\
+        },\
+        \"roleArn\":{\
+          \"shape\":\"RoleArn\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the role that grants permission to the IoT jobs service to update the reserved named shadow when the job successfully completes.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Configuration to manage IoT Job's package version reporting. If configured, Jobs updates the thing's reserved named shadow with the package version information up on successful job completion.</p> <p> <b>Note:</b> For each job, the destinationPackageVersions attribute has to be set with the correct data for Jobs to report to the thing shadow. </p>\"\
+    },\
     \"VersionsLimitExceededException\":{\
       \"type\":\"structure\",\
       \"members\":{\

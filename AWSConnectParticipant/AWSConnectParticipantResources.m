@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -87,7 +87,7 @@
         {\"shape\":\"ServiceQuotaExceededException\"},\
         {\"shape\":\"ConflictException\"}\
       ],\
-      \"documentation\":\"<p>Allows you to confirm that the attachment has been uploaded using the pre-signed URL provided in StartAttachmentUpload API. </p> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
+      \"documentation\":\"<p>Allows you to confirm that the attachment has been uploaded using the pre-signed URL provided in StartAttachmentUpload API. A conflict exception is thrown when an attachment with that identifier is already being uploaded.</p> <note> <p> <code>ConnectionToken</code> is used for invoking this API instead of <code>ParticipantToken</code>.</p> </note> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
     },\
     \"CreateParticipantConnection\":{\
       \"name\":\"CreateParticipantConnection\",\
@@ -103,7 +103,24 @@
         {\"shape\":\"ThrottlingException\"},\
         {\"shape\":\"ValidationException\"}\
       ],\
-      \"documentation\":\"<p>Creates the participant's connection. Note that ParticipantToken is used for invoking this API instead of ConnectionToken.</p> <p>The participant token is valid for the lifetime of the participant â until they are part of a contact.</p> <p>The response URL for <code>WEBSOCKET</code> Type has a connect expiry timeout of 100s. Clients must manually connect to the returned websocket URL and subscribe to the desired topic. </p> <p>For chat, you need to publish the following on the established websocket connection:</p> <p> <code>{\\\"topic\\\":\\\"aws/subscribe\\\",\\\"content\\\":{\\\"topics\\\":[\\\"aws/chat\\\"]}}</code> </p> <p>Upon websocket URL expiry, as specified in the response ConnectionExpiry parameter, clients need to call this API again to obtain a new websocket URL and perform the same steps as before.</p> <p> <b>Message streaming support</b>: This API can also be used together with the <a href=\\\"https://docs.aws.amazon.com/connect/latest/APIReference/API_StartContactStreaming.html\\\">StartContactStreaming</a> API to create a participant connection for chat contacts that are not using a websocket. For more information about message streaming, <a href=\\\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-message-streaming.html\\\">Enable real-time chat message streaming</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <p> <b>Feature specifications</b>: For information about feature specifications, such as the allowed number of open websocket connections per participant, see <a href=\\\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#feature-limits\\\">Feature specifications</a> in the <i>Amazon Connect Administrator Guide</i>. </p> <note> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p> </note>\"\
+      \"documentation\":\"<p>Creates the participant's connection. </p> <note> <p> <code>ParticipantToken</code> is used for invoking this API instead of <code>ConnectionToken</code>.</p> </note> <p>The participant token is valid for the lifetime of the participant â until they are part of a contact.</p> <p>The response URL for <code>WEBSOCKET</code> Type has a connect expiry timeout of 100s. Clients must manually connect to the returned websocket URL and subscribe to the desired topic. </p> <p>For chat, you need to publish the following on the established websocket connection:</p> <p> <code>{\\\"topic\\\":\\\"aws/subscribe\\\",\\\"content\\\":{\\\"topics\\\":[\\\"aws/chat\\\"]}}</code> </p> <p>Upon websocket URL expiry, as specified in the response ConnectionExpiry parameter, clients need to call this API again to obtain a new websocket URL and perform the same steps as before.</p> <p> <b>Message streaming support</b>: This API can also be used together with the <a href=\\\"https://docs.aws.amazon.com/connect/latest/APIReference/API_StartContactStreaming.html\\\">StartContactStreaming</a> API to create a participant connection for chat contacts that are not using a websocket. For more information about message streaming, <a href=\\\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-message-streaming.html\\\">Enable real-time chat message streaming</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <p> <b>Feature specifications</b>: For information about feature specifications, such as the allowed number of open websocket connections per participant, see <a href=\\\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#feature-limits\\\">Feature specifications</a> in the <i>Amazon Connect Administrator Guide</i>. </p> <note> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p> </note>\"\
+    },\
+    \"DescribeView\":{\
+      \"name\":\"DescribeView\",\
+      \"http\":{\
+        \"method\":\"GET\",\
+        \"requestUri\":\"/participant/views/{ViewToken}\"\
+      },\
+      \"input\":{\"shape\":\"DescribeViewRequest\"},\
+      \"output\":{\"shape\":\"DescribeViewResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"AccessDeniedException\"},\
+        {\"shape\":\"InternalServerException\"},\
+        {\"shape\":\"ThrottlingException\"},\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"ValidationException\"}\
+      ],\
+      \"documentation\":\"<p>Retrieves the view for the specified view token.</p>\"\
     },\
     \"DisconnectParticipant\":{\
       \"name\":\"DisconnectParticipant\",\
@@ -119,7 +136,7 @@
         {\"shape\":\"ThrottlingException\"},\
         {\"shape\":\"ValidationException\"}\
       ],\
-      \"documentation\":\"<p>Disconnects a participant. Note that ConnectionToken is used for invoking this API instead of ParticipantToken.</p> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
+      \"documentation\":\"<p>Disconnects a participant. </p> <note> <p> <code>ConnectionToken</code> is used for invoking this API instead of <code>ParticipantToken</code>.</p> </note> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
     },\
     \"GetAttachment\":{\
       \"name\":\"GetAttachment\",\
@@ -135,7 +152,7 @@
         {\"shape\":\"ThrottlingException\"},\
         {\"shape\":\"ValidationException\"}\
       ],\
-      \"documentation\":\"<p>Provides a pre-signed URL for download of a completed attachment. This is an asynchronous API for use with active contacts.</p> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
+      \"documentation\":\"<p>Provides a pre-signed URL for download of a completed attachment. This is an asynchronous API for use with active contacts.</p> <note> <p> <code>ConnectionToken</code> is used for invoking this API instead of <code>ParticipantToken</code>.</p> </note> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
     },\
     \"GetTranscript\":{\
       \"name\":\"GetTranscript\",\
@@ -151,7 +168,7 @@
         {\"shape\":\"ThrottlingException\"},\
         {\"shape\":\"ValidationException\"}\
       ],\
-      \"documentation\":\"<p>Retrieves a transcript of the session, including details about any attachments. Note that ConnectionToken is used for invoking this API instead of ParticipantToken.</p> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
+      \"documentation\":\"<p>Retrieves a transcript of the session, including details about any attachments. For information about accessing past chat contact transcripts for a persistent chat, see <a href=\\\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-persistence.html\\\">Enable persistent chat</a>. </p> <p>If you have a process that consumes events in the transcript of an chat that has ended, note that chat transcripts contain the following event content types if the event has occurred during the chat session:</p> <ul> <li> <p> <code>application/vnd.amazonaws.connect.event.participant.left</code> </p> </li> <li> <p> <code>application/vnd.amazonaws.connect.event.participant.joined</code> </p> </li> <li> <p> <code>application/vnd.amazonaws.connect.event.chat.ended</code> </p> </li> <li> <p> <code>application/vnd.amazonaws.connect.event.transfer.succeeded</code> </p> </li> <li> <p> <code>application/vnd.amazonaws.connect.event.transfer.failed</code> </p> </li> </ul> <note> <p> <code>ConnectionToken</code> is used for invoking this API instead of <code>ParticipantToken</code>.</p> </note> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
     },\
     \"SendEvent\":{\
       \"name\":\"SendEvent\",\
@@ -165,9 +182,10 @@
         {\"shape\":\"AccessDeniedException\"},\
         {\"shape\":\"InternalServerException\"},\
         {\"shape\":\"ThrottlingException\"},\
-        {\"shape\":\"ValidationException\"}\
+        {\"shape\":\"ValidationException\"},\
+        {\"shape\":\"ConflictException\"}\
       ],\
-      \"documentation\":\"<p>Sends an event. Note that ConnectionToken is used for invoking this API instead of ParticipantToken.</p> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
+      \"documentation\":\"<note> <p>The <code>application/vnd.amazonaws.connect.event.connection.acknowledged</code> ContentType will no longer be supported starting December 31, 2024. This event has been migrated to the <a href=\\\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\\\">CreateParticipantConnection</a> API using the <code>ConnectParticipant</code> field.</p> </note> <p>Sends an event. Message receipts are not supported when there are more than two active participants in the chat. Using the SendEvent API for message receipts when a supervisor is barged-in will result in a conflict exception.</p> <note> <p> <code>ConnectionToken</code> is used for invoking this API instead of <code>ParticipantToken</code>.</p> </note> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
     },\
     \"SendMessage\":{\
       \"name\":\"SendMessage\",\
@@ -183,7 +201,7 @@
         {\"shape\":\"ThrottlingException\"},\
         {\"shape\":\"ValidationException\"}\
       ],\
-      \"documentation\":\"<p>Sends a message. Note that ConnectionToken is used for invoking this API instead of ParticipantToken.</p> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
+      \"documentation\":\"<p>Sends a message.</p> <note> <p> <code>ConnectionToken</code> is used for invoking this API instead of <code>ParticipantToken</code>.</p> </note> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
     },\
     \"StartAttachmentUpload\":{\
       \"name\":\"StartAttachmentUpload\",\
@@ -200,10 +218,11 @@
         {\"shape\":\"ValidationException\"},\
         {\"shape\":\"ServiceQuotaExceededException\"}\
       ],\
-      \"documentation\":\"<p>Provides a pre-signed Amazon S3 URL in response for uploading the file directly to S3.</p> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
+      \"documentation\":\"<p>Provides a pre-signed Amazon S3 URL in response for uploading the file directly to S3.</p> <note> <p> <code>ConnectionToken</code> is used for invoking this API instead of <code>ParticipantToken</code>.</p> </note> <p>The Amazon Connect Participant Service APIs do not use <a href=\\\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\\\">Signature Version 4 authentication</a>.</p>\"\
     }\
   },\
   \"shapes\":{\
+    \"ARN\":{\"type\":\"string\"},\
     \"AccessDeniedException\":{\
       \"type\":\"structure\",\
       \"required\":[\"Message\"],\
@@ -238,7 +257,7 @@
       \"members\":{\
         \"ContentType\":{\
           \"shape\":\"ContentType\",\
-          \"documentation\":\"<p>Describes the MIME file type of the attachment. For a list of supported file types, see <a href=\\\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#feature-limits\\\">Feature specifications</a> in the <i>Amazon Connect Administrator Guide</i>.</p>\"\
+          \"documentation\":\"<p>Describes the MIME file type of the attachment. For a list of supported file types, see <a href=\\\"https://docs.aws.amazon.com/connect/latest/adminguide/feature-limits.html\\\">Feature specifications</a> in the <i>Amazon Connect Administrator Guide</i>.</p>\"\
         },\
         \"AttachmentId\":{\
           \"shape\":\"ArtifactId\",\
@@ -271,7 +290,7 @@
     \"Bool\":{\"type\":\"boolean\"},\
     \"ChatContent\":{\
       \"type\":\"string\",\
-      \"max\":1024,\
+      \"max\":16384,\
       \"min\":1\
     },\
     \"ChatContentType\":{\
@@ -297,10 +316,8 @@
         \"EVENT\",\
         \"ATTACHMENT\",\
         \"CONNECTION_ACK\",\
-        \"PARTICIPANT_ACTIVE\",\
-        \"PARTICIPANT_INACTIVE\",\
-        \"PARTICIPANT_ENGAGED\",\
-        \"PARTICIPANT_DISENGAGED\"\
+        \"MESSAGE_DELIVERED\",\
+        \"MESSAGE_READ\"\
       ]\
     },\
     \"ClientToken\":{\
@@ -321,7 +338,7 @@
         },\
         \"ClientToken\":{\
           \"shape\":\"NonEmptyClientToken\",\
-          \"documentation\":\"<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>\",\
+          \"documentation\":\"<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\\\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\\\">Making retries safe with idempotent APIs</a>.</p>\",\
           \"idempotencyToken\":true\
         },\
         \"ConnectionToken\":{\
@@ -343,7 +360,7 @@
       \"members\":{\
         \"Message\":{\"shape\":\"Reason\"}\
       },\
-      \"documentation\":\"<p>An attachment with that identifier is already being uploaded.</p>\",\
+      \"documentation\":\"<p>The requested operation conflicts with the current state of a service resource associated with the request. </p>\",\
       \"error\":{\"httpStatusCode\":409},\
       \"exception\":true\
     },\
@@ -385,14 +402,11 @@
     },\
     \"CreateParticipantConnectionRequest\":{\
       \"type\":\"structure\",\
-      \"required\":[\
-        \"Type\",\
-        \"ParticipantToken\"\
-      ],\
+      \"required\":[\"ParticipantToken\"],\
       \"members\":{\
         \"Type\":{\
           \"shape\":\"ConnectionTypeList\",\
-          \"documentation\":\"<p>Type of connection information required.</p>\"\
+          \"documentation\":\"<p>Type of connection information required. If you need <code>CONNECTION_CREDENTIALS</code> along with marking participant as connected, pass <code>CONNECTION_CREDENTIALS</code> in <code>Type</code>.</p>\"\
         },\
         \"ParticipantToken\":{\
           \"shape\":\"ParticipantToken\",\
@@ -402,7 +416,7 @@
         },\
         \"ConnectParticipant\":{\
           \"shape\":\"Bool\",\
-          \"documentation\":\"<p>Amazon Connect Participant is used to mark the participant as connected for message streaming.</p>\"\
+          \"documentation\":\"<p>Amazon Connect Participant is used to mark the participant as connected for customer participant in message streaming, as well as for agent or manager participant in non-streaming chats.</p>\"\
         }\
       }\
     },\
@@ -419,13 +433,43 @@
         }\
       }\
     },\
+    \"DescribeViewRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"ViewToken\",\
+        \"ConnectionToken\"\
+      ],\
+      \"members\":{\
+        \"ViewToken\":{\
+          \"shape\":\"ViewToken\",\
+          \"documentation\":\"<p>An encrypted token originating from the interactive message of a ShowView block operation. Represents the desired view.</p>\",\
+          \"location\":\"uri\",\
+          \"locationName\":\"ViewToken\"\
+        },\
+        \"ConnectionToken\":{\
+          \"shape\":\"ParticipantToken\",\
+          \"documentation\":\"<p>The connection token.</p>\",\
+          \"location\":\"header\",\
+          \"locationName\":\"X-Amz-Bearer\"\
+        }\
+      }\
+    },\
+    \"DescribeViewResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"View\":{\
+          \"shape\":\"View\",\
+          \"documentation\":\"<p>A view resource object. Contains metadata and content necessary to render the view.</p>\"\
+        }\
+      }\
+    },\
     \"DisconnectParticipantRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\"ConnectionToken\"],\
       \"members\":{\
         \"ClientToken\":{\
           \"shape\":\"ClientToken\",\
-          \"documentation\":\"<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>\",\
+          \"documentation\":\"<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\\\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\\\">Making retries safe with idempotent APIs</a>.</p>\",\
           \"idempotencyToken\":true\
         },\
         \"ConnectionToken\":{\
@@ -587,6 +631,18 @@
         \"Attachments\":{\
           \"shape\":\"Attachments\",\
           \"documentation\":\"<p>Provides information about the attachments.</p>\"\
+        },\
+        \"MessageMetadata\":{\
+          \"shape\":\"MessageMetadata\",\
+          \"documentation\":\"<p>The metadata related to the message. Currently this supports only information related to message receipts.</p>\"\
+        },\
+        \"RelatedContactId\":{\
+          \"shape\":\"ContactId\",\
+          \"documentation\":\"<p>The contactId on which the transcript item was originally sent. This field is only populated for persistent chats when the transcript item is from the past chat session. For more information, see <a href=\\\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-persistence.html\\\">Enable persistent chat</a>.</p>\"\
+        },\
+        \"ContactId\":{\
+          \"shape\":\"ContactId\",\
+          \"documentation\":\"<p>The contactId on which the transcript item was originally sent. This field is populated only when the transcript item is from the current chat session.</p>\"\
         }\
       },\
       \"documentation\":\"<p>An item - message or event - that has been sent. </p>\"\
@@ -597,6 +653,20 @@
       \"min\":0\
     },\
     \"Message\":{\"type\":\"string\"},\
+    \"MessageMetadata\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"MessageId\":{\
+          \"shape\":\"ChatItemId\",\
+          \"documentation\":\"<p>The identifier of the message that contains the metadata information. </p>\"\
+        },\
+        \"Receipts\":{\
+          \"shape\":\"Receipts\",\
+          \"documentation\":\"<p>The list of receipt information for a message for different recipients.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Contains metadata related to a message.</p>\"\
+    },\
     \"MostRecent\":{\
       \"type\":\"integer\",\
       \"max\":100,\
@@ -622,7 +692,9 @@
       \"enum\":[\
         \"AGENT\",\
         \"CUSTOMER\",\
-        \"SYSTEM\"\
+        \"SYSTEM\",\
+        \"CUSTOM_BOT\",\
+        \"SUPERVISOR\"\
       ]\
     },\
     \"ParticipantToken\":{\
@@ -645,6 +717,59 @@
       \"max\":2000,\
       \"min\":1\
     },\
+    \"Receipt\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"DeliveredTimestamp\":{\
+          \"shape\":\"Instant\",\
+          \"documentation\":\"<p>The time when the message was delivered to the recipient.</p>\"\
+        },\
+        \"ReadTimestamp\":{\
+          \"shape\":\"Instant\",\
+          \"documentation\":\"<p>The time when the message was read by the recipient.</p>\"\
+        },\
+        \"RecipientParticipantId\":{\
+          \"shape\":\"ParticipantId\",\
+          \"documentation\":\"<p>The identifier of the recipient of the message. </p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The receipt for the message delivered to the recipient.</p>\"\
+    },\
+    \"Receipts\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"Receipt\"}\
+    },\
+    \"ResourceId\":{\"type\":\"string\"},\
+    \"ResourceNotFoundException\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Message\":{\"shape\":\"Message\"},\
+        \"ResourceId\":{\
+          \"shape\":\"ResourceId\",\
+          \"documentation\":\"<p>The identifier of the resource.</p>\"\
+        },\
+        \"ResourceType\":{\
+          \"shape\":\"ResourceType\",\
+          \"documentation\":\"<p>The type of Amazon Connect resource.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The resource was not found.</p>\",\
+      \"error\":{\"httpStatusCode\":404},\
+      \"exception\":true\
+    },\
+    \"ResourceType\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"CONTACT\",\
+        \"CONTACT_FLOW\",\
+        \"INSTANCE\",\
+        \"PARTICIPANT\",\
+        \"HIERARCHY_LEVEL\",\
+        \"HIERARCHY_GROUP\",\
+        \"USER\",\
+        \"PHONE_NUMBER\"\
+      ]\
+    },\
     \"ScanDirection\":{\
       \"type\":\"string\",\
       \"enum\":[\
@@ -661,15 +786,15 @@
       \"members\":{\
         \"ContentType\":{\
           \"shape\":\"ChatContentType\",\
-          \"documentation\":\"<p>The content type of the request. Supported types are:</p> <ul> <li> <p>application/vnd.amazonaws.connect.event.typing</p> </li> <li> <p>application/vnd.amazonaws.connect.event.connection.acknowledged</p> </li> </ul>\"\
+          \"documentation\":\"<p>The content type of the request. Supported types are:</p> <ul> <li> <p>application/vnd.amazonaws.connect.event.typing</p> </li> <li> <p>application/vnd.amazonaws.connect.event.connection.acknowledged (will be deprecated on December 31, 2024) </p> </li> <li> <p>application/vnd.amazonaws.connect.event.message.delivered</p> </li> <li> <p>application/vnd.amazonaws.connect.event.message.read</p> </li> </ul>\"\
         },\
         \"Content\":{\
           \"shape\":\"ChatContent\",\
-          \"documentation\":\"<p>The content of the event to be sent (for example, message text). This is not yet supported.</p>\"\
+          \"documentation\":\"<p>The content of the event to be sent (for example, message text). For content related to message receipts, this is supported in the form of a JSON string.</p> <p>Sample Content: \\\"{\\\\\\\"messageId\\\\\\\":\\\\\\\"11111111-aaaa-bbbb-cccc-EXAMPLE01234\\\\\\\"}\\\"</p>\"\
         },\
         \"ClientToken\":{\
           \"shape\":\"ClientToken\",\
-          \"documentation\":\"<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>\",\
+          \"documentation\":\"<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\\\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\\\">Making retries safe with idempotent APIs</a>.</p>\",\
           \"idempotencyToken\":true\
         },\
         \"ConnectionToken\":{\
@@ -703,15 +828,15 @@
       \"members\":{\
         \"ContentType\":{\
           \"shape\":\"ChatContentType\",\
-          \"documentation\":\"<p>The type of the content. Supported types are text/plain.</p>\"\
+          \"documentation\":\"<p>The type of the content. Supported types are <code>text/plain</code>, <code>text/markdown</code>, <code>application/json</code>, and <code>application/vnd.amazonaws.connect.message.interactive.response</code>.</p>\"\
         },\
         \"Content\":{\
           \"shape\":\"ChatContent\",\
-          \"documentation\":\"<p>The content of the message.</p>\"\
+          \"documentation\":\"<p>The content of the message. </p> <ul> <li> <p>For <code>text/plain</code> and <code>text/markdown</code>, the Length Constraints are Minimum of 1, Maximum of 1024. </p> </li> <li> <p>For <code>application/json</code>, the Length Constraints are Minimum of 1, Maximum of 12000. </p> </li> <li> <p>For <code>application/vnd.amazonaws.connect.message.interactive.response</code>, the Length Constraints are Minimum of 1, Maximum of 12288.</p> </li> </ul>\"\
         },\
         \"ClientToken\":{\
           \"shape\":\"ClientToken\",\
-          \"documentation\":\"<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>\",\
+          \"documentation\":\"<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\\\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\\\">Making retries safe with idempotent APIs</a>.</p>\",\
           \"idempotencyToken\":true\
         },\
         \"ConnectionToken\":{\
@@ -764,7 +889,7 @@
       \"members\":{\
         \"ContentType\":{\
           \"shape\":\"ContentType\",\
-          \"documentation\":\"<p>Describes the MIME file type of the attachment. For a list of supported file types, see <a href=\\\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#feature-limits\\\">Feature specifications</a> in the <i>Amazon Connect Administrator Guide</i>.</p>\"\
+          \"documentation\":\"<p>Describes the MIME file type of the attachment. For a list of supported file types, see <a href=\\\"https://docs.aws.amazon.com/connect/latest/adminguide/feature-limits.html\\\">Feature specifications</a> in the <i>Amazon Connect Administrator Guide</i>.</p>\"\
         },\
         \"AttachmentSizeInBytes\":{\
           \"shape\":\"AttachmentSizeInBytes\",\
@@ -776,7 +901,7 @@
         },\
         \"ClientToken\":{\
           \"shape\":\"NonEmptyClientToken\",\
-          \"documentation\":\"<p>A unique case sensitive identifier to support idempotency of request.</p>\",\
+          \"documentation\":\"<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\\\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\\\">Making retries safe with idempotent APIs</a>.</p>\",\
           \"idempotencyToken\":true\
         },\
         \"ConnectionToken\":{\
@@ -880,6 +1005,88 @@
       \"error\":{\"httpStatusCode\":400},\
       \"exception\":true\
     },\
+    \"View\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Id\":{\
+          \"shape\":\"ViewId\",\
+          \"documentation\":\"<p>The identifier of the view.</p>\"\
+        },\
+        \"Arn\":{\
+          \"shape\":\"ARN\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the view.</p>\"\
+        },\
+        \"Name\":{\
+          \"shape\":\"ViewName\",\
+          \"documentation\":\"<p>The name of the view.</p>\"\
+        },\
+        \"Version\":{\
+          \"shape\":\"ViewVersion\",\
+          \"documentation\":\"<p>The current version of the view.</p>\"\
+        },\
+        \"Content\":{\
+          \"shape\":\"ViewContent\",\
+          \"documentation\":\"<p>View content containing all content necessary to render a view except for runtime input data.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>A view resource object. Contains metadata and content necessary to render the view.</p>\"\
+    },\
+    \"ViewAction\":{\
+      \"type\":\"string\",\
+      \"max\":255,\
+      \"min\":1,\
+      \"pattern\":\"^([\\\\p{L}\\\\p{N}_.:\\\\/=+\\\\-@()']+[\\\\p{L}\\\\p{Z}\\\\p{N}_.:\\\\/=+\\\\-@()']*)$\",\
+      \"sensitive\":true\
+    },\
+    \"ViewActions\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"ViewAction\"}\
+    },\
+    \"ViewContent\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"InputSchema\":{\
+          \"shape\":\"ViewInputSchema\",\
+          \"documentation\":\"<p>The schema representing the input data that the view template must be supplied to render.</p>\"\
+        },\
+        \"Template\":{\
+          \"shape\":\"ViewTemplate\",\
+          \"documentation\":\"<p>The view template representing the structure of the view.</p>\"\
+        },\
+        \"Actions\":{\
+          \"shape\":\"ViewActions\",\
+          \"documentation\":\"<p>A list of actions possible from the view</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>View content containing all content necessary to render a view except for runtime input data.</p>\"\
+    },\
+    \"ViewId\":{\
+      \"type\":\"string\",\
+      \"max\":500,\
+      \"min\":1,\
+      \"pattern\":\"^[a-zA-Z0-9\\\\_\\\\-:\\\\/$]+$\"\
+    },\
+    \"ViewInputSchema\":{\
+      \"type\":\"string\",\
+      \"sensitive\":true\
+    },\
+    \"ViewName\":{\
+      \"type\":\"string\",\
+      \"max\":255,\
+      \"min\":1,\
+      \"pattern\":\"^([\\\\p{L}\\\\p{N}_.:\\\\/=+\\\\-@()']+[\\\\p{L}\\\\p{Z}\\\\p{N}_.:\\\\/=+\\\\-@()']*)$\",\
+      \"sensitive\":true\
+    },\
+    \"ViewTemplate\":{\
+      \"type\":\"string\",\
+      \"sensitive\":true\
+    },\
+    \"ViewToken\":{\
+      \"type\":\"string\",\
+      \"max\":1000,\
+      \"min\":1\
+    },\
+    \"ViewVersion\":{\"type\":\"integer\"},\
     \"Websocket\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -895,7 +1102,7 @@
       \"documentation\":\"<p>The websocket for the participant's connection.</p>\"\
     }\
   },\
-  \"documentation\":\"<p>Amazon Connect is a cloud-based contact center solution that makes it easy to set up and manage a customer contact center and provide reliable customer engagement at any scale.</p> <p>Amazon Connect enables customer contacts through voice or chat.</p> <p>The APIs described here are used by chat participants, such as agents and customers.</p>\"\
+  \"documentation\":\"<p>Amazon Connect is an easy-to-use omnichannel cloud contact center service that enables companies of any size to deliver superior customer service at a lower cost. Amazon Connect communications capabilities make it easy for companies to deliver personalized interactions across communication channels, including chat. </p> <p>Use the Amazon Connect Participant Service to manage participants (for example, agents, customers, and managers listening in), and to send messages and events within a chat contact. The APIs in the service enable the following: sending chat messages, attachment sharing, managing a participant's connection state and message events, and retrieving chat transcripts.</p>\"\
 }\
 ";
 }

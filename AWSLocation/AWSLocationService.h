@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -325,7 +325,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)batchPutGeofence:(AWSLocationBatchPutGeofenceRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationBatchPutGeofenceResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Uploads position update data for one or more devices to a tracker resource. Amazon Location uses the data when it reports the last known device position and position history. Amazon Location retains location data for 30 days.</p><note><p>Position updates are handled based on the <code>PositionFiltering</code> property of the tracker. When <code>PositionFiltering</code> is set to <code>TimeBased</code>, updates are evaluated against linked geofence collections, and location data is stored at a maximum of one position per 30 second interval. If your update frequency is more often than every 30 seconds, only one update per 30 seconds is stored for each unique device ID.</p><p>When <code>PositionFiltering</code> is set to <code>DistanceBased</code> filtering, location data is stored and evaluated against linked geofence collections only if the device has moved more than 30 m (98.4 ft).</p><p>When <code>PositionFiltering</code> is set to <code>AccuracyBased</code> filtering, location data is stored and evaluated against linked geofence collections only if the device has moved more than the measured accuracy. For example, if two consecutive updates from a device have a horizontal accuracy of 5 m and 10 m, the second update is neither stored or evaluated if the device has moved less than 15 m. If <code>PositionFiltering</code> is set to <code>AccuracyBased</code> filtering, Amazon Location uses the default value <code>{ "Horizontal": 0}</code> when accuracy is not provided on a <code>DevicePositionUpdate</code>.</p></note>
+ <p>Uploads position update data for one or more devices to a tracker resource (up to 10 devices per batch). Amazon Location uses the data when it reports the last known device position and position history. Amazon Location retains location data for 30 days.</p><note><p>Position updates are handled based on the <code>PositionFiltering</code> property of the tracker. When <code>PositionFiltering</code> is set to <code>TimeBased</code>, updates are evaluated against linked geofence collections, and location data is stored at a maximum of one position per 30 second interval. If your update frequency is more often than every 30 seconds, only one update per 30 seconds is stored for each unique device ID.</p><p>When <code>PositionFiltering</code> is set to <code>DistanceBased</code> filtering, location data is stored and evaluated against linked geofence collections only if the device has moved more than 30 m (98.4 ft).</p><p>When <code>PositionFiltering</code> is set to <code>AccuracyBased</code> filtering, location data is stored and evaluated against linked geofence collections only if the device has moved more than the measured accuracy. For example, if two consecutive updates from a device have a horizontal accuracy of 5 m and 10 m, the second update is neither stored or evaluated if the device has moved less than 15 m. If <code>PositionFiltering</code> is set to <code>AccuracyBased</code> filtering, Amazon Location uses the default value <code>{ "Horizontal": 0}</code> when accuracy is not provided on a <code>DevicePositionUpdate</code>.</p></note>
  
  @param request A container for the necessary parameters to execute the BatchUpdateDevicePosition service method.
 
@@ -337,7 +337,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationBatchUpdateDevicePositionResponse *> *)batchUpdateDevicePosition:(AWSLocationBatchUpdateDevicePositionRequest *)request;
 
 /**
- <p>Uploads position update data for one or more devices to a tracker resource. Amazon Location uses the data when it reports the last known device position and position history. Amazon Location retains location data for 30 days.</p><note><p>Position updates are handled based on the <code>PositionFiltering</code> property of the tracker. When <code>PositionFiltering</code> is set to <code>TimeBased</code>, updates are evaluated against linked geofence collections, and location data is stored at a maximum of one position per 30 second interval. If your update frequency is more often than every 30 seconds, only one update per 30 seconds is stored for each unique device ID.</p><p>When <code>PositionFiltering</code> is set to <code>DistanceBased</code> filtering, location data is stored and evaluated against linked geofence collections only if the device has moved more than 30 m (98.4 ft).</p><p>When <code>PositionFiltering</code> is set to <code>AccuracyBased</code> filtering, location data is stored and evaluated against linked geofence collections only if the device has moved more than the measured accuracy. For example, if two consecutive updates from a device have a horizontal accuracy of 5 m and 10 m, the second update is neither stored or evaluated if the device has moved less than 15 m. If <code>PositionFiltering</code> is set to <code>AccuracyBased</code> filtering, Amazon Location uses the default value <code>{ "Horizontal": 0}</code> when accuracy is not provided on a <code>DevicePositionUpdate</code>.</p></note>
+ <p>Uploads position update data for one or more devices to a tracker resource (up to 10 devices per batch). Amazon Location uses the data when it reports the last known device position and position history. Amazon Location retains location data for 30 days.</p><note><p>Position updates are handled based on the <code>PositionFiltering</code> property of the tracker. When <code>PositionFiltering</code> is set to <code>TimeBased</code>, updates are evaluated against linked geofence collections, and location data is stored at a maximum of one position per 30 second interval. If your update frequency is more often than every 30 seconds, only one update per 30 seconds is stored for each unique device ID.</p><p>When <code>PositionFiltering</code> is set to <code>DistanceBased</code> filtering, location data is stored and evaluated against linked geofence collections only if the device has moved more than 30 m (98.4 ft).</p><p>When <code>PositionFiltering</code> is set to <code>AccuracyBased</code> filtering, location data is stored and evaluated against linked geofence collections only if the device has moved more than the measured accuracy. For example, if two consecutive updates from a device have a horizontal accuracy of 5 m and 10 m, the second update is neither stored or evaluated if the device has moved less than 15 m. If <code>PositionFiltering</code> is set to <code>AccuracyBased</code> filtering, Amazon Location uses the default value <code>{ "Horizontal": 0}</code> when accuracy is not provided on a <code>DevicePositionUpdate</code>.</p></note>
  
  @param request A container for the necessary parameters to execute the BatchUpdateDevicePosition service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -404,7 +404,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
  
  @param request A container for the necessary parameters to execute the CreateGeofenceCollection service method.
 
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationCreateGeofenceCollectionResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationCreateGeofenceCollectionResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
  
  @see AWSLocationCreateGeofenceCollectionRequest
  @see AWSLocationCreateGeofenceCollectionResponse
@@ -417,7 +417,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
  @param request A container for the necessary parameters to execute the CreateGeofenceCollection service method.
  @param completionHandler The completion handler to call when the load request is complete.
                           `response` - A response object, or `nil` if the request failed.
-                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
  
  @see AWSLocationCreateGeofenceCollectionRequest
  @see AWSLocationCreateGeofenceCollectionResponse
@@ -425,11 +425,36 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)createGeofenceCollection:(AWSLocationCreateGeofenceCollectionRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationCreateGeofenceCollectionResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Creates a map resource in your AWS account, which provides map tiles of different styles sourced from global location data providers.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you may only use HERE as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">AWS service terms</a> for more details.</p></note>
+ <p>Creates an API key resource in your Amazon Web Services account, which lets you grant actions for Amazon Location resources to the API key bearer.</p><note><p>For more information, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">Using API keys</a>.</p></note>
+ 
+ @param request A container for the necessary parameters to execute the CreateKey service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationCreateKeyResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationCreateKeyRequest
+ @see AWSLocationCreateKeyResponse
+ */
+- (AWSTask<AWSLocationCreateKeyResponse *> *)createKey:(AWSLocationCreateKeyRequest *)request;
+
+/**
+ <p>Creates an API key resource in your Amazon Web Services account, which lets you grant actions for Amazon Location resources to the API key bearer.</p><note><p>For more information, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html">Using API keys</a>.</p></note>
+ 
+ @param request A container for the necessary parameters to execute the CreateKey service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationCreateKeyRequest
+ @see AWSLocationCreateKeyResponse
+ */
+- (void)createKey:(AWSLocationCreateKeyRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationCreateKeyResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Creates a map resource in your Amazon Web Services account, which provides map tiles of different styles sourced from global location data providers.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you must not use Esri as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">Amazon Web Services service terms</a> for more details.</p></note>
  
  @param request A container for the necessary parameters to execute the CreateMap service method.
 
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationCreateMapResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationCreateMapResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
  
  @see AWSLocationCreateMapRequest
  @see AWSLocationCreateMapResponse
@@ -437,12 +462,12 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationCreateMapResponse *> *)createMap:(AWSLocationCreateMapRequest *)request;
 
 /**
- <p>Creates a map resource in your AWS account, which provides map tiles of different styles sourced from global location data providers.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you may only use HERE as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">AWS service terms</a> for more details.</p></note>
+ <p>Creates a map resource in your Amazon Web Services account, which provides map tiles of different styles sourced from global location data providers.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you must not use Esri as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">Amazon Web Services service terms</a> for more details.</p></note>
  
  @param request A container for the necessary parameters to execute the CreateMap service method.
  @param completionHandler The completion handler to call when the load request is complete.
                           `response` - A response object, or `nil` if the request failed.
-                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
  
  @see AWSLocationCreateMapRequest
  @see AWSLocationCreateMapResponse
@@ -450,11 +475,11 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)createMap:(AWSLocationCreateMapRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationCreateMapResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Creates a place index resource in your AWS account. Use a place index resource to geocode addresses and other text queries by using the <code>SearchPlaceIndexForText</code> operation, and reverse geocode coordinates by using the <code>SearchPlaceIndexForPosition</code> operation, and enable autosuggestions by using the <code>SearchPlaceIndexForSuggestions</code> operation.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you may only use HERE as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">AWS service terms</a> for more details.</p></note>
+ <p>Creates a place index resource in your Amazon Web Services account. Use a place index resource to geocode addresses and other text queries by using the <code>SearchPlaceIndexForText</code> operation, and reverse geocode coordinates by using the <code>SearchPlaceIndexForPosition</code> operation, and enable autosuggestions by using the <code>SearchPlaceIndexForSuggestions</code> operation.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you must not use Esri as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">Amazon Web Services service terms</a> for more details.</p></note>
  
  @param request A container for the necessary parameters to execute the CreatePlaceIndex service method.
 
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationCreatePlaceIndexResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationCreatePlaceIndexResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
  
  @see AWSLocationCreatePlaceIndexRequest
  @see AWSLocationCreatePlaceIndexResponse
@@ -462,12 +487,12 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationCreatePlaceIndexResponse *> *)createPlaceIndex:(AWSLocationCreatePlaceIndexRequest *)request;
 
 /**
- <p>Creates a place index resource in your AWS account. Use a place index resource to geocode addresses and other text queries by using the <code>SearchPlaceIndexForText</code> operation, and reverse geocode coordinates by using the <code>SearchPlaceIndexForPosition</code> operation, and enable autosuggestions by using the <code>SearchPlaceIndexForSuggestions</code> operation.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you may only use HERE as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">AWS service terms</a> for more details.</p></note>
+ <p>Creates a place index resource in your Amazon Web Services account. Use a place index resource to geocode addresses and other text queries by using the <code>SearchPlaceIndexForText</code> operation, and reverse geocode coordinates by using the <code>SearchPlaceIndexForPosition</code> operation, and enable autosuggestions by using the <code>SearchPlaceIndexForSuggestions</code> operation.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you must not use Esri as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">Amazon Web Services service terms</a> for more details.</p></note>
  
  @param request A container for the necessary parameters to execute the CreatePlaceIndex service method.
  @param completionHandler The completion handler to call when the load request is complete.
                           `response` - A response object, or `nil` if the request failed.
-                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
  
  @see AWSLocationCreatePlaceIndexRequest
  @see AWSLocationCreatePlaceIndexResponse
@@ -475,11 +500,11 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)createPlaceIndex:(AWSLocationCreatePlaceIndexRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationCreatePlaceIndexResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Creates a route calculator resource in your AWS account.</p><p>You can send requests to a route calculator resource to estimate travel time, distance, and get directions. A route calculator sources traffic and road network data from your chosen data provider.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you may only use HERE as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">AWS service terms</a> for more details.</p></note>
+ <p>Creates a route calculator resource in your Amazon Web Services account.</p><p>You can send requests to a route calculator resource to estimate travel time, distance, and get directions. A route calculator sources traffic and road network data from your chosen data provider.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you must not use Esri as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">Amazon Web Services service terms</a> for more details.</p></note>
  
  @param request A container for the necessary parameters to execute the CreateRouteCalculator service method.
 
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationCreateRouteCalculatorResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationCreateRouteCalculatorResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
  
  @see AWSLocationCreateRouteCalculatorRequest
  @see AWSLocationCreateRouteCalculatorResponse
@@ -487,12 +512,12 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationCreateRouteCalculatorResponse *> *)createRouteCalculator:(AWSLocationCreateRouteCalculatorRequest *)request;
 
 /**
- <p>Creates a route calculator resource in your AWS account.</p><p>You can send requests to a route calculator resource to estimate travel time, distance, and get directions. A route calculator sources traffic and road network data from your chosen data provider.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you may only use HERE as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">AWS service terms</a> for more details.</p></note>
+ <p>Creates a route calculator resource in your Amazon Web Services account.</p><p>You can send requests to a route calculator resource to estimate travel time, distance, and get directions. A route calculator sources traffic and road network data from your chosen data provider.</p><note><p>If your application is tracking or routing assets you use in your business, such as delivery vehicles or employees, you must not use Esri as your geolocation provider. See section 82 of the <a href="http://aws.amazon.com/service-terms">Amazon Web Services service terms</a> for more details.</p></note>
  
  @param request A container for the necessary parameters to execute the CreateRouteCalculator service method.
  @param completionHandler The completion handler to call when the load request is complete.
                           `response` - A response object, or `nil` if the request failed.
-                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
  
  @see AWSLocationCreateRouteCalculatorRequest
  @see AWSLocationCreateRouteCalculatorResponse
@@ -500,11 +525,11 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)createRouteCalculator:(AWSLocationCreateRouteCalculatorRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationCreateRouteCalculatorResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Creates a tracker resource in your AWS account, which lets you retrieve current and historical location of devices.</p>
+ <p>Creates a tracker resource in your Amazon Web Services account, which lets you retrieve current and historical location of devices.</p>
  
  @param request A container for the necessary parameters to execute the CreateTracker service method.
 
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationCreateTrackerResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationCreateTrackerResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
  
  @see AWSLocationCreateTrackerRequest
  @see AWSLocationCreateTrackerResponse
@@ -512,12 +537,12 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationCreateTrackerResponse *> *)createTracker:(AWSLocationCreateTrackerRequest *)request;
 
 /**
- <p>Creates a tracker resource in your AWS account, which lets you retrieve current and historical location of devices.</p>
+ <p>Creates a tracker resource in your Amazon Web Services account, which lets you retrieve current and historical location of devices.</p>
  
  @param request A container for the necessary parameters to execute the CreateTracker service method.
  @param completionHandler The completion handler to call when the load request is complete.
                           `response` - A response object, or `nil` if the request failed.
-                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorConflict`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorServiceQuotaExceeded`, `AWSLocationErrorThrottling`.
  
  @see AWSLocationCreateTrackerRequest
  @see AWSLocationCreateTrackerResponse
@@ -525,7 +550,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)createTracker:(AWSLocationCreateTrackerRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationCreateTrackerResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Deletes a geofence collection from your AWS account.</p><note><p>This operation deletes the resource permanently. If the geofence collection is the target of a tracker resource, the devices will no longer be monitored.</p></note>
+ <p>Deletes a geofence collection from your Amazon Web Services account.</p><note><p>This operation deletes the resource permanently. If the geofence collection is the target of a tracker resource, the devices will no longer be monitored.</p></note>
  
  @param request A container for the necessary parameters to execute the DeleteGeofenceCollection service method.
 
@@ -537,7 +562,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationDeleteGeofenceCollectionResponse *> *)deleteGeofenceCollection:(AWSLocationDeleteGeofenceCollectionRequest *)request;
 
 /**
- <p>Deletes a geofence collection from your AWS account.</p><note><p>This operation deletes the resource permanently. If the geofence collection is the target of a tracker resource, the devices will no longer be monitored.</p></note>
+ <p>Deletes a geofence collection from your Amazon Web Services account.</p><note><p>This operation deletes the resource permanently. If the geofence collection is the target of a tracker resource, the devices will no longer be monitored.</p></note>
  
  @param request A container for the necessary parameters to execute the DeleteGeofenceCollection service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -550,7 +575,32 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)deleteGeofenceCollection:(AWSLocationDeleteGeofenceCollectionRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationDeleteGeofenceCollectionResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Deletes a map resource from your AWS account.</p><note><p>This operation deletes the resource permanently. If the map is being used in an application, the map may not render.</p></note>
+ <p>Deletes the specified API key. The API key must have been deactivated more than 90 days previously.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteKey service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationDeleteKeyResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationDeleteKeyRequest
+ @see AWSLocationDeleteKeyResponse
+ */
+- (AWSTask<AWSLocationDeleteKeyResponse *> *)deleteKey:(AWSLocationDeleteKeyRequest *)request;
+
+/**
+ <p>Deletes the specified API key. The API key must have been deactivated more than 90 days previously.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteKey service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationDeleteKeyRequest
+ @see AWSLocationDeleteKeyResponse
+ */
+- (void)deleteKey:(AWSLocationDeleteKeyRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationDeleteKeyResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Deletes a map resource from your Amazon Web Services account.</p><note><p>This operation deletes the resource permanently. If the map is being used in an application, the map may not render.</p></note>
  
  @param request A container for the necessary parameters to execute the DeleteMap service method.
 
@@ -562,7 +612,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationDeleteMapResponse *> *)deleteMap:(AWSLocationDeleteMapRequest *)request;
 
 /**
- <p>Deletes a map resource from your AWS account.</p><note><p>This operation deletes the resource permanently. If the map is being used in an application, the map may not render.</p></note>
+ <p>Deletes a map resource from your Amazon Web Services account.</p><note><p>This operation deletes the resource permanently. If the map is being used in an application, the map may not render.</p></note>
  
  @param request A container for the necessary parameters to execute the DeleteMap service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -575,7 +625,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)deleteMap:(AWSLocationDeleteMapRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationDeleteMapResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Deletes a place index resource from your AWS account.</p><note><p>This operation deletes the resource permanently.</p></note>
+ <p>Deletes a place index resource from your Amazon Web Services account.</p><note><p>This operation deletes the resource permanently.</p></note>
  
  @param request A container for the necessary parameters to execute the DeletePlaceIndex service method.
 
@@ -587,7 +637,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationDeletePlaceIndexResponse *> *)deletePlaceIndex:(AWSLocationDeletePlaceIndexRequest *)request;
 
 /**
- <p>Deletes a place index resource from your AWS account.</p><note><p>This operation deletes the resource permanently.</p></note>
+ <p>Deletes a place index resource from your Amazon Web Services account.</p><note><p>This operation deletes the resource permanently.</p></note>
  
  @param request A container for the necessary parameters to execute the DeletePlaceIndex service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -600,7 +650,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)deletePlaceIndex:(AWSLocationDeletePlaceIndexRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationDeletePlaceIndexResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Deletes a route calculator resource from your AWS account.</p><note><p>This operation deletes the resource permanently.</p></note>
+ <p>Deletes a route calculator resource from your Amazon Web Services account.</p><note><p>This operation deletes the resource permanently.</p></note>
  
  @param request A container for the necessary parameters to execute the DeleteRouteCalculator service method.
 
@@ -612,7 +662,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationDeleteRouteCalculatorResponse *> *)deleteRouteCalculator:(AWSLocationDeleteRouteCalculatorRequest *)request;
 
 /**
- <p>Deletes a route calculator resource from your AWS account.</p><note><p>This operation deletes the resource permanently.</p></note>
+ <p>Deletes a route calculator resource from your Amazon Web Services account.</p><note><p>This operation deletes the resource permanently.</p></note>
  
  @param request A container for the necessary parameters to execute the DeleteRouteCalculator service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -625,7 +675,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)deleteRouteCalculator:(AWSLocationDeleteRouteCalculatorRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationDeleteRouteCalculatorResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Deletes a tracker resource from your AWS account.</p><note><p>This operation deletes the resource permanently. If the tracker resource is in use, you may encounter an error. Make sure that the target resource isn't a dependency for your applications.</p></note>
+ <p>Deletes a tracker resource from your Amazon Web Services account.</p><note><p>This operation deletes the resource permanently. If the tracker resource is in use, you may encounter an error. Make sure that the target resource isn't a dependency for your applications.</p></note>
  
  @param request A container for the necessary parameters to execute the DeleteTracker service method.
 
@@ -637,7 +687,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationDeleteTrackerResponse *> *)deleteTracker:(AWSLocationDeleteTrackerRequest *)request;
 
 /**
- <p>Deletes a tracker resource from your AWS account.</p><note><p>This operation deletes the resource permanently. If the tracker resource is in use, you may encounter an error. Make sure that the target resource isn't a dependency for your applications.</p></note>
+ <p>Deletes a tracker resource from your Amazon Web Services account.</p><note><p>This operation deletes the resource permanently. If the tracker resource is in use, you may encounter an error. Make sure that the target resource isn't a dependency for your applications.</p></note>
  
  @param request A container for the necessary parameters to execute the DeleteTracker service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -673,6 +723,31 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
  @see AWSLocationDescribeGeofenceCollectionResponse
  */
 - (void)describeGeofenceCollection:(AWSLocationDescribeGeofenceCollectionRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationDescribeGeofenceCollectionResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Retrieves the API key resource details.</p>
+ 
+ @param request A container for the necessary parameters to execute the DescribeKey service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationDescribeKeyResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationDescribeKeyRequest
+ @see AWSLocationDescribeKeyResponse
+ */
+- (AWSTask<AWSLocationDescribeKeyResponse *> *)describeKey:(AWSLocationDescribeKeyRequest *)request;
+
+/**
+ <p>Retrieves the API key resource details.</p>
+ 
+ @param request A container for the necessary parameters to execute the DescribeKey service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationDescribeKeyRequest
+ @see AWSLocationDescribeKeyResponse
+ */
+- (void)describeKey:(AWSLocationDescribeKeyRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationDescribeKeyResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p>Retrieves the map resource details.</p>
@@ -800,6 +875,31 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)disassociateTrackerConsumer:(AWSLocationDisassociateTrackerConsumerRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationDisassociateTrackerConsumerResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Evaluates device positions against geofence geometries from a given geofence collection. The event forecasts three states for which a device can be in relative to a geofence:</p><p><code>ENTER</code>: If a device is outside of a geofence, but would breach the fence if the device is moving at its current speed within time horizon window.</p><p><code>EXIT</code>: If a device is inside of a geofence, but would breach the fence if the device is moving at its current speed within time horizon window.</p><p><code>IDLE</code>: If a device is inside of a geofence, and the device is not moving.</p>
+ 
+ @param request A container for the necessary parameters to execute the ForecastGeofenceEvents service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationForecastGeofenceEventsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationForecastGeofenceEventsRequest
+ @see AWSLocationForecastGeofenceEventsResponse
+ */
+- (AWSTask<AWSLocationForecastGeofenceEventsResponse *> *)forecastGeofenceEvents:(AWSLocationForecastGeofenceEventsRequest *)request;
+
+/**
+ <p>Evaluates device positions against geofence geometries from a given geofence collection. The event forecasts three states for which a device can be in relative to a geofence:</p><p><code>ENTER</code>: If a device is outside of a geofence, but would breach the fence if the device is moving at its current speed within time horizon window.</p><p><code>EXIT</code>: If a device is inside of a geofence, but would breach the fence if the device is moving at its current speed within time horizon window.</p><p><code>IDLE</code>: If a device is inside of a geofence, and the device is not moving.</p>
+ 
+ @param request A container for the necessary parameters to execute the ForecastGeofenceEvents service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationForecastGeofenceEventsRequest
+ @see AWSLocationForecastGeofenceEventsResponse
+ */
+- (void)forecastGeofenceEvents:(AWSLocationForecastGeofenceEventsRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationForecastGeofenceEventsResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
  <p>Retrieves a device's most recent position according to its sample time.</p><note><p>Device positions are deleted after 30 days.</p></note>
  
  @param request A container for the necessary parameters to execute the GetDevicePosition service method.
@@ -850,7 +950,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)getDevicePositionHistory:(AWSLocationGetDevicePositionHistoryRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationGetDevicePositionHistoryResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Retrieves the geofence details from a geofence collection.</p>
+ <p>Retrieves the geofence details from a geofence collection.</p><note><p>The returned geometry will always match the geometry format used when the geofence was created.</p></note>
  
  @param request A container for the necessary parameters to execute the GetGeofence service method.
 
@@ -862,7 +962,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationGetGeofenceResponse *> *)getGeofence:(AWSLocationGetGeofenceRequest *)request;
 
 /**
- <p>Retrieves the geofence details from a geofence collection.</p>
+ <p>Retrieves the geofence details from a geofence collection.</p><note><p>The returned geometry will always match the geometry format used when the geofence was created.</p></note>
  
  @param request A container for the necessary parameters to execute the GetGeofence service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -975,6 +1075,31 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)getMapTile:(AWSLocationGetMapTileRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationGetMapTileResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Finds a place by its unique ID. A <code>PlaceId</code> is returned by other search operations.</p><note><p>A PlaceId is valid only if all of the following are the same in the original search request and the call to <code>GetPlace</code>.</p><ul><li><p>Customer Amazon Web Services account</p></li><li><p>Amazon Web Services Region</p></li><li><p>Data provider specified in the place index resource</p></li></ul></note>
+ 
+ @param request A container for the necessary parameters to execute the GetPlace service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationGetPlaceResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationGetPlaceRequest
+ @see AWSLocationGetPlaceResponse
+ */
+- (AWSTask<AWSLocationGetPlaceResponse *> *)getPlace:(AWSLocationGetPlaceRequest *)request;
+
+/**
+ <p>Finds a place by its unique ID. A <code>PlaceId</code> is returned by other search operations.</p><note><p>A PlaceId is valid only if all of the following are the same in the original search request and the call to <code>GetPlace</code>.</p><ul><li><p>Customer Amazon Web Services account</p></li><li><p>Amazon Web Services Region</p></li><li><p>Data provider specified in the place index resource</p></li></ul></note>
+ 
+ @param request A container for the necessary parameters to execute the GetPlace service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationGetPlaceRequest
+ @see AWSLocationGetPlaceResponse
+ */
+- (void)getPlace:(AWSLocationGetPlaceRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationGetPlaceResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
  <p>A batch request to retrieve all device positions.</p>
  
  @param request A container for the necessary parameters to execute the ListDevicePositions service method.
@@ -1000,7 +1125,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)listDevicePositions:(AWSLocationListDevicePositionsRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationListDevicePositionsResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Lists geofence collections in your AWS account.</p>
+ <p>Lists geofence collections in your Amazon Web Services account.</p>
  
  @param request A container for the necessary parameters to execute the ListGeofenceCollections service method.
 
@@ -1012,7 +1137,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationListGeofenceCollectionsResponse *> *)listGeofenceCollections:(AWSLocationListGeofenceCollectionsRequest *)request;
 
 /**
- <p>Lists geofence collections in your AWS account.</p>
+ <p>Lists geofence collections in your Amazon Web Services account.</p>
  
  @param request A container for the necessary parameters to execute the ListGeofenceCollections service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -1050,7 +1175,32 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)listGeofences:(AWSLocationListGeofencesRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationListGeofencesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Lists map resources in your AWS account.</p>
+ <p>Lists API key resources in your Amazon Web Services account.</p>
+ 
+ @param request A container for the necessary parameters to execute the ListKeys service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationListKeysResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationListKeysRequest
+ @see AWSLocationListKeysResponse
+ */
+- (AWSTask<AWSLocationListKeysResponse *> *)listKeys:(AWSLocationListKeysRequest *)request;
+
+/**
+ <p>Lists API key resources in your Amazon Web Services account.</p>
+ 
+ @param request A container for the necessary parameters to execute the ListKeys service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationListKeysRequest
+ @see AWSLocationListKeysResponse
+ */
+- (void)listKeys:(AWSLocationListKeysRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationListKeysResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Lists map resources in your Amazon Web Services account.</p>
  
  @param request A container for the necessary parameters to execute the ListMaps service method.
 
@@ -1062,7 +1212,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationListMapsResponse *> *)listMaps:(AWSLocationListMapsRequest *)request;
 
 /**
- <p>Lists map resources in your AWS account.</p>
+ <p>Lists map resources in your Amazon Web Services account.</p>
  
  @param request A container for the necessary parameters to execute the ListMaps service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -1075,7 +1225,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)listMaps:(AWSLocationListMapsRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationListMapsResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Lists place index resources in your AWS account.</p>
+ <p>Lists place index resources in your Amazon Web Services account.</p>
  
  @param request A container for the necessary parameters to execute the ListPlaceIndexes service method.
 
@@ -1087,7 +1237,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationListPlaceIndexesResponse *> *)listPlaceIndexes:(AWSLocationListPlaceIndexesRequest *)request;
 
 /**
- <p>Lists place index resources in your AWS account.</p>
+ <p>Lists place index resources in your Amazon Web Services account.</p>
  
  @param request A container for the necessary parameters to execute the ListPlaceIndexes service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -1100,7 +1250,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)listPlaceIndexes:(AWSLocationListPlaceIndexesRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationListPlaceIndexesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Lists route calculator resources in your AWS account.</p>
+ <p>Lists route calculator resources in your Amazon Web Services account.</p>
  
  @param request A container for the necessary parameters to execute the ListRouteCalculators service method.
 
@@ -1112,7 +1262,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationListRouteCalculatorsResponse *> *)listRouteCalculators:(AWSLocationListRouteCalculatorsRequest *)request;
 
 /**
- <p>Lists route calculator resources in your AWS account.</p>
+ <p>Lists route calculator resources in your Amazon Web Services account.</p>
  
  @param request A container for the necessary parameters to execute the ListRouteCalculators service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -1175,7 +1325,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)listTrackerConsumers:(AWSLocationListTrackerConsumersRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationListTrackerConsumersResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Lists tracker resources in your AWS account.</p>
+ <p>Lists tracker resources in your Amazon Web Services account.</p>
  
  @param request A container for the necessary parameters to execute the ListTrackers service method.
 
@@ -1187,7 +1337,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationListTrackersResponse *> *)listTrackers:(AWSLocationListTrackersRequest *)request;
 
 /**
- <p>Lists tracker resources in your AWS account.</p>
+ <p>Lists tracker resources in your Amazon Web Services account.</p>
  
  @param request A container for the necessary parameters to execute the ListTrackers service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -1300,7 +1450,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (void)searchPlaceIndexForText:(AWSLocationSearchPlaceIndexForTextRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationSearchPlaceIndexForTextResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Assigns one or more tags (key-value pairs) to the specified Amazon Location Service resource.</p><pre><code> &lt;p&gt;Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only resources with certain tag values.&lt;/p&gt; &lt;p&gt;You can use the &lt;code&gt;TagResource&lt;/code&gt; operation with an Amazon Location Service resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the tags already associated with the resource. If you specify a tag key that's already associated with the resource, the new tag value that you specify replaces the previous value for that tag. &lt;/p&gt; &lt;p&gt;You can associate up to 50 tags with a resource.&lt;/p&gt; </code></pre>
+ <p>Assigns one or more tags (key-value pairs) to the specified Amazon Location Service resource.</p><p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only resources with certain tag values.</p><p>You can use the <code>TagResource</code> operation with an Amazon Location Service resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the tags already associated with the resource. If you specify a tag key that's already associated with the resource, the new tag value that you specify replaces the previous value for that tag. </p><p>You can associate up to 50 tags with a resource.</p>
  
  @param request A container for the necessary parameters to execute the TagResource service method.
 
@@ -1312,7 +1462,7 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
 - (AWSTask<AWSLocationTagResourceResponse *> *)tagResource:(AWSLocationTagResourceRequest *)request;
 
 /**
- <p>Assigns one or more tags (key-value pairs) to the specified Amazon Location Service resource.</p><pre><code> &lt;p&gt;Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only resources with certain tag values.&lt;/p&gt; &lt;p&gt;You can use the &lt;code&gt;TagResource&lt;/code&gt; operation with an Amazon Location Service resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the tags already associated with the resource. If you specify a tag key that's already associated with the resource, the new tag value that you specify replaces the previous value for that tag. &lt;/p&gt; &lt;p&gt;You can associate up to 50 tags with a resource.&lt;/p&gt; </code></pre>
+ <p>Assigns one or more tags (key-value pairs) to the specified Amazon Location Service resource.</p><p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only resources with certain tag values.</p><p>You can use the <code>TagResource</code> operation with an Amazon Location Service resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the tags already associated with the resource. If you specify a tag key that's already associated with the resource, the new tag value that you specify replaces the previous value for that tag. </p><p>You can associate up to 50 tags with a resource.</p>
  
  @param request A container for the necessary parameters to execute the TagResource service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -1373,6 +1523,31 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
  @see AWSLocationUpdateGeofenceCollectionResponse
  */
 - (void)updateGeofenceCollection:(AWSLocationUpdateGeofenceCollectionRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationUpdateGeofenceCollectionResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Updates the specified properties of a given API key resource.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdateKey service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationUpdateKeyResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationUpdateKeyRequest
+ @see AWSLocationUpdateKeyResponse
+ */
+- (AWSTask<AWSLocationUpdateKeyResponse *> *)updateKey:(AWSLocationUpdateKeyRequest *)request;
+
+/**
+ <p>Updates the specified properties of a given API key resource.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdateKey service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationUpdateKeyRequest
+ @see AWSLocationUpdateKeyResponse
+ */
+- (void)updateKey:(AWSLocationUpdateKeyRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationUpdateKeyResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p>Updates the specified properties of a given map resource.</p>
@@ -1473,6 +1648,31 @@ FOUNDATION_EXPORT NSString *const AWSLocationSDKVersion;
  @see AWSLocationUpdateTrackerResponse
  */
 - (void)updateTracker:(AWSLocationUpdateTrackerRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationUpdateTrackerResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Verifies the integrity of the device's position by determining if it was reported behind a proxy, and by comparing it to an inferred position estimated based on the device's state.</p>
+ 
+ @param request A container for the necessary parameters to execute the VerifyDevicePosition service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLocationVerifyDevicePositionResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationVerifyDevicePositionRequest
+ @see AWSLocationVerifyDevicePositionResponse
+ */
+- (AWSTask<AWSLocationVerifyDevicePositionResponse *> *)verifyDevicePosition:(AWSLocationVerifyDevicePositionRequest *)request;
+
+/**
+ <p>Verifies the integrity of the device's position by determining if it was reported behind a proxy, and by comparing it to an inferred position estimated based on the device's state.</p>
+ 
+ @param request A container for the necessary parameters to execute the VerifyDevicePosition service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLocationErrorDomain` domain and the following error code: `AWSLocationErrorInternalServer`, `AWSLocationErrorResourceNotFound`, `AWSLocationErrorAccessDenied`, `AWSLocationErrorValidation`, `AWSLocationErrorThrottling`.
+ 
+ @see AWSLocationVerifyDevicePositionRequest
+ @see AWSLocationVerifyDevicePositionResponse
+ */
+- (void)verifyDevicePosition:(AWSLocationVerifyDevicePositionRequest *)request completionHandler:(void (^ _Nullable)(AWSLocationVerifyDevicePositionResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 @end
 

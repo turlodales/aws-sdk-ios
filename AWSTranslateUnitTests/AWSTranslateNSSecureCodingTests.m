@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
 - (void) test_AWSTranslateDeleteTerminologyRequest API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateDescribeTextTranslationJobRequest API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateDescribeTextTranslationJobResponse API_AVAILABLE(ios(11));
+- (void) test_AWSTranslateDocument API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateEncryptionKey API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateGetParallelDataRequest API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateGetParallelDataResponse API_AVAILABLE(ios(11));
@@ -41,6 +42,8 @@
 - (void) test_AWSTranslateListLanguagesResponse API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateListParallelDataRequest API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateListParallelDataResponse API_AVAILABLE(ios(11));
+- (void) test_AWSTranslateListTagsForResourceRequest API_AVAILABLE(ios(11));
+- (void) test_AWSTranslateListTagsForResourceResponse API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateListTerminologiesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateListTerminologiesResponse API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateListTextTranslationJobsRequest API_AVAILABLE(ios(11));
@@ -53,15 +56,23 @@
 - (void) test_AWSTranslateStartTextTranslationJobResponse API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateStopTextTranslationJobRequest API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateStopTextTranslationJobResponse API_AVAILABLE(ios(11));
+- (void) test_AWSTranslateTag API_AVAILABLE(ios(11));
+- (void) test_AWSTranslateTagResourceRequest API_AVAILABLE(ios(11));
+- (void) test_AWSTranslateTagResourceResponse API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateTerm API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateTerminologyData API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateTerminologyDataLocation API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateTerminologyProperties API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateTextTranslationJobFilter API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateTextTranslationJobProperties API_AVAILABLE(ios(11));
+- (void) test_AWSTranslateTranslateDocumentRequest API_AVAILABLE(ios(11));
+- (void) test_AWSTranslateTranslateDocumentResponse API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateTranslateTextRequest API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateTranslateTextResponse API_AVAILABLE(ios(11));
+- (void) test_AWSTranslateTranslatedDocument API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateTranslationSettings API_AVAILABLE(ios(11));
+- (void) test_AWSTranslateUntagResourceRequest API_AVAILABLE(ios(11));
+- (void) test_AWSTranslateUntagResourceResponse API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateUpdateParallelDataRequest API_AVAILABLE(ios(11));
 - (void) test_AWSTranslateUpdateParallelDataResponse API_AVAILABLE(ios(11));
 
@@ -99,6 +110,10 @@
 
 - (void) test_AWSTranslateDescribeTextTranslationJobResponse {
     [self validateSecureCodingForClass:[AWSTranslateDescribeTextTranslationJobResponse class]];
+}
+
+- (void) test_AWSTranslateDocument {
+    [self validateSecureCodingForClass:[AWSTranslateDocument class]];
 }
 
 - (void) test_AWSTranslateEncryptionKey {
@@ -157,6 +172,14 @@
     [self validateSecureCodingForClass:[AWSTranslateListParallelDataResponse class]];
 }
 
+- (void) test_AWSTranslateListTagsForResourceRequest {
+    [self validateSecureCodingForClass:[AWSTranslateListTagsForResourceRequest class]];
+}
+
+- (void) test_AWSTranslateListTagsForResourceResponse {
+    [self validateSecureCodingForClass:[AWSTranslateListTagsForResourceResponse class]];
+}
+
 - (void) test_AWSTranslateListTerminologiesRequest {
     [self validateSecureCodingForClass:[AWSTranslateListTerminologiesRequest class]];
 }
@@ -205,6 +228,18 @@
     [self validateSecureCodingForClass:[AWSTranslateStopTextTranslationJobResponse class]];
 }
 
+- (void) test_AWSTranslateTag {
+    [self validateSecureCodingForClass:[AWSTranslateTag class]];
+}
+
+- (void) test_AWSTranslateTagResourceRequest {
+    [self validateSecureCodingForClass:[AWSTranslateTagResourceRequest class]];
+}
+
+- (void) test_AWSTranslateTagResourceResponse {
+    [self validateSecureCodingForClass:[AWSTranslateTagResourceResponse class]];
+}
+
 - (void) test_AWSTranslateTerm {
     [self validateSecureCodingForClass:[AWSTranslateTerm class]];
 }
@@ -229,6 +264,14 @@
     [self validateSecureCodingForClass:[AWSTranslateTextTranslationJobProperties class]];
 }
 
+- (void) test_AWSTranslateTranslateDocumentRequest {
+    [self validateSecureCodingForClass:[AWSTranslateTranslateDocumentRequest class]];
+}
+
+- (void) test_AWSTranslateTranslateDocumentResponse {
+    [self validateSecureCodingForClass:[AWSTranslateTranslateDocumentResponse class]];
+}
+
 - (void) test_AWSTranslateTranslateTextRequest {
     [self validateSecureCodingForClass:[AWSTranslateTranslateTextRequest class]];
 }
@@ -237,8 +280,20 @@
     [self validateSecureCodingForClass:[AWSTranslateTranslateTextResponse class]];
 }
 
+- (void) test_AWSTranslateTranslatedDocument {
+    [self validateSecureCodingForClass:[AWSTranslateTranslatedDocument class]];
+}
+
 - (void) test_AWSTranslateTranslationSettings {
     [self validateSecureCodingForClass:[AWSTranslateTranslationSettings class]];
+}
+
+- (void) test_AWSTranslateUntagResourceRequest {
+    [self validateSecureCodingForClass:[AWSTranslateUntagResourceRequest class]];
+}
+
+- (void) test_AWSTranslateUntagResourceResponse {
+    [self validateSecureCodingForClass:[AWSTranslateUntagResourceResponse class]];
 }
 
 - (void) test_AWSTranslateUpdateParallelDataRequest {

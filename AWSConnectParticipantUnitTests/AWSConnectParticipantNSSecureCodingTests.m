@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@
 - (void) test_AWSConnectParticipantConnectionCredentials API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantCreateParticipantConnectionRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantCreateParticipantConnectionResponse API_AVAILABLE(ios(11));
+- (void) test_AWSConnectParticipantDescribeViewRequest API_AVAILABLE(ios(11));
+- (void) test_AWSConnectParticipantDescribeViewResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantDisconnectParticipantRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantDisconnectParticipantResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantGetAttachmentRequest API_AVAILABLE(ios(11));
@@ -32,6 +34,8 @@
 - (void) test_AWSConnectParticipantGetTranscriptRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantGetTranscriptResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantItem API_AVAILABLE(ios(11));
+- (void) test_AWSConnectParticipantMessageMetadata API_AVAILABLE(ios(11));
+- (void) test_AWSConnectParticipantReceipt API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantSendEventRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantSendEventResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantSendMessageRequest API_AVAILABLE(ios(11));
@@ -40,6 +44,8 @@
 - (void) test_AWSConnectParticipantStartAttachmentUploadResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantStartPosition API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantUploadMetadata API_AVAILABLE(ios(11));
+- (void) test_AWSConnectParticipantView API_AVAILABLE(ios(11));
+- (void) test_AWSConnectParticipantViewContent API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantWebsocket API_AVAILABLE(ios(11));
 
 @end
@@ -70,6 +76,14 @@
     [self validateSecureCodingForClass:[AWSConnectParticipantCreateParticipantConnectionResponse class]];
 }
 
+- (void) test_AWSConnectParticipantDescribeViewRequest {
+    [self validateSecureCodingForClass:[AWSConnectParticipantDescribeViewRequest class]];
+}
+
+- (void) test_AWSConnectParticipantDescribeViewResponse {
+    [self validateSecureCodingForClass:[AWSConnectParticipantDescribeViewResponse class]];
+}
+
 - (void) test_AWSConnectParticipantDisconnectParticipantRequest {
     [self validateSecureCodingForClass:[AWSConnectParticipantDisconnectParticipantRequest class]];
 }
@@ -96,6 +110,14 @@
 
 - (void) test_AWSConnectParticipantItem {
     [self validateSecureCodingForClass:[AWSConnectParticipantItem class]];
+}
+
+- (void) test_AWSConnectParticipantMessageMetadata {
+    [self validateSecureCodingForClass:[AWSConnectParticipantMessageMetadata class]];
+}
+
+- (void) test_AWSConnectParticipantReceipt {
+    [self validateSecureCodingForClass:[AWSConnectParticipantReceipt class]];
 }
 
 - (void) test_AWSConnectParticipantSendEventRequest {
@@ -128,6 +150,14 @@
 
 - (void) test_AWSConnectParticipantUploadMetadata {
     [self validateSecureCodingForClass:[AWSConnectParticipantUploadMetadata class]];
+}
+
+- (void) test_AWSConnectParticipantView {
+    [self validateSecureCodingForClass:[AWSConnectParticipantView class]];
+}
+
+- (void) test_AWSConnectParticipantViewContent {
+    [self validateSecureCodingForClass:[AWSConnectParticipantViewContent class]];
 }
 
 - (void) test_AWSConnectParticipantWebsocket {
